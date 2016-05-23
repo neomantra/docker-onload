@@ -2,6 +2,14 @@
 
 `docker-onload` provides a Dockerfile which installs Solarflare's [OpenOnload](http://www.openonload.org/ "OpenOnload") into various OS flavors.
 
+## Supported tags and respective `Dockerfile` links
+
+- [`centos`, `201509-u1-centos`, (*centos/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/6e94a322ebd6fa5dabfebe86c9317a5ef4982a05/centos/Dockerfile)
+- [`trusty`, `201509-u1-trusty`, (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/6e94a322ebd6fa5dabfebe86c9317a5ef4982a05/trusty/Dockerfile)
+- [`xenial`, `201509-u1-xenial`, (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/6e94a322ebd6fa5dabfebe86c9317a5ef4982a05/xenial/Dockerfile)
+
+[![](https://imagelayers.io/badge/neomantra/onload:trusty.svg)](https://imagelayers.io/?images=neomantra/onload:trusty 'Get your own badge on imagelayers.io')
+
 ### Launching Onload-enabled container
 
 To expose the host and onload to this container, run like this:
