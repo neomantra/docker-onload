@@ -19,34 +19,47 @@ FROM ubuntu:trusty
 
 MAINTAINER Evan Wies <evan@neomantra.net>
 
-
-# Install OpenOnload build dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get update -y
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    wget coreutils \
-    perl autoconf automake libtool tar gcc make net-tools ethtool \
-    valgrind libpcap0.8-dev python-dev \
-    gcc-multilib libc6-dev-i386
-
-
 # Onload version and its md5sum
 ARG ONLOAD_VERSION="201509-u1"
 ARG ONLOAD_MD5SUM="01192799b6e932a043fdf27f5c28e6be"
 
 
-# Download and verify OpenOnload from Solarflare's site
-WORKDIR /tmp
-ADD http://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz /tmp/openonload-${ONLOAD_VERSION}.tgz
-RUN echo "${ONLOAD_MD5SUM} openonload-${ONLOAD_VERSION}.tgz" | md5sum --check
+# 1) Install OpenOnload build dependencies
+# 2) Download and verify OpenOnload from Solarflare's site
+# 3) Extract, build, and install onload
+# 4) Cleanup
 
+RUN \
+    DEBIAN_FRONTEND=noninteractive apt-get update -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        autoconf \
+        automake \
+        coreutils \
+        curl \
+        ethtool \
+        gcc \
+        gcc-multilib \
+        libc6-dev-i386 \
+        libpcap0.8-dev \
+        libtool \
+        make \
+        net-tools \
+        perl \
+        python-dev \
+        tar \
+        valgrind \
+        wget \
+    && cd /tmp \
+    && curl -fSL http://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz -o /tmp/openonload-${ONLOAD_VERSION}.tgz \
+    && echo "${ONLOAD_MD5SUM} openonload-${ONLOAD_VERSION}.tgz" | md5sum --check \
+    && tar -zxf openonload-${ONLOAD_VERSION}.tgz \
+    && cd /tmp/openonload-${ONLOAD_VERSION}/scripts \
+    && ./onload_build --user \
+    && ./onload_install --userfiles --nobuild \
+    && cd /tmp \
+    && rm -rf openonload-${ONLOAD_VERSION}.tgz openonload-${ONLOAD_VERSION} \
+    && DEBIAN_FRONTEND=noninteractive apt-get remove -y --purge \
+        curl \
+    && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y
 
-# Extract, build, and install onload
-RUN tar -zxf openonload-${ONLOAD_VERSION}.tgz
-WORKDIR /tmp/openonload-${ONLOAD_VERSION}/scripts
-RUN ./onload_build --user
-RUN ./onload_install --userfiles --nobuild
-
-
-# Cleanup
-RUN rm -rf /tmp/openonload-${ONLOAD_VERSION}.tgz /tmp/openonload-${ONLOAD_VERSION}
-WORKDIR /
+# TODO: which apt packages can we remove?

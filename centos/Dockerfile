@@ -19,33 +19,47 @@ FROM centos:7
 
 MAINTAINER Evan Wies <evan@neomantra.net>
 
-
-# Install OpenOnload build dependencies
-RUN yum install -y \
-    kernel-devel binutils gettext gawk which file \
-    gcc sed make bash glibc-common automake libtool autoconf \
-    glibc-devel.x86_64 glibc-devel.i686 libgcc.i686 \
-    libpcap-devel valgrind-devel python-devel
-
-
 # Onload version and its md5sum
 ARG ONLOAD_VERSION="201509-u1"
 ARG ONLOAD_MD5SUM="01192799b6e932a043fdf27f5c28e6be"
 
 
-# Download and verify OpenOnload from Solarflare's site
-WORKDIR /tmp
-ADD http://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz /tmp/openonload-${ONLOAD_VERSION}.tgz
-RUN echo "${ONLOAD_MD5SUM} openonload-${ONLOAD_VERSION}.tgz" | md5sum --check
+# 1) Install OpenOnload build dependencies
+# 2) Download and verify OpenOnload from Solarflare's site
+# 3) Extract, build, and install onload
+# 4) Cleanup
 
+RUN \
+    yum install -y \
+        autoconf \
+        automake \
+        bash \
+        binutils \
+        file \
+        gawk \
+        gcc \
+        gettext \
+        glibc-common \
+        glibc-devel.i686 \
+        glibc-devel.x86_64 \
+        kernel-devel \
+        libgcc.i686 \
+        libpcap-devel \
+        libtool \
+        make \
+        python-devel \
+        sed \
+        valgrind-devel \
+        which \
+    && cd /tmp \
+    && curl -fSL http://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz -o /tmp/openonload-${ONLOAD_VERSION}.tgz \
+    && echo "${ONLOAD_MD5SUM} openonload-${ONLOAD_VERSION}.tgz" | md5sum --check \
+    && tar -zxf openonload-${ONLOAD_VERSION}.tgz \
+    && cd /tmp/openonload-${ONLOAD_VERSION}/scripts \
+    && ./onload_build --user \
+    && ./onload_install --userfiles --nobuild \
+    && cd /tmp \
+    && rm -rf openonload-${ONLOAD_VERSION}.tgz openonload-${ONLOAD_VERSION} \
+    && yum clean all
 
-# Extract, build, and install onload
-RUN tar -zxf openonload-${ONLOAD_VERSION}.tgz
-WORKDIR /tmp/openonload-${ONLOAD_VERSION}/scripts
-RUN ./onload_build --user
-RUN ./onload_install --userfiles --nobuild
-
-
-# Cleanup
-RUN rm -rf /tmp/openonload-${ONLOAD_VERSION}.tgz /tmp/openonload-${ONLOAD_VERSION}
-WORKDIR /
+# TODO: which yum packages can we remove
