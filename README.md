@@ -1,6 +1,6 @@
 # docker-onload
 
-`docker-onload` provides a Dockerfile which installs Solarflare's [OpenOnload](http://www.openonload.org/ "OpenOnload") into various OS flavors.
+`docker-onload` provides a Dockerfile which installs Solarflare's [OpenOnload](http://www.openonload.org/ "OpenOnload") into various OS flavors.  Find it on the Docker Hub: https://hub.docker.com/r/neomantra/onload/
 
 ## Supported tags and respective `Dockerfile` links
 
