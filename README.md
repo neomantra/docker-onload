@@ -4,10 +4,15 @@
 
 ## Supported tags and respective `Dockerfile` links
 
-- [`centos`, `201509-u1-centos`, (*centos/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos/Dockerfile)
-- [`precise`, `201509-u1-precise`, (*precise/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile)
-- [`trusty`, `201509-u1-trusty`, (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile)
-- [`xenial`, `201509-u1-xenial`, (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
+- [`centos`, `201606-centos`, (*centos/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos/Dockerfile)
+- [`precise`, `201606-precise`, (*precise/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile)
+- [`trusty`, `201606-trusty`, (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile)
+- [`xenial`, `201606-xenial`, (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
+- `201509-u1-centos`
+- `201509-u1-precise`
+- `201509-u1-trusty`
+- `201509-u1-xenial`
+
 
 [![](https://imagelayers.io/badge/neomantra/onload:trusty.svg)](https://imagelayers.io/?images=neomantra/onload:trusty 'Get your own badge on imagelayers.io')
 
@@ -39,8 +44,8 @@ The Dockerfile downloads specific versions from [openonload.org](http://openonlo
 
 | Key  | Default | Description |
 :----- | :-----: |:----------- |
-|ONLOAD_VERSION | "201509-u1" | The version of OpenOnload to download. |
-|ONLOAD_MD5SUM | "01192799b6e932a043fdf27f5c28e6be" | The MD5 checksum of the download. |
+|ONLOAD_VERSION | "201606" | The version of OpenOnload to download. |
+|ONLOAD_MD5SUM | "a94dc9b45bda85096814d85e366afdea" | The MD5 checksum of the download. |
 
 If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to match. Note that Docker is only supported by OpenOnload since version 201502.
 
