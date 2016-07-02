@@ -39,6 +39,7 @@ RUN \
         ethtool \
         gcc \
         gcc-multilib \
+        kmod \
         libc6-dev-i386 \
         libpcap0.8-dev \
         libtool \
