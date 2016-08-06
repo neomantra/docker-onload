@@ -14,7 +14,7 @@
 - `201509-u1-xenial`
 
 
-[![](https://imagelayers.io/badge/neomantra/onload:trusty.svg)](https://imagelayers.io/?images=neomantra/onload:trusty 'Get your own badge on imagelayers.io')
+[![](https://images.microbadger.com/badges/license/neomantra/onload.svg)](http://microbadger.com/images/neomantra/onload "Get your own license badge on microbadger.com")
 
 ### Launching Onload-enabled container
 
