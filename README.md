@@ -13,8 +13,7 @@
 - `201509-u1-trusty`
 - `201509-u1-xenial`
 
-
-[![](https://images.microbadger.com/badges/license/neomantra/onload.svg)](http://microbadger.com/images/neomantra/onload "Get your own license badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/neomantra/onload.svg)](http://microbadger.com/images/neomantra/onload "Get your own image badge on microbadger.com")
 
 ### Launching Onload-enabled container
 
