@@ -17,10 +17,19 @@
 
 ### Launching Onload-enabled container
 
-To expose the host and onload to this container, run like this:
+For OpenOnload versions >= `201606`, to expose the host and onload to this container, run like so:
+```
+docker run --net=host --device=/dev/onload --device=/dev/onload_epoll --device=/dev/onload_cplane -it ONLOAD_ENABLED_IMAGE_ID [COMMAND] [ARG...]
+```
+
+For OpenOnload versions < `201606`, to expose the host and onload to this container, run like so:
 ```
 docker run --net=host --device=/dev/onload --device=/dev/onload_epoll -it ONLOAD_ENABLED_IMAGE_ID [COMMAND] [ARG...]
 ```
+
+The difference is that version 201606 introduced the device `/dev/onload_cplane`.
+
+Here's a bash one-liner for extracting the OpenOnload version year:  `onload --version | awk 'NR == 1 {print substr($2, 0, 4)}'`
 
 **NOTE:** The host's `onload` version must be the same as the container's.
 
