@@ -33,7 +33,7 @@ docker run --net=host --device=/dev/onload --device=/dev/onload_epoll -it ONLOAD
 
 The difference is that version 201606 introduced the device `/dev/onload_cplane`.
 
-Here's a bash one-liner for extracting the OpenOnload version year:  `onload --version | awk 'NR == 1 {print substr($2, 0, 4)}'`
+Here's a bash one-liner for extracting the OpenOnload version year:  `onload --version | awk 'NR == 1 {print substr($2, 1, 4)}'`
 
 **NOTE:** The host's `onload` version must be the same as the container's.
 
