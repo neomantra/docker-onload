@@ -4,10 +4,14 @@
 
 ## Supported tags and respective `Dockerfile` links
 
-- [`centos`, `201606-centos`, (*centos/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos/Dockerfile)
-- [`precise`, `201606-precise`, (*precise/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile)
-- [`trusty`, `201606-trusty`, (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile)
-- [`xenial`, `201606-xenial`, (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
+- [`centos`, `201606-u1-centos`, (*centos/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos/Dockerfile)
+- [`precise`, `201606-u1-precise`, (*precise/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile)
+- [`trusty`, `201606-u1-trusty`, (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile)
+- [`xenial`, `201606-u1-xenial`, (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
+- `201606-centos`
+- `201606-precise`
+- `201606-trusty`
+- `201606-xenial`
 - `201509-u1-centos`
 - `201509-u1-precise`
 - `201509-u1-trusty`
@@ -52,8 +56,8 @@ The Dockerfile downloads specific versions from [openonload.org](http://openonlo
 
 | Key  | Default | Description |
 :----- | :-----: |:----------- |
-|ONLOAD_VERSION | "201606" | The version of OpenOnload to download. |
-|ONLOAD_MD5SUM | "a94dc9b45bda85096814d85e366afdea" | The MD5 checksum of the download. |
+|ONLOAD_VERSION | "201606-u1" | The version of OpenOnload to download. |
+|ONLOAD_MD5SUM | "21d242f4da8d48eb825e0c95c5010883" | The MD5 checksum of the download. |
 
 If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to match. Note that Docker is only supported by OpenOnload since version 201502.
 
