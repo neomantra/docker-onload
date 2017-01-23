@@ -1,6 +1,7 @@
-# Dockerfile - CentOS 7
+# Dockerfile - Ubuntu Trusty
 #
-# Installs Solarflare's OpenOnload into CentOS 7.
+# Installs Solarflare's OpenOnload into Ubuntu Trusty,
+# without distributing TCPDirect.
 #
 # OpenOnload web page:
 #    http://www.openonload.org/
@@ -11,11 +12,11 @@
 #
 # NOTE: The host's OpenOnload version must be the same as the container's.
 #
-# Copyright (c) 2016 neomantra BV
+# Copyright (c) 2017 neomantra BV
 # Released under the MIT License, see LICENSE.txt
 #
 
-FROM centos:7
+FROM ubuntu:trusty
 
 MAINTAINER Evan Wies <evan@neomantra.net>
 
@@ -30,27 +31,26 @@ ARG ONLOAD_MD5SUM="21d242f4da8d48eb825e0c95c5010883"
 # 4) Cleanup
 
 RUN \
-    yum install -y \
+    DEBIAN_FRONTEND=noninteractive apt-get update -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         autoconf \
         automake \
-        bash \
-        binutils \
-        file \
-        gawk \
+        coreutils \
+        curl \
+        ethtool \
         gcc \
-        gettext \
-        glibc-common \
-        glibc-devel.i686 \
-        glibc-devel.x86_64 \
-        kernel-devel \
-        libgcc.i686 \
-        libpcap-devel \
+        gcc-multilib \
+        kmod \
+        libc6-dev-i386 \
+        libpcap0.8-dev \
         libtool \
         make \
-        python-devel \
-        sed \
-        valgrind-devel \
-        which \
+        net-tools \
+        perl \
+        python-dev \
+        tar \
+        valgrind \
+        wget \
     && cd /tmp \
     && curl -fSL http://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz -o /tmp/openonload-${ONLOAD_VERSION}.tgz \
     && echo "${ONLOAD_MD5SUM} openonload-${ONLOAD_VERSION}.tgz" | md5sum --check \
@@ -60,6 +60,9 @@ RUN \
     && ./onload_install --userfiles --nobuild \
     && cd /tmp \
     && rm -rf openonload-${ONLOAD_VERSION}.tgz openonload-${ONLOAD_VERSION} \
-    && yum clean all
+    && rm -rf /usr/include/zf /usr/bin/zf_stackdump /usr/bin/zf_debug /usr/lib/x86_64-linux-gnu/zf /usr/lib/x86_64-linux-gnu/libonload_zf* \
+    && DEBIAN_FRONTEND=noninteractive apt-get remove -y --purge \
+        curl \
+    && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y
 
-# TODO: which yum packages can we remove
+# TODO: which apt packages can we remove?

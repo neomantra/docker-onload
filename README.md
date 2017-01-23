@@ -2,12 +2,18 @@
 
 `docker-onload` provides a Dockerfile which installs Solarflare's [OpenOnload](http://www.openonload.org/ "OpenOnload") into various OS flavors. Find it on the Docker Hub: https://hub.docker.com/r/neomantra/onload/
 
-## Supported tags and respective `Dockerfile` links
+See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/master/CHANGELOG.md).
 
-- [`centos`, `201606-u1-centos`, (*centos/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos/Dockerfile)
-- [`precise`, `201606-u1-precise`, (*precise/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile)
-- [`trusty`, `201606-u1-trusty`, (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile)
-- [`xenial`, `201606-u1-xenial`, (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
+## Supported Docker Hub tags and respective `Dockerfile` links
+
+- [`centos-nozf` (*centos/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/centos/Dockerfile.nozf)
+- [`precise-nozf` (*precise/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile.nozf)
+- [`trusty-nozf` (*trusty/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile.nozf)
+- [`xenial-nozf` (*xenial/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile.nozf)
+- `201606-u1-centos-nozf`
+- `201606-u1-precise-nozf`
+- `201606-u1-trusty-nozf`
+- `201606-u1-xenial-nozf`
 - `201606-centos`
 - `201606-precise`
 - `201606-trusty`
@@ -17,9 +23,11 @@
 - `201509-u1-trusty`
 - `201509-u1-xenial`
 
+**NOTE** Since version 201606-u1, Docker Hub hosts images tagged as a `-nozf` variant.  These are built from [Dockerfile.nozf](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile.nozf), without support for [TCPDirect](#TCPDirect) (aka ZF).
+
 [![](https://images.microbadger.com/badges/image/neomantra/onload.svg)](http://microbadger.com/images/neomantra/onload "Get your own image badge on microbadger.com")
 
-### Launching Onload-enabled container
+### Launching Onload-enabled containers
 
 For OpenOnload versions >= `201606`, to expose the host and onload to this container, run like so:
 ```
@@ -33,9 +41,32 @@ docker run --net=host --device=/dev/onload --device=/dev/onload_epoll -it ONLOAD
 
 The difference is that version 201606 introduced the device `/dev/onload_cplane`.
 
-Here's a bash one-liner for extracting the OpenOnload version year:  `onload --version | awk 'NR == 1 {print substr($2, 1, 4)}'`
+Here's a bash one-liner for extracting the OpenOnload version year:
+`onload --version | awk 'NR == 1 {print substr($2, 1, 4)}'`
 
-**NOTE:** The host's `onload` version must be the same as the container's.
+### Cavets
+
+ * Host networking must be used: `--net=host`
+
+ * The following devices must be exported: `--device=/dev/onload --device=/dev/onload_epoll --device=/dev/onload_cplane`
+
+ * The host's `onload --version` must be the same as the container's.
+
+ * Containers run as root.  If you want to share Onload stacks, be sure to properly configure `EF_SHARE_WITH`,
+   e.g. `EF_SHARE_WITH=1000`.  A value of `-1` disables this security feature.
+
+### TCPDirect
+
+In OpenOnload 201606-u1, Solarflare introducted a new kernel-bypass networking API named *TCPDirect*.
+
+To run TCPDirect applications in a container, an addition device must be exported:
+`--device=/dev/sfc_char`
+
+TCPDirect is under a different license than OpenOnload; its binaries may not be distributed.
+Thus, we have introduced a [`-nozf`](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile.nozf)
+variant for images hosted on [Docker Hub](https://hub.docker.com/r/neomantra/onload/).
+
+You are free to build and deploy TCPDirect-enabled images yourself with the regular Dockerfiles.
 
 ### Customizing
 
@@ -46,6 +77,8 @@ Dockerfiles are provided for the following base systems, selecting the Dockerfil
  * [Ubuntu Trusty](https://github.com/neomantra/docker-onload/trusty/Dockerfile) (`trusty/Dockerfile`)
  * [Ubuntu Xenial](https://github.com/neomantra/docker-onload/xenial/Dockerfile) (`xenial/Dockerfile`)
 
+Each system folder has a `Dockerfile` and `Dockerfile.nozf`.
+ 
 The following are the available build-time options. They can be set using the `--build-arg` CLI argument, like so:
 
 ```
@@ -63,6 +96,6 @@ If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to matc
 
 ### License
 
-Copyright (c) 2016 neomantra BV
+Copyright (c) 2017 neomantra BV
 
 Released under the MIT License, see LICENSE.txt

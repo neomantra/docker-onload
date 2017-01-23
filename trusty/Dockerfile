@@ -7,7 +7,7 @@
 #
 # To expose the host and onload to this container, run like this:
 #
-#   docker run --net=host --device=/dev/onload --device=/dev/onload_epoll -it ONLOAD_ENABLED_IMAGE_ID [COMMAND] [ARG...]
+#   docker run --net=host --device=/dev/onload --device=/dev/onload_epoll --device=/dev/onload_cplane -it ONLOAD_ENABLED_IMAGE_ID [COMMAND] [ARG...]
 #
 # NOTE: The host's OpenOnload version must be the same as the container's.
 #
