@@ -52,8 +52,7 @@ Here's a bash one-liner for extracting the OpenOnload version year:
 
  * The host's `onload --version` must be the same as the container's.
 
- * Containers run as root.  If you want to share Onload stacks, be sure to properly configure `EF_SHARE_WITH`,
-   e.g. `EF_SHARE_WITH=1000`.  A value of `-1` disables this security feature.
+ * *Stack Sharing*: If a container and the host must share an Onload stack, both should use `EF_SHARE_WITH=-1` to avoid a current limitation in OpenOnload.  Note this disables the stack sharing security feature.
 
 ### TCPDirect
 
@@ -66,7 +65,13 @@ TCPDirect is under a different license than OpenOnload; its binaries may not be 
 Thus, we have introduced a [`-nozf`](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile.nozf)
 variant for images hosted on [Docker Hub](https://hub.docker.com/r/neomantra/onload/).
 
-You are free to build and deploy TCPDirect-enabled images yourself with the regular Dockerfiles.
+You are free to build and deploy TCPDirect-enabled images yourself with the regular Dockerfiles, for example:
+
+```
+git clone https://github.com/neomantra/docker-onload.git
+cd docker-onload
+docker build -f xenial/Dockerfile -t neomantra/onload:201606-u1-xenial .
+```
 
 ### Customizing
 
