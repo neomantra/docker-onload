@@ -10,6 +10,10 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 - [`precise-nozf` (*precise/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile.nozf)
 - [`trusty-nozf` (*trusty/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile.nozf)
 - [`xenial-nozf` (*xenial/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile.nozf)
+- `201606-u1.1-centos-nozf`
+- `201606-u1.1-precise-nozf`
+- `201606-u1.1-trusty-nozf`
+- `201606-u1.1-xenial-nozf`
 - `201606-u1-centos-nozf`
 - `201606-u1-precise-nozf`
 - `201606-u1-trusty-nozf`
@@ -23,7 +27,7 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 - `201509-u1-trusty`
 - `201509-u1-xenial`
 
-**NOTE** Since version 201606-u1, Docker Hub hosts images tagged as a `-nozf` variant.  These are built from [Dockerfile.nozf](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile.nozf), without support for [TCPDirect](#TCPDirect) (aka ZF).
+**NOTE** Since version 201606-u1, Docker Hub hosts images tagged as a `-nozf` variant.  These are built from [Dockerfile.nozf](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile.nozf), without support for [TCPDirect](#tcpdirect) (aka ZF).
 
 [![](https://images.microbadger.com/badges/image/neomantra/onload.svg)](http://microbadger.com/images/neomantra/onload "Get your own image badge on microbadger.com")
 
@@ -53,6 +57,8 @@ Here's a bash one-liner for extracting the OpenOnload version year:
  * The host's `onload --version` must be the same as the container's.
 
  * *Stack Sharing*: If a container and the host must share an Onload stack, both should use `EF_SHARE_WITH=-1` to avoid a current limitation in OpenOnload.  Note this disables the stack sharing security feature.
+
+ * Due to a current limitation with OpenOnload, you should run with `EF_USE_HUGE_PAGES=0` if you share Onload stacks.
 
 ### TCPDirect
 
@@ -94,8 +100,8 @@ The Dockerfile downloads specific versions from [openonload.org](http://openonlo
 
 | Key  | Default | Description |
 :----- | :-----: |:----------- |
-|ONLOAD_VERSION | "201606-u1" | The version of OpenOnload to download. |
-|ONLOAD_MD5SUM | "21d242f4da8d48eb825e0c95c5010883" | The MD5 checksum of the download. |
+|ONLOAD_VERSION | "201606-u1.1" | The version of OpenOnload to download. |
+|ONLOAD_MD5SUM | "f8ff1f18208dc95e912c636177b88bb1" | The MD5 checksum of the download. |
 
 If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to match. Note that Docker is only supported by OpenOnload since version 201502.
 

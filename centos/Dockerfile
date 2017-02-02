@@ -20,8 +20,8 @@ FROM centos:7
 MAINTAINER Evan Wies <evan@neomantra.net>
 
 # Onload version and its md5sum
-ARG ONLOAD_VERSION="201606-u1"
-ARG ONLOAD_MD5SUM="21d242f4da8d48eb825e0c95c5010883"
+ARG ONLOAD_VERSION="201606-u1.1"
+ARG ONLOAD_MD5SUM="f8ff1f18208dc95e912c636177b88bb1"
 
 
 # 1) Install OpenOnload build dependencies
