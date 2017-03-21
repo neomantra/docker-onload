@@ -1,5 +1,9 @@
 # docker-onload CHANGELOG
 
+## 2017-03-21
+
+ * Update to OpenOnload 201606-u1.2
+
 ## 2017-02-02
 
  * Update to OpenOnload 201606-u1.1
