@@ -10,6 +10,10 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 - [`precise-nozf` (*precise/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile.nozf)
 - [`trusty-nozf` (*trusty/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile.nozf)
 - [`xenial-nozf` (*xenial/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile.nozf)
+- `201606-u1.3-centos-nozf`
+- `201606-u1.3-precise-nozf`
+- `201606-u1.3-trusty-nozf`
+- `201606-u1.3-xenial-nozf`
 - `201606-u1.2-centos-nozf`
 - `201606-u1.2-precise-nozf`
 - `201606-u1.2-trusty-nozf`
@@ -104,8 +108,8 @@ The Dockerfile downloads specific versions from [openonload.org](http://openonlo
 
 | Key  | Default | Description |
 :----- | :-----: |:----------- |
-|ONLOAD_VERSION | "201606-u1.2" | The version of OpenOnload to download. |
-|ONLOAD_MD5SUM | "fd3993a35b9e18aa32cb86fb9502623b" | The MD5 checksum of the download. |
+|ONLOAD_VERSION | "201606-u1.3" | The version of OpenOnload to download. |
+|ONLOAD_MD5SUM | "4313539336d14df264e5b945486f9e92" | The MD5 checksum of the download. |
 
 If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to match. Note that Docker is only supported by OpenOnload since version 201502.
 

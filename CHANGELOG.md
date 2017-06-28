@@ -1,5 +1,10 @@
 # docker-onload CHANGELOG
 
+## 2017-06-28
+
+ * Update to OpenOnload 201606-u1.3
+ * Xenial builds need libtool-bin package
+
 ## 2017-03-21
 
  * Update to OpenOnload 201606-u1.2
