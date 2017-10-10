@@ -20,8 +20,8 @@ FROM ubuntu:precise
 MAINTAINER Evan Wies <evan@neomantra.net>
 
 # Onload version and its md5sum
-ARG ONLOAD_VERSION="201606-u1.3"
-ARG ONLOAD_MD5SUM="4313539336d14df264e5b945486f9e92"
+ARG ONLOAD_VERSION="201710"
+ARG ONLOAD_MD5SUM="f22e9046694c11d83ca1ad520f7e8c4a"
 
 
 # 1) Install OpenOnload build dependencies
