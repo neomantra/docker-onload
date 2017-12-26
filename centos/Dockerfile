@@ -11,7 +11,7 @@
 #
 # NOTE: The host's OpenOnload version must be the same as the container's.
 #
-# Copyright (c) 2016 neomantra BV
+# Copyright (c) 2017 neomantra BV
 # Released under the MIT License, see LICENSE.txt
 #
 
@@ -23,6 +23,9 @@ MAINTAINER Evan Wies <evan@neomantra.net>
 ARG ONLOAD_VERSION="201710"
 ARG ONLOAD_MD5SUM="f22e9046694c11d83ca1ad520f7e8c4a"
 
+# When ONLOAD_WITHZF is non-empty, the build includes Solarflare's TCPDirect library.
+# Default is to exclude it.
+ARG ONLOAD_WITHZF
 
 # 1) Install OpenOnload build dependencies
 # 2) Download and verify OpenOnload from Solarflare's site
@@ -61,6 +64,7 @@ RUN \
     && ./onload_install --userfiles --nobuild \
     && cd /tmp \
     && rm -rf openonload-${ONLOAD_VERSION}.tgz openonload-${ONLOAD_VERSION} \
+    && if [ -z ${ONLOAD_WITHZF} ] ; then rm -rf /usr/include/zf /usr/bin/zf_stackdump /usr/bin/zf_debug /usr/lib/x86_64-linux-gnu/zf /usr/lib/x86_64-linux-gnu/libonload_zf* ; fi \
     && yum clean all
 
 # TODO: which yum packages can we remove

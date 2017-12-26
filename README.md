@@ -83,12 +83,14 @@ TCPDirect is under a different license than OpenOnload; its binaries may not be 
 Thus, we have introduced a [`-nozf`](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile.nozf)
 variant for images hosted on [Docker Hub](https://hub.docker.com/r/neomantra/onload/).
 
-You are free to build and deploy TCPDirect-enabled images yourself with the regular Dockerfiles, for example:
+You are free to build and deploy TCPDirect-enabled images yourself with the regular Dockerfiles.
+To do so, set the build argument `ONLOAD_WITHZF` to a non-empty string (the Dockerfile checks `[ -z ${ONLOAD_WITHZF} ]`).
+For example:
 
 ```
 git clone https://github.com/neomantra/docker-onload.git
 cd docker-onload
-docker build -f xenial/Dockerfile -t neomantra/onload:201606-u1-xenial .
+docker build --build-arg ONLOAD_WITHZF=1 -f xenial/Dockerfile -t neomantra/onload:201606-u1-xenial .
 ```
 
 ### Customizing
