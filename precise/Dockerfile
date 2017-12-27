@@ -15,7 +15,10 @@
 # Released under the MIT License, see LICENSE.txt
 #
 
-FROM ubuntu:precise
+ARG ONLOAD_DEBIAN_BASE="ubuntu"
+ARG ONLOAD_DEBIAN_TAG="precise"
+
+FROM ${ONLOAD_DEBIAN_BASE}:${ONLOAD_DEBIAN_TAG}
 
 MAINTAINER Evan Wies <evan@neomantra.net>
 

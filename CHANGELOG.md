@@ -2,6 +2,7 @@
 
 ## 2017-12-26
 
+ * Parameterize `FROM` stanzas with `ONLOAD_CENTOS_BASE` and `ONLOAD_DEBIAN_BASE`
  * Manage TCPDirect using build-arg `ONLOAD_WITHZF` instead of separate Dockerfiles
  * Remove all the `Dockerfile.nozf` files
 

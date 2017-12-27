@@ -15,7 +15,10 @@
 # Released under the MIT License, see LICENSE.txt
 #
 
-FROM centos:7
+ARG ONLOAD_CENTOS_BASE="centos"
+ARG ONLOAD_CENTOS_TAG="7"
+
+FROM ${ONLOAD_CENTOS_BASE}:${ONLOAD_CENTOS_TAG}
 
 MAINTAINER Evan Wies <evan@neomantra.net>
 
