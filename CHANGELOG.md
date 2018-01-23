@@ -2,6 +2,7 @@
 
 ## 2018-01-23
 
+ * Update to OpenOnload 201710-u1
  * Add Debian Stretch images, derived from `stretch-slim`
 
 ## 2017-12-26
