@@ -6,13 +6,15 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 
 ## Supported Docker Hub tags and respective `Dockerfile` links
 
-- [`centos-nozf` (*centos/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/centos/Dockerfile.nozf)
-- [`precise-nozf` (*precise/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile.nozf)
-- [`trusty-nozf` (*trusty/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile.nozf)
-- [`xenial-nozf` (*xenial/Dockerfile.nozf*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile.nozf)
+- [`centos-nozf` (*centos/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos/Dockerfile)
+- [`precise-nozf` (*precise/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile)
+- [`stretch-nozf` (*stretch/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/stretch/Dockerfile)
+- [`trusty-nozf` (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile)
+- [`xenial-nozf` (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
 - `201710-centos-nozf`
 - `201710-precise-nozf`
 - `201710-trusty-nozf`
+- `201710-stretch-nozf`
 - `201710-xenial-nozf`
 - `201606-u1.3-centos-nozf`
 - `201606-u1.3-precise-nozf`
@@ -39,7 +41,7 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 - `201509-u1-trusty`
 - `201509-u1-xenial`
 
-**NOTE** Since version 201606-u1, Docker Hub hosts images tagged as a `-nozf` variant.  These are built from [Dockerfile.nozf](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile.nozf), without support for [TCPDirect](#tcpdirect) (aka ZF).
+**NOTE** Since version 201606-u1, Docker Hub hosts images tagged as a `-nozf` variant.  These are built from [Dockerfile](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile) without `ONLOAD_WITHZF` set, thus without support for [TCPDirect](#tcpdirect) (aka ZF).
 
 [![](https://images.microbadger.com/badges/image/neomantra/onload.svg)](http://microbadger.com/images/neomantra/onload "Get your own image badge on microbadger.com")
 
@@ -80,8 +82,7 @@ To run TCPDirect applications in a container, an addition device must be exporte
 `--device=/dev/sfc_char`
 
 TCPDirect is under a different license than OpenOnload; its binaries may not be distributed.
-Thus, we have introduced a [`-nozf`](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile.nozf)
-variant for images hosted on [Docker Hub](https://hub.docker.com/r/neomantra/onload/).
+Thus, we have introduced a `-nozf` variant for images hosted on [Docker Hub](https://hub.docker.com/r/neomantra/onload/).
 
 You are free to build and deploy TCPDirect-enabled images yourself with the regular Dockerfiles.
 To do so, set the build argument `ONLOAD_WITHZF` to a non-empty string (the Dockerfile checks `[ -z ${ONLOAD_WITHZF} ]`).
@@ -98,11 +99,12 @@ docker build --build-arg ONLOAD_WITHZF=1 -f xenial/Dockerfile -t neomantra/onloa
 Dockerfiles are provided for the following base systems, selecting the Dockerfile path with `-f`:
 
  * [CentOS 7](https://github.com/neomantra/docker-onload/centos/Dockerfile) (`centos/Dockerfile`)
+ * [Debian Stretch](https://github.com/neomantra/docker-onload/stretch/Dockerfile) (`stretch/Dockerfile`)
  * [Ubuntu Precise](https://github.com/neomantra/docker-onload/precise/Dockerfile) (`precise/Dockerfile`)
  * [Ubuntu Trusty](https://github.com/neomantra/docker-onload/trusty/Dockerfile) (`trusty/Dockerfile`)
  * [Ubuntu Xenial](https://github.com/neomantra/docker-onload/xenial/Dockerfile) (`xenial/Dockerfile`)
 
-Each system folder has a `Dockerfile` and `Dockerfile.nozf`.
+Each system folder has a `Dockerfile`.
  
 The following are the available build-time options. They can be set using the `--build-arg` CLI argument, like so:
 
@@ -114,13 +116,14 @@ The Dockerfile downloads specific versions from [openonload.org](http://openonlo
 
 | Key  | Default | Description |
 :----- | :-----: |:----------- |
-|ONLOAD_VERSION | "201710" | The version of OpenOnload to download. |
-|ONLOAD_MD5SUM | "f22e9046694c11d83ca1ad520f7e8c4a" | The MD5 checksum of the download. |
+|ONLOAD_VERSION | "201710" |The version of OpenOnload to download. |
+|ONLOAD_MD5SUM | "f22e9046694c11d83ca1ad520f7e8c4a" |The MD5 checksum of the download. |
+|ONLOAD_WITHZF | |Set to non-empty to include TCPDirect. |
 
 If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to match. Note that Docker is only supported by OpenOnload since version 201502.
 
 ### License
 
-Copyright (c) 2017 neomantra BV
+Copyright (c) 2018 Neomantra BV
 
 Released under the MIT License, see LICENSE.txt

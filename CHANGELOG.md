@@ -1,5 +1,9 @@
 # docker-onload CHANGELOG
 
+## 2018-01-23
+
+ * Add Debian Stretch images, derived from `stretch-slim`
+
 ## 2017-12-26
 
  * Parameterize `FROM` stanzas with `ONLOAD_CENTOS_BASE` and `ONLOAD_DEBIAN_BASE`
