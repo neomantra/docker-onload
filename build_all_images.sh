@@ -9,6 +9,7 @@
 DISTS=(
     'centos'
     'precise'
+    'stretch'
     'trusty'
     'xenial'
 )
