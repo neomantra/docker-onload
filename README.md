@@ -11,6 +11,11 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 - [`stretch-nozf` (*stretch/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/stretch/Dockerfile)
 - [`trusty-nozf` (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile)
 - [`xenial-nozf` (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
+- `201710-u1.1-centos-nozf`
+- `201710-u1.1-precise-nozf`
+- `201710-u1.1-trusty-nozf`
+- `201710-u1.1-stretch-nozf`
+- `201710-u1.1-xenial-nozf`
 - `201710-u1-centos-nozf`
 - `201710-u1-precise-nozf`
 - `201710-u1-trusty-nozf`
@@ -121,8 +126,8 @@ The Dockerfile downloads specific versions from [openonload.org](http://openonlo
 
 | Key  | Default | Description |
 :----- | :-----: |:----------- |
-|ONLOAD_VERSION | "201710-u1" |The version of OpenOnload to download. |
-|ONLOAD_MD5SUM | "725ec834ee08720b36a161944a02cf2a" |The MD5 checksum of the download. |
+|ONLOAD_VERSION | "201710-u1.1" |The version of OpenOnload to download. |
+|ONLOAD_MD5SUM | "99593ea209282ea669c1c0618e15bb02" |The MD5 checksum of the download. |
 |ONLOAD_WITHZF | |Set to non-empty to include TCPDirect. |
 
 If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to match. Note that Docker is only supported by OpenOnload since version 201502.
