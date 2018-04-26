@@ -1,5 +1,13 @@
 # docker-onload CHANGELOG
 
+## 2018-04-26
+
+ * Add Ubuntu Bionic image, with patched OpenOnload 201710-u1.1
+
+## 2018-04-23
+
+ * Update to OpenOnload 201710-u1.1
+
 ## 2018-01-23
 
  * Update to OpenOnload 201710-u1

@@ -11,11 +11,13 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 - [`stretch-nozf` (*stretch/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/stretch/Dockerfile)
 - [`trusty-nozf` (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile)
 - [`xenial-nozf` (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
+- [`bionic-nozf` (*bionic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bionic/Dockerfile)
 - `201710-u1.1-centos-nozf`
 - `201710-u1.1-precise-nozf`
 - `201710-u1.1-trusty-nozf`
 - `201710-u1.1-stretch-nozf`
 - `201710-u1.1-xenial-nozf`
+- `201710-u1.1-bionic-nozf`
 - `201710-u1-centos-nozf`
 - `201710-u1-precise-nozf`
 - `201710-u1-trusty-nozf`

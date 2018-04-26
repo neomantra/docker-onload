@@ -1,0 +1,25 @@
+diff -ruN openonload-201710-u1.1/scripts/libc_compat.sh openonload-201710-u1.1-bionic/scripts/libc_compat.sh
+--- openonload-201710-u1.1/scripts/libc_compat.sh	2018-04-19 10:38:17.000000000 -0400
++++ openonload-201710-u1.1-bionic/scripts/libc_compat.sh	2018-04-26 12:26:58.000000000 -0400
+@@ -60,6 +60,9 @@
+ echo -n "#define CI_HAVE_SPLICE_RETURNS_SSIZE_T "
+ check_prototype fcntl.h splice \
+     "ssize_t (*foo)(int, loff_t*, int, loff_t*, size_t, unsigned int)"
++echo -n "#define CI_HAVE_SPLICE_RETURNS___SSIZE_T "
++check_prototype fcntl.h splice \
++    "__ssize_t (*foo)(int, off64_t*, int, off64_t*, size_t, unsigned int)"
+ # Some Ubuntus (1504) have timespec parameter in recvmmsg without
+ # "const" keyword.  We assume normal definition of recvmmsg if it is not
+ # present in libc.
+diff -ruN openonload-201710-u1.1/src/include/onload/declare_syscalls.h.tmpl openonload-201710-u1.1-bionic/src/include/onload/declare_syscalls.h.tmpl
+--- openonload-201710-u1.1/src/include/onload/declare_syscalls.h.tmpl	2018-04-19 10:38:18.000000000 -0400
++++ openonload-201710-u1.1-bionic/src/include/onload/declare_syscalls.h.tmpl	2018-04-26 12:08:09.000000000 -0400
+@@ -49,6 +49,8 @@
+ #if CI_LIBC_HAS_splice
+ # if CI_HAVE_SPLICE_RETURNS_SSIZE_T
+ #  define ci_splice_return_type ssize_t
++# elif CI_HAVE_SPLICE_RETURNS___SSIZE_T
++#  define ci_splice_return_type __ssize_t
+ # elif CI_HAVE_SPLICE_RETURNS_INT
+ #  define ci_splice_return_type int
+ # else
