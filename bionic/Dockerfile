@@ -35,7 +35,8 @@ ARG ONLOAD_WITHZF
 # 3) Extract, build, and install onload
 # 4) Cleanup
 
-ADD bionic/splice.patch /
+# Build context must be the bionic directory, per Docker Hub build set-up
+ADD splice.patch /
 
 RUN \
     DEBIAN_FRONTEND=noninteractive apt-get update -y \

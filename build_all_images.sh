@@ -18,7 +18,7 @@ DISTS=(
 for DIST in "${DISTS[@]}"; do
     cd $DIST
     echo $DIST
-    time docker build -q --no-cache -f $DIST/Dockerfile .
-    time docker build -q --no-cache -f $DIST/Dockerfile --build-arg ONLOAD_WITHZF=1 .
+    time docker build -q --no-cache -f .
+    time docker build -q --no-cache -f --build-arg ONLOAD_WITHZF=1 .
     cd ..
 done
