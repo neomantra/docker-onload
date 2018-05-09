@@ -23,8 +23,8 @@ FROM ${ONLOAD_DEBIAN_BASE}:${ONLOAD_DEBIAN_TAG}
 MAINTAINER Evan Wies <evan@neomantra.net>
 
 # Onload version and its md5sum
-ARG ONLOAD_VERSION="201710-u1.1"
-ARG ONLOAD_MD5SUM="99593ea209282ea669c1c0618e15bb02"
+ARG ONLOAD_VERSION="201805"
+ARG ONLOAD_MD5SUM="cbc523076c63b61fc853094a9af25e56"
 
 # When ONLOAD_WITHZF is non-empty, the build includes Solarflare's TCPDirect library.
 # Default is to exclude it.

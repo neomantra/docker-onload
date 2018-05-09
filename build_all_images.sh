@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 # build_all_images.sh
 #
@@ -18,7 +18,7 @@ DISTS=(
 for DIST in "${DISTS[@]}"; do
     cd $DIST
     echo $DIST
-    time docker build -q --no-cache -f .
-    time docker build -q --no-cache -f --build-arg ONLOAD_WITHZF=1 .
+    time docker build -q --no-cache .
+    time docker build -q --no-cache --build-arg ONLOAD_WITHZF=1 .
     cd ..
 done

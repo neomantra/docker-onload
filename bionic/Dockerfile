@@ -23,8 +23,8 @@ FROM ${ONLOAD_DEBIAN_BASE}:${ONLOAD_DEBIAN_TAG}
 MAINTAINER Evan Wies <evan@neomantra.net>
 
 # Onload version and its md5sum
-ARG ONLOAD_VERSION="201710-u1.1"
-ARG ONLOAD_MD5SUM="99593ea209282ea669c1c0618e15bb02"
+ARG ONLOAD_VERSION="201805"
+ARG ONLOAD_MD5SUM="cbc523076c63b61fc853094a9af25e56"
 
 # When ONLOAD_WITHZF is non-empty, the build includes Solarflare's TCPDirect library.
 # Default is to exclude it.
@@ -34,9 +34,6 @@ ARG ONLOAD_WITHZF
 # 2) Download and verify OpenOnload from Solarflare's site
 # 3) Extract, build, and install onload
 # 4) Cleanup
-
-# Build context must be the bionic directory, per Docker Hub build set-up
-ADD splice.patch /
 
 RUN \
     DEBIAN_FRONTEND=noninteractive apt-get update -y \
@@ -65,7 +62,6 @@ RUN \
     && echo "${ONLOAD_MD5SUM} openonload-${ONLOAD_VERSION}.tgz" | md5sum --check \
     && tar -zxf openonload-${ONLOAD_VERSION}.tgz \
     && cd /tmp/openonload-${ONLOAD_VERSION} \
-    && patch -p1 < /splice.patch \
     && cd scripts \
     && ./onload_build --user \
     && ./onload_install --userfiles --nobuild \
@@ -75,7 +71,6 @@ RUN \
     && DEBIAN_FRONTEND=noninteractive apt-get remove -y --purge \
         curl \
         patch \
-    && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y \
-    && rm /splice.patch
+    && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y
 
 # TODO: which apt packages can we remove?
