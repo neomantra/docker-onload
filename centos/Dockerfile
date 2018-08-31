@@ -23,8 +23,8 @@ FROM ${ONLOAD_CENTOS_BASE}:${ONLOAD_CENTOS_TAG}
 MAINTAINER Evan Wies <evan@neomantra.net>
 
 # Onload version and its md5sum
-ARG ONLOAD_VERSION="201805"
-ARG ONLOAD_MD5SUM="cbc523076c63b61fc853094a9af25e56"
+ARG ONLOAD_VERSION="201805-u1"
+ARG ONLOAD_MD5SUM="f3b3761b4bfd74fec311fa0fe380ec0a"
 
 # When ONLOAD_WITHZF is non-empty, the build includes Solarflare's TCPDirect library.
 # Default is to exclude it.

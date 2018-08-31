@@ -1,5 +1,9 @@
 # docker-onload CHANGELOG
 
+## 2018-08-31
+
+ * Update to OpenOnload 201805-u1
+
 ## 2018-05-09
 
  * Update to OpenOnload 201805
