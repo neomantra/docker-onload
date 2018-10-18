@@ -3,7 +3,7 @@
 ## 2018-08-31
 
  * Add Ubuntu Cosmic image
-
+ * Pass -k to curl because openonload.org doesn't support SSL
 
 ## 2018-08-31
 

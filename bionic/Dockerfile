@@ -58,7 +58,7 @@ RUN \
         valgrind \
         wget \
     && cd /tmp \
-    && curl -fSL http://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz -o /tmp/openonload-${ONLOAD_VERSION}.tgz \
+    && curl -kfSL http://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz -o /tmp/openonload-${ONLOAD_VERSION}.tgz \
     && echo "${ONLOAD_MD5SUM} openonload-${ONLOAD_VERSION}.tgz" | md5sum --check \
     && tar -zxf openonload-${ONLOAD_VERSION}.tgz \
     && cd /tmp/openonload-${ONLOAD_VERSION} \
