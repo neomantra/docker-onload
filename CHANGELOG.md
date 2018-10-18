@@ -2,6 +2,11 @@
 
 ## 2018-08-31
 
+ * Add Ubuntu Cosmic image
+
+
+## 2018-08-31
+
  * Update to OpenOnload 201805-u1
 
 ## 2018-05-09

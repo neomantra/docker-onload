@@ -12,6 +12,14 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 - [`trusty-nozf` (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile)
 - [`xenial-nozf` (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
 - [`bionic-nozf` (*bionic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bionic/Dockerfile)
+- [`cosmic-nozf` (*cosmic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/cosmic/Dockerfile)
+- `201805-u1-centos-nozf`
+- `201805-u1-precise-nozf`
+- `201805-u1-trusty-nozf`
+- `201805-u1-stretch-nozf`
+- `201805-u1-xenial-nozf`
+- `201805-u1-bionic-nozf`
+- `201805-u1-cosmic-nozf`
 - `201805-centos-nozf`
 - `201805-precise-nozf`
 - `201805-trusty-nozf`
@@ -122,6 +130,7 @@ Dockerfiles are provided for the following base systems, selecting the Dockerfil
  * [Ubuntu Trusty](https://github.com/neomantra/docker-onload/trusty/Dockerfile) (`trusty/Dockerfile`)
  * [Ubuntu Xenial](https://github.com/neomantra/docker-onload/xenial/Dockerfile) (`xenial/Dockerfile`)
  * [Ubuntu Bionic](https://github.com/neomantra/docker-onload/bionic/Dockerfile) (`bionic/Dockerfile`)
+ * [Ubuntu Cosmic](https://github.com/neomantra/docker-onload/cosmic/Dockerfile) (`cosmic/Dockerfile`)
 
 Each system folder has a `Dockerfile`.
  
@@ -135,8 +144,8 @@ The Dockerfile downloads specific versions from [openonload.org](http://openonlo
 
 | Key  | Default | Description |
 :----- | :-----: |:----------- |
-|ONLOAD_VERSION | "201805" |The version of OpenOnload to download. |
-|ONLOAD_MD5SUM | "cbc523076c63b61fc853094a9af25e56" |The MD5 checksum of the download. |
+|ONLOAD_VERSION | "201805-u1" |The version of OpenOnload to download. |
+|ONLOAD_MD5SUM | "f3b3761b4bfd74fec311fa0fe380ec0a" |The MD5 checksum of the download. |
 |ONLOAD_WITHZF | |Set to non-empty to include TCPDirect. |
 
 If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to match. Note that Docker is only supported by OpenOnload since version 201502.
