@@ -1,0 +1,1 @@
+docker build --build-arg ONLOAD_WITHZF="$ONLOAD_WITHZF" -f "$DOCKERFILE_PATH" -t "$IMAGE_NAME" .
