@@ -1,9 +1,10 @@
 # docker-onload CHANGELOG
 
-## 2018-08-31
+## 2018-10-23
 
  * Add Ubuntu Cosmic image
  * Pass -k to curl because openonload.org doesn't support SSL
+ * Travis builds!
 
 ## 2018-08-31
 

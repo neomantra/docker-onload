@@ -1,0 +1,267 @@
+# docker-onoad .travis.yml
+#
+# Builds docker-onload images on Travis CI
+#
+# https://travis-ci.org/neomantra/docker-onload
+#
+# Master will build with Docker tag:
+#   neomantra/onload:<flavor>
+#   neomantra/onload:<flavor>-nozf
+#   neomantra/onloadzf:<flavor>
+#
+# Releases should be tagged in git as:
+#   neomantra/onload:<onload-version>-<flavor>
+#   neomantra/onload:<onload-version>-<flavor>-nozf
+#   neomantra/onloadzf:<onload-version>-<flavor>
+#
+# Travis Environment Variables:
+#   DOCKER_ORG
+#   DOCKER_USERNAME
+#   DOCKER_PASSWORD
+#
+
+sudo: required
+
+services:
+  - docker
+
+jobs:
+  include:
+
+    - stage: build docker image for flavor centos (nozf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onload:centos -f centos/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:centos $DOCKER_ORG/onload:centos &&
+          docker push $DOCKER_ORG/onload:centos &&
+          docker tag onload:centos $DOCKER_ORG/onload:centos-nozf &&
+          docker push $DOCKER_ORG/onload:centos-nozf ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:centos $DOCKER_ORG/onload:$TRAVIS_TAG-centos &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-centos &&
+          docker tag onload:centos $DOCKER_ORG/onload:$TRAVIS_TAG-centos-nozf &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-centos-nozf ;
+        fi
+
+    - stage: build docker image for flavor centos (zf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onloadzf:centos --build-arg ONLOAD_WITHZF=1 -f centos/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:centos $DOCKER_ORG/onloadzf:centos &&
+          docker push $DOCKER_ORG/onloadzf:centos ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:centos $DOCKER_ORG/onloadzf:$TRAVIS_TAG-centos &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-centos &&
+        fi
+
+    - stage: build docker image for flavor stretch (nozf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onload:stretch -f stretch/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:stretch $DOCKER_ORG/onload:stretch &&
+          docker push $DOCKER_ORG/onload:stretch &&
+          docker tag onload:stretch $DOCKER_ORG/onload:stretch-nozf &&
+          docker push $DOCKER_ORG/onload:stretch-nozf ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:stretch $DOCKER_ORG/onload:$TRAVIS_TAG-stretch &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-stretch &&
+          docker tag onload:stretch $DOCKER_ORG/onload:$TRAVIS_TAG-stretch-nozf &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-stretch-nozf ;
+        fi
+
+    - stage: build docker image for flavor stretch (zf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onloadzf:stretch --build-arg ONLOAD_WITHZF=1 -f stretch/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:stretch $DOCKER_ORG/onloadzf:stretch &&
+          docker push $DOCKER_ORG/onloadzf:stretch ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:stretch $DOCKER_ORG/onloadzf:$TRAVIS_TAG-stretch &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-stretch &&
+        fi
+
+    - stage: build docker image for flavor precise (nozf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onload:precise -f precise/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:precise $DOCKER_ORG/onload:precise &&
+          docker push $DOCKER_ORG/onload:precise &&
+          docker tag onload:precise $DOCKER_ORG/onload:precise-nozf &&
+          docker push $DOCKER_ORG/onload:precise-nozf ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:precise $DOCKER_ORG/onload:$TRAVIS_TAG-precise &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-precise &&
+          docker tag onload:precise $DOCKER_ORG/onload:$TRAVIS_TAG-precise-nozf &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-precise-nozf ;
+        fi
+
+    - stage: build docker image for flavor precise (zf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onloadzf:precise --build-arg ONLOAD_WITHZF=1 -f precise/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:precise $DOCKER_ORG/onloadzf:precise &&
+          docker push $DOCKER_ORG/onloadzf:precise ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:precise $DOCKER_ORG/onloadzf:$TRAVIS_TAG-precise &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-precise &&
+        fi
+
+    - stage: build docker image for flavor trusty (nozf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onload:trusty -f trusty/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:trusty $DOCKER_ORG/onload:trusty &&
+          docker push $DOCKER_ORG/onload:trusty &&
+          docker tag onload:trusty $DOCKER_ORG/onload:trusty-nozf &&
+          docker push $DOCKER_ORG/onload:trusty-nozf ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:trusty $DOCKER_ORG/onload:$TRAVIS_TAG-trusty &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-trusty &&
+          docker tag onload:trusty $DOCKER_ORG/onload:$TRAVIS_TAG-trusty-nozf &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-trusty-nozf ;
+        fi
+
+    - stage: build docker image for flavor trusty (zf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onloadzf:trusty --build-arg ONLOAD_WITHZF=1 -f trusty/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:trusty $DOCKER_ORG/onloadzf:trusty &&
+          docker push $DOCKER_ORG/onloadzf:trusty ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:trusty $DOCKER_ORG/onloadzf:$TRAVIS_TAG-trusty &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-trusty &&
+        fi
+
+    - stage: build docker image for flavor xenial (nozf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onload:xenial -f xenial/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:xenial $DOCKER_ORG/onload:xenial &&
+          docker push $DOCKER_ORG/onload:xenial &&
+          docker tag onload:xenial $DOCKER_ORG/onload:xenial-nozf &&
+          docker push $DOCKER_ORG/onload:xenial-nozf ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:xenial $DOCKER_ORG/onload:$TRAVIS_TAG-xenial &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-xenial &&
+          docker tag onload:xenial $DOCKER_ORG/onload:$TRAVIS_TAG-xenial-nozf &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-xenial-nozf ;
+        fi
+
+    - stage: build docker image for flavor xenial (zf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onloadzf:xenial --build-arg ONLOAD_WITHZF=1 -f xenial/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:xenial $DOCKER_ORG/onloadzf:xenial &&
+          docker push $DOCKER_ORG/onloadzf:xenial ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:xenial $DOCKER_ORG/onloadzf:$TRAVIS_TAG-xenial &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-xenial &&
+        fi
+
+    - stage: build docker image for flavor bionic (nozf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onload:bionic -f bionic/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:bionic $DOCKER_ORG/onload:bionic &&
+          docker push $DOCKER_ORG/onload:bionic &&
+          docker tag onload:bionic $DOCKER_ORG/onload:bionic-nozf &&
+          docker push $DOCKER_ORG/onload:bionic-nozf ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:bionic $DOCKER_ORG/onload:$TRAVIS_TAG-bionic &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-bionic &&
+          docker tag onload:bionic $DOCKER_ORG/onload:$TRAVIS_TAG-bionic-nozf &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-bionic-nozf ;
+        fi
+
+    - stage: build docker image for flavor bionic (zf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onloadzf:bionic --build-arg ONLOAD_WITHZF=1 -f bionic/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:bionic $DOCKER_ORG/onloadzf:bionic &&
+          docker push $DOCKER_ORG/onloadzf:bionic ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:bionic $DOCKER_ORG/onloadzf:$TRAVIS_TAG-bionic &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-bionic &&
+        fi
+
+    - stage: build docker image for flavor cosmic (nozf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onload:cosmic -f cosmic/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:cosmic $DOCKER_ORG/onload:cosmic &&
+          docker push $DOCKER_ORG/onload:cosmic &&
+          docker tag onload:cosmic $DOCKER_ORG/onload:cosmic-nozf &&
+          docker push $DOCKER_ORG/onload:cosmic-nozf ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:cosmic $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic &&
+          docker tag onload:cosmic $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic-nozf &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic-nozf ;
+        fi
+
+    - stage: build docker image for flavor cosmic (zf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onloadzf:cosmic --build-arg ONLOAD_WITHZF=1 -f cosmic/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:cosmic $DOCKER_ORG/onloadzf:cosmic &&
+          docker push $DOCKER_ORG/onloadzf:cosmic ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:cosmic $DOCKER_ORG/onloadzf:$TRAVIS_TAG-cosmic &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-cosmic &&
+        fi

@@ -1,5 +1,7 @@
 # docker-onload
 
+[![Travis Status](https://travis-ci.org/neomantra/docker-onload.svg?branch=master)](https://travis-ci.org/neomantra/docker-onload)  [![](https://images.microbadger.com/badges/image/neomantra/onload-nozf.svg)](https://microbadger.com/#/images/neomantra/onload-nozf "microbadger.com")
+
 `docker-onload` provides a Dockerfile which installs Solarflare's [OpenOnload](http://www.openonload.org/ "OpenOnload") into various OS flavors. Find it on the Docker Hub: https://hub.docker.com/r/neomantra/onload/
 
 See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/master/CHANGELOG.md).
