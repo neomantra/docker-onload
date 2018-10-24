@@ -59,7 +59,7 @@ jobs:
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:centos $DOCKER_ORG/onloadzf:$TRAVIS_TAG-centos &&
-          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-centos &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-centos ;
         fi
 
     - stage: build docker image for flavor stretch (nozf)
@@ -93,7 +93,7 @@ jobs:
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:stretch $DOCKER_ORG/onloadzf:$TRAVIS_TAG-stretch &&
-          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-stretch &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-stretch ;
         fi
 
     - stage: build docker image for flavor precise (nozf)
@@ -127,7 +127,7 @@ jobs:
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:precise $DOCKER_ORG/onloadzf:$TRAVIS_TAG-precise &&
-          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-precise &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-precise ;
         fi
 
     - stage: build docker image for flavor trusty (nozf)
@@ -161,7 +161,7 @@ jobs:
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:trusty $DOCKER_ORG/onloadzf:$TRAVIS_TAG-trusty &&
-          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-trusty &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-trusty ;
         fi
 
     - stage: build docker image for flavor xenial (nozf)
@@ -195,7 +195,7 @@ jobs:
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:xenial $DOCKER_ORG/onloadzf:$TRAVIS_TAG-xenial &&
-          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-xenial &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-xenial ;
         fi
 
     - stage: build docker image for flavor bionic (nozf)
@@ -229,7 +229,7 @@ jobs:
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:bionic $DOCKER_ORG/onloadzf:$TRAVIS_TAG-bionic &&
-          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-bionic &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-bionic ;
         fi
 
     - stage: build docker image for flavor cosmic (nozf)
@@ -263,5 +263,5 @@ jobs:
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:cosmic $DOCKER_ORG/onloadzf:$TRAVIS_TAG-cosmic &&
-          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-cosmic &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-cosmic ;
         fi
