@@ -41,6 +41,7 @@ RUN \
         autoconf \
         automake \
         coreutils \
+        ca-certificates \
         curl \
         ethtool \
         gcc \
