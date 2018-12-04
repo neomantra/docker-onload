@@ -1,5 +1,10 @@
 # docker-onload CHANGELOG
 
+## 2018-12-03
+
+ * Update to OpenOnload 201811
+ * Remove -k from curl and use https since openonload.org now supports SSL
+
 ## 2018-10-23
 
  * Add Ubuntu Cosmic image

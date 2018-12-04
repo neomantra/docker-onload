@@ -3,7 +3,7 @@
 # Installs Solarflare's OpenOnload into Ubuntu Cosmic.
 #
 # OpenOnload web page:
-#    http://www.openonload.org/
+#    https://www.openonload.org/
 #
 # To expose the host and onload to this container, run like this:
 #
@@ -11,7 +11,7 @@
 #
 # NOTE: The host's OpenOnload version must be the same as the container's.
 #
-# Copyright (c) 2018 neomantra BV
+# Copyright (c) 2018 Neomantra BV
 # Released under the MIT License, see LICENSE.txt
 #
 
@@ -23,8 +23,8 @@ FROM ${ONLOAD_DEBIAN_BASE}:${ONLOAD_DEBIAN_TAG}
 MAINTAINER Evan Wies <evan@neomantra.net>
 
 # Onload version and its md5sum
-ARG ONLOAD_VERSION="201805-u1"
-ARG ONLOAD_MD5SUM="f3b3761b4bfd74fec311fa0fe380ec0a"
+ARG ONLOAD_VERSION="201811"
+ARG ONLOAD_MD5SUM="fde70da355e11c8b4114b54114a35de1"
 
 # When ONLOAD_WITHZF is non-empty, the build includes Solarflare's TCPDirect library.
 # Default is to exclude it.
@@ -58,7 +58,7 @@ RUN \
         valgrind \
         wget \
     && cd /tmp \
-    && curl -kfSL http://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz -o /tmp/openonload-${ONLOAD_VERSION}.tgz \
+    && curl -fSL https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz -o /tmp/openonload-${ONLOAD_VERSION}.tgz \
     && echo "${ONLOAD_MD5SUM} openonload-${ONLOAD_VERSION}.tgz" | md5sum --check \
     && tar -zxf openonload-${ONLOAD_VERSION}.tgz \
     && cd /tmp/openonload-${ONLOAD_VERSION} \

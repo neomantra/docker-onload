@@ -1,12 +1,12 @@
 # docker-onload
 
-[![Travis Status](https://travis-ci.org/neomantra/docker-onload.svg?branch=master)](https://travis-ci.org/neomantra/docker-onload)  [![](https://images.microbadger.com/badges/image/neomantra/onload-nozf.svg)](https://microbadger.com/#/images/neomantra/onload-nozf "microbadger.com")
+[![Travis Status](https://travis-ci.org/neomantra/docker-onload.svg?branch=master)](https://travis-ci.org/neomantra/docker-onload)  [![](https://images.microbadger.com/badges/image/neomantra/onload.svg)](https://microbadger.com/#/images/neomantra/onload "microbadger.com")
 
-`docker-onload` provides a Dockerfile which installs Solarflare's [OpenOnload](http://www.openonload.org/ "OpenOnload") into various OS flavors. Find it on the Docker Hub: https://hub.docker.com/r/neomantra/onload/
+`docker-onload` provides a Dockerfile which installs Solarflare's [OpenOnload](https://www.openonload.org/ "OpenOnload") into various OS flavors. Find it on the Docker Hub: https://hub.docker.com/r/neomantra/onload/
 
 See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/master/CHANGELOG.md).
 
-## Supported Docker Hub tags and respective `Dockerfile` links
+## Supported Docker Hub tags for image `neomantra/onload` and respective `Dockerfile` links
 
 - [`centos-nozf` (*centos/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos/Dockerfile)
 - [`precise-nozf` (*precise/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile)
@@ -15,6 +15,13 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 - [`xenial-nozf` (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
 - [`bionic-nozf` (*bionic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bionic/Dockerfile)
 - [`cosmic-nozf` (*cosmic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/cosmic/Dockerfile)
+- `201811-centos-nozf`
+- `201811-precise-nozf`
+- `201811-trusty-nozf`
+- `201811-stretch-nozf`
+- `201811-xenial-nozf`
+- `201811-bionic-nozf`
+- `201811-cosmic-nozf`
 - `201805-u1-centos-nozf`
 - `201805-u1-precise-nozf`
 - `201805-u1-trusty-nozf`
@@ -71,7 +78,7 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 
 **NOTE** Since version 201606-u1, Docker Hub hosts images tagged as a `-nozf` variant.  These are built from [Dockerfile](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile) without `ONLOAD_WITHZF` set, thus without support for [TCPDirect](#tcpdirect) (aka ZF).
 
-[![](https://images.microbadger.com/badges/image/neomantra/onload.svg)](http://microbadger.com/images/neomantra/onload "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/neomantra/onload.svg)](https://microbadger.com/images/neomantra/onload "Get your own image badge on microbadger.com")
 
 ### Launching Onload-enabled containers
 
@@ -142,18 +149,18 @@ The following are the available build-time options. They can be set using the `-
 docker build --build-arg ONLOAD_VERSION="201509" --build-arg ONLOAD_MD5SUM="b093ea9f3a534c9c9fe9da6c2b6ccb7a" -f trusty/Dockerfile .
 ```
 
-The Dockerfile downloads specific versions from [openonload.org](http://openonload.org "openonload.org") using the following `ARG` settings:
+The Dockerfile downloads specific versions from [openonload.org](https://openonload.org "openonload.org") using the following `ARG` settings:
 
 | Key  | Default | Description |
 :----- | :-----: |:----------- |
-|ONLOAD_VERSION | "201805-u1" |The version of OpenOnload to download. |
-|ONLOAD_MD5SUM | "f3b3761b4bfd74fec311fa0fe380ec0a" |The MD5 checksum of the download. |
+|ONLOAD_VERSION | "201811" |The version of OpenOnload to download. |
+|ONLOAD_MD5SUM | "fde70da355e11c8b4114b54114a35de1" |The MD5 checksum of the download. |
 |ONLOAD_WITHZF | |Set to non-empty to include TCPDirect. |
 
 If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to match. Note that Docker is only supported by OpenOnload since version 201502.
 
 ### License
 
-Copyright (c) 2018 Neomantra BV
+Copyright (c) 2015-2018 Neomantra BV
 
 Released under the MIT License, see LICENSE.txt
