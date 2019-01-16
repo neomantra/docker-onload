@@ -1,5 +1,9 @@
 # docker-onload CHANGELOG
 
+## 2019-01-16
+
+ * Fixup Centos Dockerfile to support centos:6 (#1, #2)
+
 ## 2018-12-03
 
  * Update to OpenOnload 201811

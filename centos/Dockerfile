@@ -54,13 +54,15 @@ RUN \
         libpcap-devel \
         libtool \
         make \
+        module-init-tools \
         python-devel \
         sed \
+        tar \
         valgrind-devel \
         which \
     && cd /tmp \
     && curl -fSL https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz -o /tmp/openonload-${ONLOAD_VERSION}.tgz \
-    && echo "${ONLOAD_MD5SUM} openonload-${ONLOAD_VERSION}.tgz" | md5sum --check \
+    && echo "${ONLOAD_MD5SUM}  openonload-${ONLOAD_VERSION}.tgz" | md5sum --check \
     && tar -zxf openonload-${ONLOAD_VERSION}.tgz \
     && cd /tmp/openonload-${ONLOAD_VERSION}/scripts \
     && ./onload_build --user \
