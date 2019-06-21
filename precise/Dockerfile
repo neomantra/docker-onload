@@ -30,6 +30,25 @@ ARG ONLOAD_MD5SUM="fde70da355e11c8b4114b54114a35de1"
 # Default is to exclude it.
 ARG ONLOAD_WITHZF
 
+# When ONLOAD_DISABLE_SYSCALL_HOOK is non-empty, then the build disables hooking the syscall function from libc.
+# Default is empty, enabling the OpenOnload's default hooking the syscall function.
+#
+# This only works with OpenOnload 201811 and newer.
+#
+# Some libraries, such as jemalloc need to invoke syscalls at startup.
+# This can cause infinite loops because the OpenOnload acceleration also needs malloc (via dlsym)
+#    https://github.com/jemalloc/jemalloc/issues/443
+#    https://github.com/jemalloc/jemalloc/issues/1426
+ARG ONLOAD_DISABLE_SYSCALL_HOOK
+
+# When ONLOAD_USERSPACE_ID is non-empty, it sets the userspace build md5sum ID.
+# Default is empty, using the actual build md5sum ID
+#
+# This is necessary when the OpenOnload build is patched (for example with ONLOAD_DISABLE_SYSCALL_HOOK).
+# The OpenOnload system checks for version and ID matches between userspace and the driver;
+# thus one may need to spoof the userspace ID.
+ARG ONLOAD_USERSPACE_ID
+
 # 1) Install OpenOnload build dependencies
 # 2) Download and verify OpenOnload from Solarflare's site
 # 3) Extract, build, and install onload
@@ -54,6 +73,7 @@ RUN \
         net-tools \
         perl \
         python-dev \
+        sed \
         tar \
         valgrind \
         wget \
@@ -61,14 +81,29 @@ RUN \
     && curl -fSL https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz -o /tmp/openonload-${ONLOAD_VERSION}.tgz \
     && echo "${ONLOAD_MD5SUM}  openonload-${ONLOAD_VERSION}.tgz" | md5sum --check \
     && tar -zxf openonload-${ONLOAD_VERSION}.tgz \
-    && cd /tmp/openonload-${ONLOAD_VERSION}/scripts \
+    && cd /tmp/openonload-${ONLOAD_VERSION} \
+    && if [ -n ${ONLOAD_DISABLE_SYSCALL_HOOK} ] ; then \
+        echo 'ONLOAD_DISABLE_SYSCALL_HOOK set, disabling CI_CFG_USERSPACE_SYSCALL' \
+        && sed -i 's/#define CI_CFG_USERSPACE_SYSCALL        1/#define CI_CFG_USERSPACE_SYSCALL        0 \/\/ disabled by ONLOAD_DISABLE_SYSCALL_HOOK/' ./src/include/ci/internal/transport_config_opt.h ; \
+    fi \
+    && if [ -n ${ONLOAD_USERSPACE_ID} ] ; then \
+        echo "ONLOAD_USERSPACE_ID set, applying userspace interface id '${ONLOAD_USERSPACE_ID}'" \
+        && sed -i "s/\$\$md5/${ONLOAD_USERSPACE_ID}/" src/lib/transport/ip/mmake.mk \
+        && cat src/lib/transport/ip/mmake.mk ; \
+    fi \
+    && cd scripts \
     && ./onload_build --user \
     && ./onload_install --userfiles --nobuild \
     && cd /tmp \
     && rm -rf openonload-${ONLOAD_VERSION}.tgz openonload-${ONLOAD_VERSION} \
-    && if [ -z ${ONLOAD_WITHZF} ] ; then rm -rf /usr/include/zf /usr/bin/zf_stackdump /usr/bin/zf_debug /usr/lib/x86_64-linux-gnu/zf /usr/lib/x86_64-linux-gnu/libonload_zf* ; fi \
+    && if [ -z ${ONLOAD_WITHZF} ] ; then \
+        rm -rf /usr/include/zf /usr/bin/zf_stackdump /usr/bin/zf_debug /usr/lib/x86_64-linux-gnu/zf /usr/lib/x86_64-linux-gnu/libonload_zf* ; \
+    fi \
     && DEBIAN_FRONTEND=noninteractive apt-get remove -y --purge \
         curl \
     && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y
 
 # TODO: which apt packages can we remove?
+
+LABEL ONLOAD_DISABLE_SYSCALL_HOOK="${ONLOAD_DISABLE_SYSCALL_HOOK}"
+LABEL ONLOAD_USERSPACE_ID="${ONLOAD_USERSPACE_ID}"

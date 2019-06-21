@@ -1,5 +1,11 @@
 # docker-onload CHANGELOG
 
+## 2019-06-21
+
+ * Add ONLOAD_DISABLE_SYSCALL_HOOK build-arg
+ * Add ONLOAD_USERSPACE_ID build-arg
+ * Update docs
+
 ## 2019-01-16
 
  * Fixup Centos Dockerfile to support centos:6 (#1, #2)

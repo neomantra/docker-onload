@@ -25,6 +25,9 @@ sudo: required
 services:
   - docker
 
+env:
+  - ONLOAD_USERSPACE_ID=357bb6508f1e324ea32da88f948efafa
+
 jobs:
   include:
 
@@ -50,7 +53,7 @@ jobs:
     - stage: build docker image for flavor centos (zf)
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t onloadzf:centos --build-arg ONLOAD_WITHZF=1 -f centos/Dockerfile .
+      - docker build -t onloadzf:centos --build-arg ONLOAD_WITHZF=1 ONLOAD_DISABLE_SYSCALL_HOOK=1 ONLOAD_USERSPACE_ID="$ONLOAD_USERSPACE_ID" -f centos/Dockerfile .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:centos $DOCKER_ORG/onloadzf:centos &&
@@ -84,7 +87,7 @@ jobs:
     - stage: build docker image for flavor stretch (zf)
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t onloadzf:stretch --build-arg ONLOAD_WITHZF=1 -f stretch/Dockerfile .
+      - docker build -t onloadzf:stretch --build-arg ONLOAD_WITHZF=1 ONLOAD_DISABLE_SYSCALL_HOOK=1 ONLOAD_USERSPACE_ID="$ONLOAD_USERSPACE_ID" -f stretch/Dockerfile .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:stretch $DOCKER_ORG/onloadzf:stretch &&
@@ -118,7 +121,7 @@ jobs:
     - stage: build docker image for flavor precise (zf)
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t onloadzf:precise --build-arg ONLOAD_WITHZF=1 -f precise/Dockerfile .
+      - docker build -t onloadzf:precise --build-arg ONLOAD_WITHZF=1 ONLOAD_DISABLE_SYSCALL_HOOK=1 ONLOAD_USERSPACE_ID="$ONLOAD_USERSPACE_ID" -f precise/Dockerfile .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:precise $DOCKER_ORG/onloadzf:precise &&
@@ -152,7 +155,7 @@ jobs:
     - stage: build docker image for flavor trusty (zf)
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t onloadzf:trusty --build-arg ONLOAD_WITHZF=1 -f trusty/Dockerfile .
+      - docker build -t onloadzf:trusty --build-arg ONLOAD_WITHZF=1 ONLOAD_DISABLE_SYSCALL_HOOK=1 ONLOAD_USERSPACE_ID="$ONLOAD_USERSPACE_ID" -f trusty/Dockerfile .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:trusty $DOCKER_ORG/onloadzf:trusty &&
@@ -186,7 +189,7 @@ jobs:
     - stage: build docker image for flavor xenial (zf)
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t onloadzf:xenial --build-arg ONLOAD_WITHZF=1 -f xenial/Dockerfile .
+      - docker build -t onloadzf:xenial --build-arg ONLOAD_WITHZF=1 ONLOAD_DISABLE_SYSCALL_HOOK=1 ONLOAD_USERSPACE_ID="$ONLOAD_USERSPACE_ID" -f xenial/Dockerfile .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:xenial $DOCKER_ORG/onloadzf:xenial &&
@@ -220,7 +223,7 @@ jobs:
     - stage: build docker image for flavor bionic (zf)
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t onloadzf:bionic --build-arg ONLOAD_WITHZF=1 -f bionic/Dockerfile .
+      - docker build -t onloadzf:bionic --build-arg ONLOAD_WITHZF=1 ONLOAD_DISABLE_SYSCALL_HOOK=1 ONLOAD_USERSPACE_ID="$ONLOAD_USERSPACE_ID" -f bionic/Dockerfile .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:bionic $DOCKER_ORG/onloadzf:bionic &&
@@ -254,7 +257,7 @@ jobs:
     - stage: build docker image for flavor cosmic (zf)
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t onloadzf:cosmic --build-arg ONLOAD_WITHZF=1 -f cosmic/Dockerfile .
+      - docker build -t onloadzf:cosmic --build-arg ONLOAD_WITHZF=1 ONLOAD_DISABLE_SYSCALL_HOOK=1 ONLOAD_USERSPACE_ID="$ONLOAD_USERSPACE_ID" -f cosmic/Dockerfile .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onloadzf:cosmic $DOCKER_ORG/onloadzf:cosmic &&

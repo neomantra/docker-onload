@@ -82,17 +82,12 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 
 ### Launching Onload-enabled containers
 
-For OpenOnload versions >= `201606`, to expose the host and onload to this container, run like so:
-```
-docker run --net=host --device=/dev/onload --device=/dev/onload_epoll --device=/dev/onload_cplane -it ONLOAD_ENABLED_IMAGE_ID [COMMAND] [ARG...]
-```
-
-For OpenOnload versions < `201606`, to expose the host and onload to this container, run like so:
+Onload-enabled contaiers require exposing the host network and onload devices, so run like so:
 ```
 docker run --net=host --device=/dev/onload --device=/dev/onload_epoll -it ONLOAD_ENABLED_IMAGE_ID [COMMAND] [ARG...]
 ```
 
-The difference is that version 201606 introduced the device `/dev/onload_cplane`.
+The OpenOnload `201606` series also requires `--device=/dev/onload_cplane`.  Using `ef_vi` or [TCPDirect](#tcpdirect) requires `--device=/dev/sfc_char`.
 
 Here's a bash one-liner for extracting the OpenOnload version year:
 `onload --version | awk 'NR == 1 {print substr($2, 1, 4)}'`
@@ -101,13 +96,19 @@ Here's a bash one-liner for extracting the OpenOnload version year:
 
  * Host networking must be used: `--net=host`
 
- * The following devices must be exported: `--device=/dev/onload --device=/dev/onload_epoll --device=/dev/onload_cplane`
+ * The following devices must be exported: `--device=/dev/onload --device=/dev/onload_epoll`.
+
+ * The OpenOnload `201606` series also requires `--device=/dev/onload_cplane`.
+
+ * Using `ef_vi` or [TCPDirect](#tcpdirect) requires `--device=/dev/sfc_char`.
 
  * The host's `onload --version` must be the same as the container's.
 
  * *Stack Sharing*: If a container and the host must share an Onload stack, both should use `EF_SHARE_WITH=-1` to avoid a current limitation in OpenOnload.  Note this disables the stack sharing security feature.
 
  * Due to a current limitation with OpenOnload, you should run with `EF_USE_HUGE_PAGES=0` if you share Onload stacks.
+
+ * Some libraries, such as [jemalloc](http://jemalloc.net/) need to invoke syscalls at startup.  This can cause infinite loops because the OpenOnload acceleration also needs malloc (via dlsym); see jemalloc issues [443](https://github.com/jemalloc/jemalloc/issues/443) and [1426](https://github.com/jemalloc/jemalloc/issues/1426).  This can be alleviated by setting `ONLOAD_DISABLE_SYSCALL_HOOK=1`; note you will also need to set `ONLOAD_USERSPACE_ID` to match the unpatched driver version. 
 
 ### TCPDirect
 
@@ -156,8 +157,12 @@ The Dockerfile downloads specific versions from [openonload.org](https://openonl
 |ONLOAD_VERSION | "201811" |The version of OpenOnload to download. |
 |ONLOAD_MD5SUM | "fde70da355e11c8b4114b54114a35de1" |The MD5 checksum of the download. |
 |ONLOAD_WITHZF | |Set to non-empty to include TCPDirect. |
+|ONLOAD_DISABLE_SYSCALL_HOOK | |Set to non-empty to disables hooking the syscall function from libc. |
+|ONLOAD_USERSPACE_ID | |Set to non-empty to specify the userspace build md5sum ID. |
 
 If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to match. Note that Docker is only supported by OpenOnload since version 201502.
+
+If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID of the driver.  For me, OpenOnload 201811 has driver interface ID  of `357bb6508f1e324ea32da88f948efafa`.
 
 ### License
 
