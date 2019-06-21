@@ -5,6 +5,7 @@
  * Add ONLOAD_DISABLE_SYSCALL_HOOK build-arg
  * Add ONLOAD_USERSPACE_ID build-arg
  * Update docs
+ * Add Docker image labels
 
 ## 2019-01-16
 
