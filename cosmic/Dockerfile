@@ -11,7 +11,7 @@
 #
 # NOTE: The host's OpenOnload version must be the same as the container's.
 #
-# Copyright (c) 2018 Neomantra BV
+# Copyright (c) 2019 Neomantra BV
 # Released under the MIT License, see LICENSE.txt
 #
 

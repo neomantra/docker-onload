@@ -166,6 +166,6 @@ If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID 
 
 ### License
 
-Copyright (c) 2015-2018 Neomantra BV
+Copyright (c) 2015-2019 Neomantra BV
 
 Released under the MIT License, see LICENSE.txt
