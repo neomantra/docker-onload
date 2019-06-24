@@ -91,8 +91,8 @@ RUN \
     fi \
     && if [ -n ${ONLOAD_USERSPACE_ID} ] ; then \
         echo "ONLOAD_USERSPACE_ID set, applying userspace interface id '${ONLOAD_USERSPACE_ID}'" \
-        && sed -i "s/\$\$md5/${ONLOAD_USERSPACE_ID}/" src/lib/transport/ip/mmake.mk \
-        && cat src/lib/transport/ip/mmake.mk ; \
+        && sed -i "s/\$\$md5/${ONLOAD_USERSPACE_ID}/" src/lib/transport/ip/mmake.mk ; \
+
     fi \
     && cd scripts \
     && ./onload_build --user \
