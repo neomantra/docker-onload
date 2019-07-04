@@ -82,14 +82,13 @@ RUN \
     && echo "${ONLOAD_MD5SUM}  openonload-${ONLOAD_VERSION}.tgz" | md5sum --check \
     && tar -zxf openonload-${ONLOAD_VERSION}.tgz \
     && cd /tmp/openonload-${ONLOAD_VERSION} \
-    && if [ -n ${ONLOAD_DISABLE_SYSCALL_HOOK} ] ; then \
+    && if [ -n "${ONLOAD_DISABLE_SYSCALL_HOOK}" ] ; then \
         echo 'ONLOAD_DISABLE_SYSCALL_HOOK set, disabling CI_CFG_USERSPACE_SYSCALL' \
         && sed -i 's/#define CI_CFG_USERSPACE_SYSCALL        1/#define CI_CFG_USERSPACE_SYSCALL        0 \/\/ disabled by ONLOAD_DISABLE_SYSCALL_HOOK/' ./src/include/ci/internal/transport_config_opt.h ; \
     fi \
-    && if [ -n ${ONLOAD_USERSPACE_ID} ] ; then \
+    && if [ -n "${ONLOAD_USERSPACE_ID}" ] ; then \
         echo "ONLOAD_USERSPACE_ID set, applying userspace interface id '${ONLOAD_USERSPACE_ID}'" \
         && sed -i "s/\$\$md5/${ONLOAD_USERSPACE_ID}/" src/lib/transport/ip/mmake.mk ; \
-
     fi \
     && cd scripts \
     && ./onload_build --user \

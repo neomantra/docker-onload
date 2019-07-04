@@ -1,5 +1,9 @@
 # docker-onload CHANGELOG
 
+## 2019-07-01 (tagged 201811)
+
+ * Fix quoting and whitespace for ONLOAD_DISABLE_SYSCALL_HOOK and ONLOAD_USERSPACE_ID
+
 ## 2019-06-21
 
  * Add ONLOAD_DISABLE_SYSCALL_HOOK build-arg
