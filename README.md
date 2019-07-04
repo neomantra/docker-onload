@@ -15,6 +15,15 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 - [`xenial-nozf` (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
 - [`bionic-nozf` (*bionic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bionic/Dockerfile)
 - [`cosmic-nozf` (*cosmic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/cosmic/Dockerfile)
+- [`disco-nozf` (*disco/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/disco/Dockerfile)
+- `201811-u1-centos-nozf`
+- `201811-u1-precise-nozf`
+- `201811-u1-trusty-nozf`
+- `201811-u1-stretch-nozf`
+- `201811-u1-xenial-nozf`
+- `201811-u1-bionic-nozf`
+- `201811-u1-cosmic-nozf`
+- `201811-u1-disco-nozf`
 - `201811-centos-nozf`
 - `201811-precise-nozf`
 - `201811-trusty-nozf`
@@ -110,6 +119,9 @@ Here's a bash one-liner for extracting the OpenOnload version year:
 
  * Some libraries, such as [jemalloc](http://jemalloc.net/) need to invoke syscalls at startup.  This can cause infinite loops because the OpenOnload acceleration also needs malloc (via dlsym); see jemalloc issues [443](https://github.com/jemalloc/jemalloc/issues/443) and [1426](https://github.com/jemalloc/jemalloc/issues/1426).  This can be alleviated by setting `ONLOAD_DISABLE_SYSCALL_HOOK=1`; note you will also need to set `ONLOAD_USERSPACE_ID` to match the unpatched driver version. 
 
+ * These OpenOnload builds default to using `-march` and `-mtune` based on the CPU-type of the build machine.  This might not be optimial or runnable on your runtime platform.  A future release will allow this to be specified as Docker build arguments.
+
+
 ### TCPDirect
 
 In OpenOnload 201606-u1, Solarflare introducted a new kernel-bypass networking API named *TCPDirect*.
@@ -141,6 +153,7 @@ Dockerfiles are provided for the following base systems, selecting the Dockerfil
  * [Ubuntu Xenial](https://github.com/neomantra/docker-onload/xenial/Dockerfile) (`xenial/Dockerfile`)
  * [Ubuntu Bionic](https://github.com/neomantra/docker-onload/bionic/Dockerfile) (`bionic/Dockerfile`)
  * [Ubuntu Cosmic](https://github.com/neomantra/docker-onload/cosmic/Dockerfile) (`cosmic/Dockerfile`)
+ * [Ubuntu Disco](https://github.com/neomantra/docker-onload/disco/Dockerfile) (`disco/Dockerfile`)
 
 Each system folder has a `Dockerfile`.
  
@@ -154,15 +167,20 @@ The Dockerfile downloads specific versions from [openonload.org](https://openonl
 
 | Key  | Default | Description |
 :----- | :-----: |:----------- |
-|ONLOAD_VERSION | "201811" |The version of OpenOnload to download. |
-|ONLOAD_MD5SUM | "fde70da355e11c8b4114b54114a35de1" |The MD5 checksum of the download. |
+|ONLOAD_VERSION | "201811-u1" |The version of OpenOnload to download. |
+|ONLOAD_MD5SUM | "357e64862aa4145e49d218fd04e63407" |The MD5 checksum of the download. |
 |ONLOAD_WITHZF | |Set to non-empty to include TCPDirect. |
 |ONLOAD_DISABLE_SYSCALL_HOOK | |Set to non-empty to disables hooking the syscall function from libc. |
 |ONLOAD_USERSPACE_ID | |Set to non-empty to specify the userspace build md5sum ID. |
 
 If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to match. Note that Docker is only supported by OpenOnload since version 201502.
 
-If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID of the driver.  For me, OpenOnload 201811 has driver interface ID  of `357bb6508f1e324ea32da88f948efafa`.
+If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID of the driver.  The following are driver interfae IDs we have recorded:
+
+| OpenOnload Version | Driver Interface ID |
+:----------- |:------------------- |
+| 201811     | 357bb6508f1e324ea32da88f948efafa |
+| 201811-u1  | 2d850c0cd0616655dc3e31c7937acaf7 |
 
 ### License
 

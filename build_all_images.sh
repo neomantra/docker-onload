@@ -13,6 +13,8 @@ DISTS=(
     'trusty'
     'xenial'
     'bionic'
+    'cosmic'
+    'disco'
 )
 
 for DIST in "${DISTS[@]}"; do

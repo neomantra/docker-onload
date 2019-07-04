@@ -1,8 +1,13 @@
 # docker-onload CHANGELOG
 
-## 2019-07-01 (tagged 201811)
+## 2019-07-04 (tagged 201811-u1)
 
- * Fix quoting and whitespace for ONLOAD_DISABLE_SYSCALL_HOOK and ONLOAD_USERSPACE_ID
+ * Update to OpenOnload 201811-u1
+ * Add Ubuntu Disco image
+
+## 2019-07-04 (tagged 201811)
+
+ * Fix quoting for ONLOAD_DISABLE_SYSCALL_HOOK and ONLOAD_USERSPACE_ID test
 
 ## 2019-06-21
 
