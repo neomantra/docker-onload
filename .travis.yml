@@ -268,3 +268,37 @@ jobs:
           docker tag onloadzf:cosmic $DOCKER_ORG/onloadzf:$TRAVIS_TAG-cosmic &&
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-cosmic ;
         fi
+
+    - stage: build docker image for flavor disco (nozf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onload:disco -f disco/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:disco $DOCKER_ORG/onload:disco &&
+          docker push $DOCKER_ORG/onload:disco &&
+          docker tag onload:disco $DOCKER_ORG/onload:disco-nozf &&
+          docker push $DOCKER_ORG/onload:disco-nozf ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:disco $DOCKER_ORG/onload:$TRAVIS_TAG-disco &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-disco &&
+          docker tag onload:disco $DOCKER_ORG/onload:$TRAVIS_TAG-disco-nozf &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-disco-nozf ;
+        fi
+
+    - stage: build docker image for flavor disco (zf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onloadzf:disco --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_DISABLE_SYSCALL_HOOK=1 --build-arg ONLOAD_USERSPACE_ID="$ONLOAD_USERSPACE_ID" -f disco/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:disco $DOCKER_ORG/onloadzf:disco &&
+          docker push $DOCKER_ORG/onloadzf:disco ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:disco $DOCKER_ORG/onloadzf:$TRAVIS_TAG-disco &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-disco ;
+        fi
