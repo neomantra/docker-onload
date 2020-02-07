@@ -1,5 +1,11 @@
 # docker-onload CHANGELOG
 
+## 2020-02-07 (untagged)
+
+ * Update to OpenOnload 7.0.0.176
+ * Support building from new OpenOnload packaging with ONLOAD_PACKAGE_URL
+ * Add ONLOAD_LEGACY_URL build arg
+
 ## 2019-07-04 (tagged 201811-u1)
 
  * Update to OpenOnload 201811-u1

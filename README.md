@@ -6,7 +6,19 @@
 
 See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/master/CHANGELOG.md).
 
+**NOTE:** In September 2019, Solarflare changed their version numbering convention from date-based (`201811-u1`) to semver (`7.0.0.176`).  They also changed the download location of the source packages.   This tooling will build the new style, but does not do so out of the box and does currently redistribute images.   To build it yourself, but you must supply `ONLOAD_PACKAGE_URL`, which can be found by navigating the [Solarflare Support Site](https://support.solarflare.com/):
+
+```
+docker build --build-arg ONLOAD_PACKAGE_URL=<"OpenOnload Release Package" URL> -f bionic/Dockerfile .
+```
+
+----
+
 ## Supported Docker Hub tags for image `neomantra/onload` and respective `Dockerfile` links
+
+**Version 7.0.0.176 is not on Docker Hub**  
+
+These unversioned tags currently map to `201811-u1`:
 
 - [`centos-nozf` (*centos/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos/Dockerfile)
 - [`precise-nozf` (*precise/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile)
@@ -16,6 +28,9 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 - [`bionic-nozf` (*bionic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bionic/Dockerfile)
 - [`cosmic-nozf` (*cosmic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/cosmic/Dockerfile)
 - [`disco-nozf` (*disco/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/disco/Dockerfile)
+
+The following versioned tags are available:
+
 - `201811-u1-centos-nozf`
 - `201811-u1-precise-nozf`
 - `201811-u1-trusty-nozf`
@@ -87,7 +102,7 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 
 **NOTE** Since version 201606-u1, Docker Hub hosts images tagged as a `-nozf` variant.  These are built from [Dockerfile](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile) without `ONLOAD_WITHZF` set, thus without support for [TCPDirect](#tcpdirect) (aka ZF).
 
-[![](https://images.microbadger.com/badges/image/neomantra/onload.svg)](https://microbadger.com/images/neomantra/onload "Get your own image badge on microbadger.com")
+----
 
 ### Launching Onload-enabled containers
 
@@ -117,7 +132,7 @@ Here's a bash one-liner for extracting the OpenOnload version year:
 
  * Due to a current limitation with OpenOnload, you should run with `EF_USE_HUGE_PAGES=0` if you share Onload stacks.
 
- * Some libraries, such as [jemalloc](http://jemalloc.net/) need to invoke syscalls at startup.  This can cause infinite loops because the OpenOnload acceleration also needs malloc (via dlsym); see jemalloc issues [443](https://github.com/jemalloc/jemalloc/issues/443) and [1426](https://github.com/jemalloc/jemalloc/issues/1426).  This can be alleviated by setting `ONLOAD_DISABLE_SYSCALL_HOOK=1`; note you will also need to set `ONLOAD_USERSPACE_ID` to match the unpatched driver version. 
+ * Some libraries, such as [jemalloc](http://jemalloc.net/) need to invoke syscalls at startup.  This can cause infinite loops because the OpenOnload acceleration also needs malloc (via dlsym); see jemalloc issues [443](https://github.com/jemalloc/jemalloc/issues/443) and [1426](https://github.com/jemalloc/jemalloc/issues/1426).  This can be alleviated by setting `ONLOAD_DISABLE_SYSCALL_HOOK=1`; note you will also need to set `ONLOAD_USERSPACE_ID` to match the unpatched driver version. **NOTE:** This maybe have been fixed in `7.0.0.176`: "SF-122792-KI/bug62297: avoid hang at app startup with jemalloc".
 
  * These OpenOnload builds default to using `-march` and `-mtune` based on the CPU-type of the build machine.  This might not be optimial or runnable on your runtime platform.  A future release will allow this to be specified as Docker build arguments.
 
@@ -167,23 +182,28 @@ The Dockerfile downloads specific versions from [openonload.org](https://openonl
 
 | Key  | Default | Description |
 :----- | :-----: |:----------- |
-|ONLOAD_VERSION | "201811-u1" |The version of OpenOnload to download. |
-|ONLOAD_MD5SUM | "357e64862aa4145e49d218fd04e63407" |The MD5 checksum of the download. |
+|ONLOAD_VERSION | "7.0.0.176" |The version of OpenOnload to download. |
+|ONLOAD_MD5SUM | "851ccf4fc76c96bcbeb01e1c57b20cce" |The MD5 checksum of the download. |
+|ONLOAD_PACKAGE_URL | | If set, it will download and unzip the tarball from the newer packaging. |
+|ONLOAD_LEGACY_URL | (see below) | Download the OpenOnload tarball from this URL, `ONLOAD_PACKAGE_URL` has priority. |
 |ONLOAD_WITHZF | |Set to non-empty to include TCPDirect. |
 |ONLOAD_DISABLE_SYSCALL_HOOK | |Set to non-empty to disables hooking the syscall function from libc. |
 |ONLOAD_USERSPACE_ID | |Set to non-empty to specify the userspace build md5sum ID. |
 
+`ONLOAD_LEGACY_URL` defaults to https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz
+
 If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to match. Note that Docker is only supported by OpenOnload since version 201502.
 
-If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID of the driver.  The following are driver interfae IDs we have recorded:
+If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID of the driver.  It can be found in the build tree at `./build/gnu/lib/transport/ip/uk_intf_ver.h`. The following are driver interface IDs we have recorded:
 
 | OpenOnload Version | Driver Interface ID |
 :----------- |:------------------- |
+| 7.0.0.176  | 6ac17472788a64c61013f3d7ed9ae4c9 |
 | 201811     | 357bb6508f1e324ea32da88f948efafa |
 | 201811-u1  | 2d850c0cd0616655dc3e31c7937acaf7 |
 
 ### License
 
-Copyright (c) 2015-2019 Neomantra BV
+Copyright (c) 2015-2020 Neomantra BV
 
 Released under the MIT License, see LICENSE.txt

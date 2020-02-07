@@ -11,7 +11,7 @@
 #
 # NOTE: The host's OpenOnload version must be the same as the container's.
 #
-# Copyright (c) 2019 Neomantra BV
+# Copyright (c) 2020 Neomantra BV
 # Released under the MIT License, see LICENSE.txt
 #
 
@@ -24,8 +24,14 @@ ARG ONLOAD_DEBIAN_BASE="ubuntu"
 ARG ONLOAD_DEBIAN_TAG="bionic"
 
 # Onload version and its md5sum
-ARG ONLOAD_VERSION="201811-u1"
-ARG ONLOAD_MD5SUM="357e64862aa4145e49d218fd04e63407"
+ARG ONLOAD_VERSION="7.0.0.176"
+ARG ONLOAD_MD5SUM="851ccf4fc76c96bcbeb01e1c57b20cce"
+
+# Onload package URL and legacy URL
+# If ONLOAD_PACKAGE_URL is set, it will download and unzip the tarball from the newer packaging,
+# otherwise it will download the tarball from ONLOAD_LEGACY_URL as before.
+ARG ONLOAD_PACKAGE_URL
+ARG ONLOAD_LEGACY_URL="https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz"
 
 # When ONLOAD_WITHZF is non-empty, the build includes Solarflare's TCPDirect library.
 # Default is to exclude it.
@@ -77,13 +83,22 @@ RUN \
         python-dev \
         sed \
         tar \
+        unzip \
         valgrind \
         wget \
     && cd /tmp \
-    && curl -fSL https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz -o /tmp/openonload-${ONLOAD_VERSION}.tgz \
-    && echo "${ONLOAD_MD5SUM} openonload-${ONLOAD_VERSION}.tgz" | md5sum --check \
-    && tar -zxf openonload-${ONLOAD_VERSION}.tgz \
-    && cd /tmp/openonload-${ONLOAD_VERSION} \
+    && if [ -n "${ONLOAD_PACKAGE_URL}" ] ; then \
+          curl -fSL "${ONLOAD_PACKAGE_URL}" -o /tmp/onload-${ONLOAD_VERSION}-package.zip \
+          && unzip /tmp/onload-${ONLOAD_VERSION}-package.zip \
+          && echo "${ONLOAD_MD5SUM} onload-${ONLOAD_VERSION}.tgz" | md5sum --check \
+          && tar -zxf onload-${ONLOAD_VERSION}.tgz ; \
+    else \
+          curl -fSL "${ONLOAD_LEGACY_URL}" -o /tmp/onload-${ONLOAD_VERSION}.tgz \
+          && echo "${ONLOAD_MD5SUM} onload-${ONLOAD_VERSION}.tgz" | md5sum --check \
+          && tar -zxf onload-${ONLOAD_VERSION}.tgz \
+          && mv openonload-${ONLOAD_VERSION} onload-${ONLOAD_VERSION}; \
+    fi \
+    && cd /tmp/onload-${ONLOAD_VERSION} \
     && if [ -n "${ONLOAD_DISABLE_SYSCALL_HOOK}" ] ; then \
         echo 'ONLOAD_DISABLE_SYSCALL_HOOK set, disabling CI_CFG_USERSPACE_SYSCALL' \
         && sed -i 's/#define CI_CFG_USERSPACE_SYSCALL        1/#define CI_CFG_USERSPACE_SYSCALL        0 \/\/ disabled by ONLOAD_DISABLE_SYSCALL_HOOK/' ./src/include/ci/internal/transport_config_opt.h ; \
@@ -96,7 +111,7 @@ RUN \
     && ./onload_build --user \
     && ./onload_install --userfiles --nobuild \
     && cd /tmp \
-    && rm -rf openonload-${ONLOAD_VERSION}.tgz openonload-${ONLOAD_VERSION} \
+    && rm -rf onload-${ONLOAD_VERSION}* \
     && if [ -z ${ONLOAD_WITHZF} ] ; then \
         rm -rf /usr/include/zf /usr/bin/zf_stackdump /usr/bin/zf_debug /usr/lib/x86_64-linux-gnu/zf /usr/lib/x86_64-linux-gnu/libonload_zf* ; \
     fi \
@@ -111,6 +126,8 @@ RUN \
 LABEL maintainer="Evan Wies <evan@neomantra.net>"
 LABEL ONLOAD_DEBIAN_BASE="${ONLOAD_DEBIAN_BASE}"
 LABEL ONLOAD_DEBIAN_TAG="${ONLOAD_DEBIAN_TAG}"
+LABEL ONLOAD_PACKAGE_URL="${ONLOAD_PACKAGE_URL}"
+LABEL ONLOAD_LEGACY_URL="${ONLOAD_LEGACY_URL}"
 LABEL ONLOAD_VERSION="${ONLOAD_VERSION}"
 LABEL ONLOAD_MD5SUM="${ONLOAD_MD5SUM}"
 LABEL ONLOAD_WITHZF="${ONLOAD_WITHZF}"
