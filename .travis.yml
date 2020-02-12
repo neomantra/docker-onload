@@ -36,16 +36,16 @@ jobs:
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:centos $DOCKER_ORG/onload:centos &&
-          echo skip docker push $DOCKER_ORG/onload:centos &&
+          docker push $DOCKER_ORG/onload:centos &&
           docker tag onload:centos $DOCKER_ORG/onload:centos-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:centos-nozf ;
+          docker push $DOCKER_ORG/onload:centos-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:centos $DOCKER_ORG/onload:$TRAVIS_TAG-centos &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-centos &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-centos &&
           docker tag onload:centos $DOCKER_ORG/onload:$TRAVIS_TAG-centos-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-centos-nozf ;
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-centos-nozf ;
         fi
 
     - stage: build docker image for flavor centos (zf)
@@ -70,16 +70,16 @@ jobs:
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:stretch $DOCKER_ORG/onload:stretch &&
-          echo skip docker push $DOCKER_ORG/onload:stretch &&
+          docker push $DOCKER_ORG/onload:stretch &&
           docker tag onload:stretch $DOCKER_ORG/onload:stretch-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:stretch-nozf ;
+          docker push $DOCKER_ORG/onload:stretch-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:stretch $DOCKER_ORG/onload:$TRAVIS_TAG-stretch &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-stretch &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-stretch &&
           docker tag onload:stretch $DOCKER_ORG/onload:$TRAVIS_TAG-stretch-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-stretch-nozf ;
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-stretch-nozf ;
         fi
 
     - stage: build docker image for flavor stretch (zf)
@@ -104,16 +104,16 @@ jobs:
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:precise $DOCKER_ORG/onload:precise &&
-          echo skip docker push $DOCKER_ORG/onload:precise &&
+          docker push $DOCKER_ORG/onload:precise &&
           docker tag onload:precise $DOCKER_ORG/onload:precise-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:precise-nozf ;
+          docker push $DOCKER_ORG/onload:precise-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:precise $DOCKER_ORG/onload:$TRAVIS_TAG-precise &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-precise &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-precise &&
           docker tag onload:precise $DOCKER_ORG/onload:$TRAVIS_TAG-precise-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-precise-nozf ;
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-precise-nozf ;
         fi
 
     - stage: build docker image for flavor precise (zf)
@@ -138,16 +138,16 @@ jobs:
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:trusty $DOCKER_ORG/onload:trusty &&
-          echo skip docker push $DOCKER_ORG/onload:trusty &&
+          docker push $DOCKER_ORG/onload:trusty &&
           docker tag onload:trusty $DOCKER_ORG/onload:trusty-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:trusty-nozf ;
+          docker push $DOCKER_ORG/onload:trusty-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:trusty $DOCKER_ORG/onload:$TRAVIS_TAG-trusty &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-trusty &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-trusty &&
           docker tag onload:trusty $DOCKER_ORG/onload:$TRAVIS_TAG-trusty-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-trusty-nozf ;
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-trusty-nozf ;
         fi
 
     - stage: build docker image for flavor trusty (zf)
@@ -172,16 +172,16 @@ jobs:
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:xenial $DOCKER_ORG/onload:xenial &&
-          echo skip docker push $DOCKER_ORG/onload:xenial &&
+          docker push $DOCKER_ORG/onload:xenial &&
           docker tag onload:xenial $DOCKER_ORG/onload:xenial-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:xenial-nozf ;
+          docker push $DOCKER_ORG/onload:xenial-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:xenial $DOCKER_ORG/onload:$TRAVIS_TAG-xenial &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-xenial &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-xenial &&
           docker tag onload:xenial $DOCKER_ORG/onload:$TRAVIS_TAG-xenial-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-xenial-nozf ;
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-xenial-nozf ;
         fi
 
     - stage: build docker image for flavor xenial (zf)
@@ -206,16 +206,16 @@ jobs:
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:bionic $DOCKER_ORG/onload:bionic &&
-          echo skip docker push $DOCKER_ORG/onload:bionic &&
+          docker push $DOCKER_ORG/onload:bionic &&
           docker tag onload:bionic $DOCKER_ORG/onload:bionic-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:bionic-nozf ;
+          docker push $DOCKER_ORG/onload:bionic-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:bionic $DOCKER_ORG/onload:$TRAVIS_TAG-bionic &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-bionic &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-bionic &&
           docker tag onload:bionic $DOCKER_ORG/onload:$TRAVIS_TAG-bionic-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-bionic-nozf ;
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-bionic-nozf ;
         fi
 
     - stage: build docker image for flavor bionic (zf)
@@ -240,16 +240,16 @@ jobs:
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:cosmic $DOCKER_ORG/onload:cosmic &&
-          echo skip docker push $DOCKER_ORG/onload:cosmic &&
+          docker push $DOCKER_ORG/onload:cosmic &&
           docker tag onload:cosmic $DOCKER_ORG/onload:cosmic-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:cosmic-nozf ;
+          docker push $DOCKER_ORG/onload:cosmic-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:cosmic $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic &&
           docker tag onload:cosmic $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic-nozf ;
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic-nozf ;
         fi
 
     - stage: build docker image for flavor cosmic (zf)
@@ -274,16 +274,16 @@ jobs:
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:disco $DOCKER_ORG/onload:disco &&
-          echo skip docker push $DOCKER_ORG/onload:disco &&
+          docker push $DOCKER_ORG/onload:disco &&
           docker tag onload:disco $DOCKER_ORG/onload:disco-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:disco-nozf ;
+          docker push $DOCKER_ORG/onload:disco-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
           docker tag onload:disco $DOCKER_ORG/onload:$TRAVIS_TAG-disco &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-disco &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-disco &&
           docker tag onload:disco $DOCKER_ORG/onload:$TRAVIS_TAG-disco-nozf &&
-          echo skip docker push $DOCKER_ORG/onload:$TRAVIS_TAG-disco-nozf ;
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-disco-nozf ;
         fi
 
     - stage: build docker image for flavor disco (zf)

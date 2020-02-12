@@ -6,19 +6,11 @@
 
 See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/master/CHANGELOG.md).
 
-**NOTE:** In September 2019, Solarflare changed their version numbering convention from date-based (`201811-u1`) to semver (`7.0.0.176`).  They also changed the download location of the source packages.   This tooling will build the new style, but does not do so out of the box and does currently redistribute images.   To build it yourself, but you must supply `ONLOAD_PACKAGE_URL`, which can be found by navigating the [Solarflare Support Site](https://support.solarflare.com/):
-
-```
-docker build --build-arg ONLOAD_PACKAGE_URL=<"OpenOnload Release Package" URL> -f bionic/Dockerfile .
-```
-
 ----
 
 ## Supported Docker Hub tags for image `neomantra/onload` and respective `Dockerfile` links
 
-**Version 7.0.0.176 is not on Docker Hub**  
-
-These unversioned tags currently map to `201811-u1`:
+These unversioned tags currently map to `7.0.0.176`:
 
 - [`centos-nozf` (*centos/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos/Dockerfile)
 - [`precise-nozf` (*precise/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile)
@@ -31,6 +23,14 @@ These unversioned tags currently map to `201811-u1`:
 
 The following versioned tags are available:
 
+- `7.0.0.176-centos-nozf`
+- `7.0.0.176-precise-nozf`
+- `7.0.0.176-trusty-nozf`
+- `7.0.0.176-stretch-nozf`
+- `7.0.0.176-xenial-nozf`
+- `7.0.0.176-bionic-nozf`
+- `7.0.0.176-cosmic-nozf`
+- `7.0.0.176-disco-nozf`
 - `201811-u1-centos-nozf`
 - `201811-u1-precise-nozf`
 - `201811-u1-trusty-nozf`
@@ -157,7 +157,7 @@ cd docker-onload
 docker build --build-arg ONLOAD_WITHZF=1 -f xenial/Dockerfile -t neomantra/onload:201606-u1-xenial .
 ```
 
-### Customizing
+### Customized Image Building
 
 Dockerfiles are provided for the following base systems, selecting the Dockerfile path with `-f`:
 
@@ -184,13 +184,15 @@ The Dockerfile downloads specific versions from [openonload.org](https://openonl
 :----- | :-----: |:----------- |
 |ONLOAD_VERSION | "7.0.0.176" |The version of OpenOnload to download. |
 |ONLOAD_MD5SUM | "851ccf4fc76c96bcbeb01e1c57b20cce" |The MD5 checksum of the download. |
-|ONLOAD_PACKAGE_URL | | If set, it will download and unzip the tarball from the newer packaging. |
+|ONLOAD_PACKAGE_URL | (see below) | If set, it will download and unzip the tarball from the newer packaging. |
 |ONLOAD_LEGACY_URL | (see below) | Download the OpenOnload tarball from this URL, `ONLOAD_PACKAGE_URL` has priority. |
 |ONLOAD_WITHZF | |Set to non-empty to include TCPDirect. |
 |ONLOAD_DISABLE_SYSCALL_HOOK | |Set to non-empty to disables hooking the syscall function from libc. |
 |ONLOAD_USERSPACE_ID | |Set to non-empty to specify the userspace build md5sum ID. |
 
-`ONLOAD_LEGACY_URL` defaults to https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz
+`ONLOAD_PACKAGE_URL` defaults to https://support.solarflare.com/index.php/component/cognidox/?task=download&file=SF-122921-DH-1.xml&subdoc=SF-109585-LS&subissue=32&o=1&format=raw
+
+`ONLOAD_LEGACY_URL` defaults to https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz.   If you want to build from a legacy (non-packaged) URL, you must also set `ONLOAD_PACKAGE_URL` to `''` (empty string).
 
 If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to match. Note that Docker is only supported by OpenOnload since version 201502.
 
