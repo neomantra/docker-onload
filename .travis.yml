@@ -97,6 +97,40 @@ jobs:
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-stretch ;
         fi
 
+    - stage: build docker image for flavor buster (nozf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onload:buster -f buster/Dockerfile --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:buster $DOCKER_ORG/onload:buster &&
+          docker push $DOCKER_ORG/onload:buster &&
+          docker tag onload:buster $DOCKER_ORG/onload:buster-nozf &&
+          docker push $DOCKER_ORG/onload:buster-nozf ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:buster $DOCKER_ORG/onload:$TRAVIS_TAG-buster &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-buster &&
+          docker tag onload:buster $DOCKER_ORG/onload:$TRAVIS_TAG-buster-nozf &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-buster-nozf ;
+        fi
+
+    - stage: build docker image for flavor buster (zf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onloadzf:buster -f buster/Dockerfile --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:buster $DOCKER_ORG/onloadzf:buster &&
+          docker push $DOCKER_ORG/onloadzf:buster ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:buster $DOCKER_ORG/onloadzf:$TRAVIS_TAG-buster &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-buster ;
+        fi
+
     - stage: build docker image for flavor precise (nozf)
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"

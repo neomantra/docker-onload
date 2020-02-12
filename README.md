@@ -20,6 +20,7 @@ These unversioned tags currently map to `7.0.0.176`:
 - [`bionic-nozf` (*bionic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bionic/Dockerfile)
 - [`cosmic-nozf` (*cosmic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/cosmic/Dockerfile)
 - [`disco-nozf` (*disco/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/disco/Dockerfile)
+- [`buster-nozf` (*buster/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/buster/Dockerfile)
 
 The following versioned tags are available:
 
@@ -31,6 +32,7 @@ The following versioned tags are available:
 - `7.0.0.176-bionic-nozf`
 - `7.0.0.176-cosmic-nozf`
 - `7.0.0.176-disco-nozf`
+- `7.0.0.176-buster-nozf`
 - `201811-u1-centos-nozf`
 - `201811-u1-precise-nozf`
 - `201811-u1-trusty-nozf`
