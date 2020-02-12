@@ -5,7 +5,7 @@
 require 'getoptlong'
 
 ONLOAD_VERSIONS = {
-    '7.0.0.176'   => { :version => '7.0.0.176',   :md5sum => '851ccf4fc76c96bcbeb01e1c57b20cce', :driverid => '6ac17472788a64c61013f3d7ed9ae4c9', :packaged => true },
+    '7.0.0.176'   => { :version => '7.0.0.176',   :md5sum => '851ccf4fc76c96bcbeb01e1c57b20cce', :driverid => '6ac17472788a64c61013f3d7ed9ae4c9', :package_url => "https://support.solarflare.com/index.php/component/cognidox/?task=download&file=SF-122921-DH-1.xml&subdoc=SF-109585-LS&subissue=32&o=1&format=raw" },
     '201811-u1'   => { :version => '201811-u1',   :md5sum => '357e64862aa4145e49d218fd04e63407', :driverid => '2d850c0cd0616655dc3e31c7937acaf7' },
     '201811'      => { :version => '201811',      :md5sum => 'fde70da355e11c8b4114b54114a35de1', :driverid => '357bb6508f1e324ea32da88f948efafa' },
     '201805-u1'   => { :version => '201805-u1',   :md5sum => 'f3b3761b4bfd74fec311fa0fe380ec0a' },
@@ -23,6 +23,7 @@ ONLOAD_VERSIONS = {
 
 IMAGE_FLAVORS = {
     'bionic'   => { :flavor => 'bionic' },
+    'buster'   => { :flavor => 'buster' },
     'centos'   => { :flavor => 'centos' },
     'cosmic'   => { :flavor => 'cosmic' },
     'disco'    => { :flavor => 'disco' },
@@ -43,7 +44,7 @@ build_onload_image.rb [options]
     --onload   -o  <version>  show docker build for OpenOnload <version>
     --flavor   -f  <flavor>   add <flavor> to build
 
-    --url      -u <url>       Download URL for "packaged" versions.  Defaults to env var ONLOAD_PACKAGE_URL
+    --url      -u <url>       Override URL for "packaged" versions.
 
     --tag      -t <tag>       tag image as <tag>
     --autotag  -a <prefix>    tag image as <prefix><version>-<flavor>[-nozf]. 
@@ -51,6 +52,8 @@ build_onload_image.rb [options]
                               the autotag will be a name not an image-name:tag
 
     --zf                      build with TCPDirect (zf)
+
+    --arg          <arg>      pass '--build-arg <arg>' to "docker build"
 
     --quiet    -q             build quietly (pass -q to "docker build")
     --no-cache                pass --no-cache to "docker build"
@@ -62,16 +65,17 @@ build_onload_image.rb [options]
 END_OF_USAGE
 
 $opts = {
-    :action   => nil,
-    :execute  => false,
-    :version  => nil,
-    :flavor   => nil,
-    :tag      => nil,
-    :autotag  => nil,
-    :zf       => false,
-    :quiet    => false,
-    :cache    => true,
-    :verbose  => 0
+    :action    => nil,
+    :execute   => false,
+    :version   => nil,
+    :flavor    => nil,
+    :tag       => nil,
+    :autotag   => nil,
+    :buildargs => [],
+    :zf        => false,
+    :quiet     => false,
+    :cache     => true,
+    :verbose   => 0
 }
 
 begin
@@ -83,6 +87,7 @@ begin
         [ '--url',      '-u', GetoptLong::REQUIRED_ARGUMENT ],
         [ '--tag',      '-t', GetoptLong::REQUIRED_ARGUMENT ],
         [ '--autotag',  '-a', GetoptLong::OPTIONAL_ARGUMENT ],
+        [ '--arg',            GetoptLong::REQUIRED_ARGUMENT ],
         [ '--zf',             GetoptLong::NO_ARGUMENT ],
         [ '--quiet',    '-q', GetoptLong::NO_ARGUMENT ],
         [ '--no-cache',       GetoptLong::NO_ARGUMENT ],
@@ -115,6 +120,8 @@ begin
             $opts[:tag] = arg
         when '--autotag'
             $opts[:autotag] = arg
+        when '--arg'
+            $opts[:buildargs] << arg
         when '--zf'
             $opts[:zf] = true
         when '--quiet'
@@ -186,17 +193,17 @@ when :build
 
     VDATA = ONLOAD_VERSIONS[V]
     cmd = "docker build --build-arg ONLOAD_VERSION=#{VDATA[:version]} --build-arg ONLOAD_MD5SUM=#{VDATA[:md5sum]} "
-    if VDATA[:packaged] then
-        url = $opts[:url]
-        url = ENV['ONLOAD_PACKAGE_URL'] if url.nil?
-        if url.nil? then
-            STDERR << "ERROR: version '#{V}' is packaged but --url arg nor ONLOAD_PACKAGE_URL env are set.\n"
-            exit(-1)
-        end
-        cmd += " --build-arg ONLOAD_PACKAGE_URL='#{url}' "
+    package_url = $opts[:url] || VDATA[:package_url]
+    if ! package_url.nil? then
+        cmd += " --build-arg ONLOAD_PACKAGE_URL='#{package_url}' "
+    else
+        # Force an empty OPEN_PACKAGE_URL to build legacy
+        cmd += " --build-arg ONLOAD_PACKAGE_URL='' "
     end
 
     cmd += "--build-arg ONLOAD_WITHZF=1 " if $opts[:zf]
+    $opts[:buildargs].each { |arg| cmd += "--build-arg #{arg} " }
+
     cmd += "-q " if $opts[:quiet]
     cmd += "--no-cache " if ! $opts[:cache]
     cmd += "-t #{tag} " if ! tag.nil?

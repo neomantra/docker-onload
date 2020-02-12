@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 #
 # build_all_images.sh
 #
@@ -6,21 +6,12 @@
 # Handy for quality control before push
 #
 
-DISTS=(
-    'centos'
-    'precise'
-    'stretch'
-    'trusty'
-    'xenial'
-    'bionic'
-    'cosmic'
-    'disco'
-)
+#DOCKER_FWD="--no-cache -q "
 
-for DIST in "${DISTS[@]}"; do
-    cd $DIST
-    echo $DIST
-    time docker build -q --no-cache .
-    time docker build -q --no-cache --build-arg ONLOAD_WITHZF=1 .
-    cd ..
+FLAVOR="${1:-bionic}"
+
+
+for VERSION in $(./build_onload_image.rb --versions); do
+    time ./build_onload_image.rb -x -v $DOCKER_FWD -f $FLAVOR -b $VERSION -a ootestbuild:
+    time ./build_onload_image.rb -x -v $DOCKER_FWD -f $FLAVOR -b $VERSION -a ootestbuild: --zf
 done

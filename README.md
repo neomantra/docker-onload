@@ -106,7 +106,7 @@ The following versioned tags are available:
 
 ----
 
-### Launching Onload-enabled containers
+## Launching Onload-enabled containers
 
 Onload-enabled contaiers require exposing the host network and onload devices, so run like so:
 ```
@@ -118,7 +118,7 @@ The OpenOnload `201606` series also requires `--device=/dev/onload_cplane`.  Usi
 Here's a bash one-liner for extracting the OpenOnload version year:
 `onload --version | awk 'NR == 1 {print substr($2, 1, 4)}'`
 
-### Cavets
+## Cavets
 
  * Host networking must be used: `--net=host`
 
@@ -139,7 +139,7 @@ Here's a bash one-liner for extracting the OpenOnload version year:
  * These OpenOnload builds default to using `-march` and `-mtune` based on the CPU-type of the build machine.  This might not be optimial or runnable on your runtime platform.  A future release will allow this to be specified as Docker build arguments.
 
 
-### TCPDirect
+## TCPDirect
 
 In OpenOnload 201606-u1, Solarflare introducted a new kernel-bypass networking API named *TCPDirect*.
 
@@ -159,7 +159,49 @@ cd docker-onload
 docker build --build-arg ONLOAD_WITHZF=1 -f xenial/Dockerfile -t neomantra/onload:201606-u1-xenial .
 ```
 
-### Customized Image Building
+## Image Building Helper Script
+
+The Ruby script `build_onload_image.rb` helps generate command lines for building Onload images.
+
+```
+$ ./build_onload_image.rb --help
+build_onload_image.rb [options]
+
+    --versions                show list of onload versions
+    --flavors                 show list of image flavors
+
+    --onload   -o  <version>  show docker build for OpenOnload <version>
+    --flavor   -f  <flavor>   add <flavor> to build
+
+    --url      -u <url>       Override URL for "packaged" versions.
+
+    --tag      -t <tag>       tag image as <tag>
+    --autotag  -a <prefix>    tag image as <prefix><version>-<flavor>[-nozf]. 
+                              <prefix> is optional, but note without a <prefix> with colon,
+                              the autotag will be a name not an image-name:tag
+
+    --zf                      build with TCPDirect (zf)
+
+    --arg          <arg>      pass '--build-arg <arg>' to "docker build"
+
+    --quiet    -q             build quietly (pass -q to "docker build")
+    --no-cache                pass --no-cache to "docker build"
+
+    --execute  -x             also execute the build line
+
+    --verbose  -v             verbose output
+    --help     -h             show this help
+```
+
+Example usage:
+
+```
+./build_onload_image.rb -o 7.0.0.176 --arg foo -f buster --zf -x
+```
+
+There are also `build_all_flavors.sh` and `build_all_images.sh`.
+
+## Customized Image Building
 
 Dockerfiles are provided for the following base systems, selecting the Dockerfile path with `-f`:
 
@@ -206,7 +248,7 @@ If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID 
 | 201811     | 357bb6508f1e324ea32da88f948efafa |
 | 201811-u1  | 2d850c0cd0616655dc3e31c7937acaf7 |
 
-### License
+## License
 
 Copyright (c) 2015-2020 Neomantra BV
 

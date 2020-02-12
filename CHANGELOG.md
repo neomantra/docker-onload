@@ -1,13 +1,14 @@
 # docker-onload CHANGELOG
 
-## 2020-02-12
+## 2020-02-12 (tagged 7.0.0.176)
 
  * Add Solarflare upstream ONLOAD_PACKAGE_URL
  * Add Debian `buster` flavor, derived from `buster-slim`
+ * Add `build_onload_image.rb` helper script
 
 ## 2020-02-07
 
- * Update to OpenOnload 7.0.0.176
+ * Update to OpenOnload 7.0.0.176 (#3)
  * Support building from new OpenOnload packaging with ONLOAD_PACKAGE_URL
  * Add ONLOAD_LEGACY_URL build arg
 
