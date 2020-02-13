@@ -167,7 +167,7 @@ The Ruby script `build_onload_image.rb` helps generate command lines for buildin
 $ ./build_onload_image.rb --help
 build_onload_image.rb [options]
 
-    --versions                show list of onload versions
+    --versions                show list of onload version name (use with -v to show all fields)
     --flavors                 show list of image flavors
 
     --onload   -o  <version>  show docker build for OpenOnload <version>

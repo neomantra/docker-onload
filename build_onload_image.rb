@@ -38,7 +38,7 @@ IMAGE_FLAVORS = {
 USAGE_STR = <<END_OF_USAGE
 build_onload_image.rb [options]
 
-    --versions                show list of onload versions
+    --versions                show list of onload version name (use with -v to show all fields)
     --flavors                 show list of image flavors
 
     --onload   -o  <version>  show docker build for OpenOnload <version>
@@ -154,7 +154,7 @@ when :versions
             STDOUT << sprintf("%-16s %s %s %s\n",
                 v[:version], v[:md5sum],
                 v[:driverid] || "",
-                v[:packaged] ? "  packaged" : "")
+                v[:package_url] || "")
         end
     end
 when :flavors
