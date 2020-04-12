@@ -31,17 +31,17 @@ jobs:
 
     - stage: build docker image for flavor centos (nozf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onload:centos -f centos/Dockerfile --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:centos $DOCKER_ORG/onload:centos &&
           docker push $DOCKER_ORG/onload:centos &&
           docker tag onload:centos $DOCKER_ORG/onload:centos-nozf &&
           docker push $DOCKER_ORG/onload:centos-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:centos $DOCKER_ORG/onload:$TRAVIS_TAG-centos &&
           docker push $DOCKER_ORG/onload:$TRAVIS_TAG-centos &&
           docker tag onload:centos $DOCKER_ORG/onload:$TRAVIS_TAG-centos-nozf &&
@@ -50,32 +50,32 @@ jobs:
 
     - stage: build docker image for flavor centos (zf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onloadzf:centos -f centos/Dockerfile --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:centos $DOCKER_ORG/onloadzf:centos &&
           docker push $DOCKER_ORG/onloadzf:centos ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:centos $DOCKER_ORG/onloadzf:$TRAVIS_TAG-centos &&
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-centos ;
         fi
 
     - stage: build docker image for flavor stretch (nozf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onload:stretch -f stretch/Dockerfile --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:stretch $DOCKER_ORG/onload:stretch &&
           docker push $DOCKER_ORG/onload:stretch &&
           docker tag onload:stretch $DOCKER_ORG/onload:stretch-nozf &&
           docker push $DOCKER_ORG/onload:stretch-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:stretch $DOCKER_ORG/onload:$TRAVIS_TAG-stretch &&
           docker push $DOCKER_ORG/onload:$TRAVIS_TAG-stretch &&
           docker tag onload:stretch $DOCKER_ORG/onload:$TRAVIS_TAG-stretch-nozf &&
@@ -84,32 +84,32 @@ jobs:
 
     - stage: build docker image for flavor stretch (zf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onloadzf:stretch -f stretch/Dockerfile --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:stretch $DOCKER_ORG/onloadzf:stretch &&
           docker push $DOCKER_ORG/onloadzf:stretch ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:stretch $DOCKER_ORG/onloadzf:$TRAVIS_TAG-stretch &&
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-stretch ;
         fi
 
     - stage: build docker image for flavor buster (nozf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onload:buster -f buster/Dockerfile --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:buster $DOCKER_ORG/onload:buster &&
           docker push $DOCKER_ORG/onload:buster &&
           docker tag onload:buster $DOCKER_ORG/onload:buster-nozf &&
           docker push $DOCKER_ORG/onload:buster-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:buster $DOCKER_ORG/onload:$TRAVIS_TAG-buster &&
           docker push $DOCKER_ORG/onload:$TRAVIS_TAG-buster &&
           docker tag onload:buster $DOCKER_ORG/onload:$TRAVIS_TAG-buster-nozf &&
@@ -118,32 +118,32 @@ jobs:
 
     - stage: build docker image for flavor buster (zf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onloadzf:buster -f buster/Dockerfile --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:buster $DOCKER_ORG/onloadzf:buster &&
           docker push $DOCKER_ORG/onloadzf:buster ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:buster $DOCKER_ORG/onloadzf:$TRAVIS_TAG-buster &&
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-buster ;
         fi
 
     - stage: build docker image for flavor precise (nozf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onload:precise -f precise/Dockerfile --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:precise $DOCKER_ORG/onload:precise &&
           docker push $DOCKER_ORG/onload:precise &&
           docker tag onload:precise $DOCKER_ORG/onload:precise-nozf &&
           docker push $DOCKER_ORG/onload:precise-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:precise $DOCKER_ORG/onload:$TRAVIS_TAG-precise &&
           docker push $DOCKER_ORG/onload:$TRAVIS_TAG-precise &&
           docker tag onload:precise $DOCKER_ORG/onload:$TRAVIS_TAG-precise-nozf &&
@@ -152,32 +152,32 @@ jobs:
 
     - stage: build docker image for flavor precise (zf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onloadzf:precise  -f precise/Dockerfile --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:precise $DOCKER_ORG/onloadzf:precise &&
           docker push $DOCKER_ORG/onloadzf:precise ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:precise $DOCKER_ORG/onloadzf:$TRAVIS_TAG-precise &&
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-precise ;
         fi
 
     - stage: build docker image for flavor trusty (nozf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onload:trusty -f trusty/Dockerfile --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:trusty $DOCKER_ORG/onload:trusty &&
           docker push $DOCKER_ORG/onload:trusty &&
           docker tag onload:trusty $DOCKER_ORG/onload:trusty-nozf &&
           docker push $DOCKER_ORG/onload:trusty-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:trusty $DOCKER_ORG/onload:$TRAVIS_TAG-trusty &&
           docker push $DOCKER_ORG/onload:$TRAVIS_TAG-trusty &&
           docker tag onload:trusty $DOCKER_ORG/onload:$TRAVIS_TAG-trusty-nozf &&
@@ -186,32 +186,32 @@ jobs:
 
     - stage: build docker image for flavor trusty (zf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onloadzf:trusty -f trusty/Dockerfile --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:trusty $DOCKER_ORG/onloadzf:trusty &&
           docker push $DOCKER_ORG/onloadzf:trusty ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:trusty $DOCKER_ORG/onloadzf:$TRAVIS_TAG-trusty &&
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-trusty ;
         fi
 
     - stage: build docker image for flavor xenial (nozf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onload:xenial -f xenial/Dockerfile --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:xenial $DOCKER_ORG/onload:xenial &&
           docker push $DOCKER_ORG/onload:xenial &&
           docker tag onload:xenial $DOCKER_ORG/onload:xenial-nozf &&
           docker push $DOCKER_ORG/onload:xenial-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:xenial $DOCKER_ORG/onload:$TRAVIS_TAG-xenial &&
           docker push $DOCKER_ORG/onload:$TRAVIS_TAG-xenial &&
           docker tag onload:xenial $DOCKER_ORG/onload:$TRAVIS_TAG-xenial-nozf &&
@@ -220,32 +220,32 @@ jobs:
 
     - stage: build docker image for flavor xenial (zf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onloadzf:xenial -f xenial/Dockerfile --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:xenial $DOCKER_ORG/onloadzf:xenial &&
           docker push $DOCKER_ORG/onloadzf:xenial ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:xenial $DOCKER_ORG/onloadzf:$TRAVIS_TAG-xenial &&
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-xenial ;
         fi
 
     - stage: build docker image for flavor bionic (nozf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onload:bionic -f bionic/Dockerfile --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:bionic $DOCKER_ORG/onload:bionic &&
           docker push $DOCKER_ORG/onload:bionic &&
           docker tag onload:bionic $DOCKER_ORG/onload:bionic-nozf &&
           docker push $DOCKER_ORG/onload:bionic-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:bionic $DOCKER_ORG/onload:$TRAVIS_TAG-bionic &&
           docker push $DOCKER_ORG/onload:$TRAVIS_TAG-bionic &&
           docker tag onload:bionic $DOCKER_ORG/onload:$TRAVIS_TAG-bionic-nozf &&
@@ -254,32 +254,32 @@ jobs:
 
     - stage: build docker image for flavor bionic (zf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onloadzf:bionic -f bionic/Dockerfile --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:bionic $DOCKER_ORG/onloadzf:bionic &&
           docker push $DOCKER_ORG/onloadzf:bionic ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:bionic $DOCKER_ORG/onloadzf:$TRAVIS_TAG-bionic &&
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-bionic ;
         fi
 
     - stage: build docker image for flavor disco (nozf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onload:disco -f disco/Dockerfile --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:disco $DOCKER_ORG/onload:disco &&
           docker push $DOCKER_ORG/onload:disco &&
           docker tag onload:disco $DOCKER_ORG/onload:disco-nozf &&
           docker push $DOCKER_ORG/onload:disco-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:disco $DOCKER_ORG/onload:$TRAVIS_TAG-disco &&
           docker push $DOCKER_ORG/onload:$TRAVIS_TAG-disco &&
           docker tag onload:disco $DOCKER_ORG/onload:$TRAVIS_TAG-disco-nozf &&
@@ -288,32 +288,32 @@ jobs:
 
     - stage: build docker image for flavor disco (zf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onloadzf:disco -f disco/Dockerfile --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:disco $DOCKER_ORG/onloadzf:disco &&
           docker push $DOCKER_ORG/onloadzf:disco ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:disco $DOCKER_ORG/onloadzf:$TRAVIS_TAG-disco &&
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-disco ;
         fi
 
     - stage: build docker image for flavor focal (nozf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onload:focal -f focal/Dockerfile --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:focal $DOCKER_ORG/onload:focal &&
           docker push $DOCKER_ORG/onload:focal &&
           docker tag onload:focal $DOCKER_ORG/onload:focal-nozf &&
           docker push $DOCKER_ORG/onload:focal-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onload:focal $DOCKER_ORG/onload:$TRAVIS_TAG-focal &&
           docker push $DOCKER_ORG/onload:$TRAVIS_TAG-focal &&
           docker tag onload:focal $DOCKER_ORG/onload:$TRAVIS_TAG-focal-nozf &&
@@ -322,15 +322,15 @@ jobs:
 
     - stage: build docker image for flavor focal (zf)
       script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
       - docker build -t onloadzf:focal -f focal/Dockerfile --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:focal $DOCKER_ORG/onloadzf:focal &&
           docker push $DOCKER_ORG/onloadzf:focal ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
           docker tag onloadzf:focal $DOCKER_ORG/onloadzf:$TRAVIS_TAG-focal &&
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-focal ;
         fi
