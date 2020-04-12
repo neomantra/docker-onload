@@ -334,3 +334,38 @@ jobs:
           docker tag onloadzf:disco $DOCKER_ORG/onloadzf:$TRAVIS_TAG-disco &&
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-disco ;
         fi
+
+    - stage: build docker image for flavor focal (nozf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onload:focal -f focal/Dockerfile --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:focal $DOCKER_ORG/onload:focal &&
+          docker push $DOCKER_ORG/onload:focal &&
+          docker tag onload:focal $DOCKER_ORG/onload:focal-nozf &&
+          docker push $DOCKER_ORG/onload:focal-nozf ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onload:focal $DOCKER_ORG/onload:$TRAVIS_TAG-focal &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-focal &&
+          docker tag onload:focal $DOCKER_ORG/onload:$TRAVIS_TAG-focal-nozf &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-focal-nozf ;
+        fi
+
+    - stage: build docker image for flavor focal (zf)
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t onloadzf:focal -f focal/Dockerfile --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:focal $DOCKER_ORG/onloadzf:focal &&
+          docker push $DOCKER_ORG/onloadzf:focal ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
+          docker tag onloadzf:focal $DOCKER_ORG/onloadzf:$TRAVIS_TAG-focal &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-focal ;
+        fi
+
