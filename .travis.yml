@@ -267,40 +267,6 @@ jobs:
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-bionic ;
         fi
 
-    - stage: build docker image for flavor cosmic (nozf)
-      script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t onload:cosmic -f cosmic/Dockerfile --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
-      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
-          docker tag onload:cosmic $DOCKER_ORG/onload:cosmic &&
-          docker push $DOCKER_ORG/onload:cosmic &&
-          docker tag onload:cosmic $DOCKER_ORG/onload:cosmic-nozf &&
-          docker push $DOCKER_ORG/onload:cosmic-nozf ;
-        fi
-      - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
-          docker tag onload:cosmic $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic &&
-          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic &&
-          docker tag onload:cosmic $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic-nozf &&
-          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-cosmic-nozf ;
-        fi
-
-    - stage: build docker image for flavor cosmic (zf)
-      script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t onloadzf:cosmic  -f cosmic/Dockerfile --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
-      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
-          docker tag onloadzf:cosmic $DOCKER_ORG/onloadzf:cosmic &&
-          docker push $DOCKER_ORG/onloadzf:cosmic ;
-        fi
-      - if [[ "$TRAVIS_TAG" ]] ; then
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" &&
-          docker tag onloadzf:cosmic $DOCKER_ORG/onloadzf:$TRAVIS_TAG-cosmic &&
-          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-cosmic ;
-        fi
-
     - stage: build docker image for flavor disco (nozf)
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"

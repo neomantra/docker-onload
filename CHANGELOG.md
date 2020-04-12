@@ -3,6 +3,7 @@
 ## 2020-04-12 (tagged 7.0.0.176)
 
  * Add Ubuntu `focal` flavor.
+ * Remove Ubuntu `cosmic` flavor (end of life)
 
 ## 2020-02-12 (tagged 7.0.0.176)
 
