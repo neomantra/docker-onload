@@ -27,6 +27,7 @@ IMAGE_FLAVORS = {
     'centos'   => { :flavor => 'centos' },
     'cosmic'   => { :flavor => 'cosmic' },
     'disco'    => { :flavor => 'disco' },
+    'focal'    => { :flavor => 'focal' },
     'precise'  => { :flavor => 'precise' },
     'stretch'  => { :flavor => 'stretch' },
     'trusty'   => { :flavor => 'trusty' },
@@ -60,6 +61,8 @@ build_onload_image.rb [options]
 
     --execute  -x             also execute the build line
 
+    --push     -p             push the built image
+
     --verbose  -v             verbose output
     --help     -h             show this help
 END_OF_USAGE
@@ -67,6 +70,7 @@ END_OF_USAGE
 $opts = {
     :action    => nil,
     :execute   => false,
+    :push      => false,
     :version   => nil,
     :flavor    => nil,
     :tag       => nil,
@@ -92,6 +96,7 @@ begin
         [ '--quiet',    '-q', GetoptLong::NO_ARGUMENT ],
         [ '--no-cache',       GetoptLong::NO_ARGUMENT ],
         [ '--execute',  '-x', GetoptLong::NO_ARGUMENT ],
+        [ '--push',     '-p' ,GetoptLong::NO_ARGUMENT ],
         [ '--verbose',  '-v', GetoptLong::NO_ARGUMENT ],
         [ '--help',     '-h', GetoptLong::NO_ARGUMENT ]
     ).each do |opt, arg|
@@ -130,6 +135,8 @@ begin
             $opts[:cache] = false
         when '--execute'
             $opts[:execute] = true
+        when '--push'
+            $opts[:push] = true
         when '--verbose'
             $opts[:verbose] += 1
         when '--help'
@@ -191,6 +198,15 @@ when :build
         tag = "#{$opts[:autotag]}#{V}-#{F}#{$opts[:zf] ? "" : "-nozf"}"
     end
 
+    if $opts[:push] && !$opts[:execute] then
+        STDERR << "--push requires --execute\n"
+        exit(-1)
+    end
+    if $opts[:push] && tag.nil? then
+        STDERR << "--push requires --tag or --autotag\n"
+        exit(-1)
+    end
+
     VDATA = ONLOAD_VERSIONS[V]
     cmd = "docker build --build-arg ONLOAD_VERSION=#{VDATA[:version]} --build-arg ONLOAD_MD5SUM=#{VDATA[:md5sum]} "
     package_url = $opts[:url] || VDATA[:package_url]
@@ -213,7 +229,14 @@ when :build
     STDOUT << cmd << "\n"
     if $opts[:execute] then
         res = system(cmd)
-        STDERR << "ERROR: build failed with code #{$?}\n" if !res
+        if !res then
+            STDERR << "ERROR: docker build failed with code #{$?}\n"
+        elsif $opts[:push] then
+            res = system("docker push #{tag}")
+            if !res then
+                STDERR << "ERROR: docker push failed with code #{$?}\n"
+            end
+        end
     end
 
 when :help
