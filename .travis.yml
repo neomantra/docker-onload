@@ -267,40 +267,6 @@ jobs:
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-bionic ;
         fi
 
-    - stage: build docker image for flavor disco (nozf)
-      script:
-      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
-      - docker build -t onload:disco -f disco/Dockerfile --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
-      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
-          docker tag onload:disco $DOCKER_ORG/onload:disco &&
-          docker push $DOCKER_ORG/onload:disco &&
-          docker tag onload:disco $DOCKER_ORG/onload:disco-nozf &&
-          docker push $DOCKER_ORG/onload:disco-nozf ;
-        fi
-      - if [[ "$TRAVIS_TAG" ]] ; then
-          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
-          docker tag onload:disco $DOCKER_ORG/onload:$TRAVIS_TAG-disco &&
-          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-disco &&
-          docker tag onload:disco $DOCKER_ORG/onload:$TRAVIS_TAG-disco-nozf &&
-          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-disco-nozf ;
-        fi
-
-    - stage: build docker image for flavor disco (zf)
-      script:
-      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
-      - docker build -t onloadzf:disco -f disco/Dockerfile --build-arg ONLOAD_WITHZF=1 --build-arg ONLOAD_PACKAGE_URL=$ONLOAD_PACKAGE_URL .
-      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
-          docker tag onloadzf:disco $DOCKER_ORG/onloadzf:disco &&
-          docker push $DOCKER_ORG/onloadzf:disco ;
-        fi
-      - if [[ "$TRAVIS_TAG" ]] ; then
-          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
-          docker tag onloadzf:disco $DOCKER_ORG/onloadzf:$TRAVIS_TAG-disco &&
-          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-disco ;
-        fi
-
     - stage: build docker image for flavor focal (nozf)
       script:
       - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin

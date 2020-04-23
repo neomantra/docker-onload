@@ -1,5 +1,10 @@
 # docker-onload CHANGELOG
 
+## 2020-04-23 (tagged 7.0.0.176)
+
+ * Remove Ubuntu `disco` flavor (end of life)
+ * Move stale Dockerfiles to `_archive` folder
+
 ## 2020-04-12 (tagged 7.0.0.176)
 
  * Add Ubuntu `focal` flavor.
