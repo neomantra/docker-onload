@@ -1,5 +1,9 @@
 # docker-onload CHANGELOG
 
+## 2020-05-06 (tagged 7.1.0.265)
+
+ * Update to Onload 7.1.0.265
+
 ## 2020-04-23 (tagged 7.0.0.176)
 
  * Remove Ubuntu `disco` flavor (end of life)

@@ -10,7 +10,7 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 
 ## Supported Docker Hub tags for image `neomantra/onload` and respective `Dockerfile` links
 
-These unversioned tags currently map to `7.0.0.176`:
+These unversioned tags currently map to `7.1.0.265`:
 
 - [`centos-nozf` (*centos/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos/Dockerfile)
 - [`precise-nozf` (*precise/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile)
@@ -23,6 +23,16 @@ These unversioned tags currently map to `7.0.0.176`:
 
 The following versioned tags are available:
 
+- `7.1.0.265-centos-nozf`
+- `7.1.0.265-precise-nozf`
+- `7.1.0.265-trusty-nozf`
+- `7.1.0.265-stretch-nozf`
+- `7.1.0.265-xenial-nozf`
+- `7.1.0.265-bionic-nozf`
+- `7.1.0.265-cosmic-nozf`
+- `7.1.0.265-disco-nozf`
+- `7.1.0.265-focal-nozf`
+- `7.1.0.265-buster-nozf`
 - `7.0.0.176-centos-nozf`
 - `7.0.0.176-precise-nozf`
 - `7.0.0.176-trusty-nozf`
@@ -134,7 +144,7 @@ Here's a bash one-liner for extracting the OpenOnload version year:
 
  * Due to a current limitation with OpenOnload, you should run with `EF_USE_HUGE_PAGES=0` if you share Onload stacks.
 
- * Some libraries, such as [jemalloc](http://jemalloc.net/) need to invoke syscalls at startup.  This can cause infinite loops because the OpenOnload acceleration also needs malloc (via dlsym); see jemalloc issues [443](https://github.com/jemalloc/jemalloc/issues/443) and [1426](https://github.com/jemalloc/jemalloc/issues/1426).  This can be alleviated by setting `ONLOAD_DISABLE_SYSCALL_HOOK=1`; note you will also need to set `ONLOAD_USERSPACE_ID` to match the unpatched driver version. **NOTE:** This maybe have been fixed in `7.0.0.176`: "SF-122792-KI/bug62297: avoid hang at app startup with jemalloc".
+ * Some libraries, such as [jemalloc](http://jemalloc.net/) need to invoke syscalls at startup.  This can cause infinite loops because the OpenOnload acceleration also needs malloc (via dlsym); see jemalloc issues [443](https://github.com/jemalloc/jemalloc/issues/443) and [1426](https://github.com/jemalloc/jemalloc/issues/1426).  This can be alleviated by setting `ONLOAD_DISABLE_SYSCALL_HOOK=1`; note you will also need to set `ONLOAD_USERSPACE_ID` to match the unpatched driver version. **NOTE:** This may have been fixed in `7.0.0.176`: "SF-122792-KI/bug62297: avoid hang at app startup with jemalloc".
 
  * These OpenOnload builds default to using `-march` and `-mtune` based on the CPU-type of the build machine.  This might not be optimial or runnable on your runtime platform.  A future release will allow this to be specified as Docker build arguments.
 
@@ -196,7 +206,7 @@ build_onload_image.rb [options]
 Example usage:
 
 ```
-./build_onload_image.rb -o 7.0.0.176 --arg foo -f buster --zf -x
+./build_onload_image.rb -o 7.1.0.265 --arg foo -f buster --zf -x
 ```
 
 There are also `build_all_flavors.sh` and `build_all_images.sh`.
@@ -226,15 +236,15 @@ The Dockerfile downloads specific versions from [openonload.org](https://openonl
 
 | Key  | Default | Description |
 :----- | :-----: |:----------- |
-|ONLOAD_VERSION | "7.0.0.176" |The version of OpenOnload to download. |
-|ONLOAD_MD5SUM | "851ccf4fc76c96bcbeb01e1c57b20cce" |The MD5 checksum of the download. |
+|ONLOAD_VERSION | "7.1.0.265" |The version of OpenOnload to download. |
+|ONLOAD_MD5SUM | "4db72fe198ec88d71fb1d39ef60c5ba7" |The MD5 checksum of the download. |
 |ONLOAD_PACKAGE_URL | (see below) | If set, it will download and unzip the tarball from the newer packaging. |
 |ONLOAD_LEGACY_URL | (see below) | Download the OpenOnload tarball from this URL, `ONLOAD_PACKAGE_URL` has priority. |
 |ONLOAD_WITHZF | |Set to non-empty to include TCPDirect. |
 |ONLOAD_DISABLE_SYSCALL_HOOK | |Set to non-empty to disables hooking the syscall function from libc. |
 |ONLOAD_USERSPACE_ID | |Set to non-empty to specify the userspace build md5sum ID. |
 
-`ONLOAD_PACKAGE_URL` defaults to https://support.solarflare.com/index.php/component/cognidox/?task=download&file=SF-122921-DH-1.xml&subdoc=SF-109585-LS&subissue=32&o=1&format=raw
+`ONLOAD_PACKAGE_URL` defaults to https://support.solarflare.com/index.php/component/cognidox/?task=download&file=SF-122921-DH-2.xml&subdoc=SF-109585-LS&subissue=33&o=1&format=raw
 
 `ONLOAD_LEGACY_URL` defaults to https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz.   If you want to build from a legacy (non-packaged) URL, you must also set `ONLOAD_PACKAGE_URL` to `''` (empty string).
 
@@ -244,6 +254,7 @@ If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID 
 
 | OpenOnload Version | Driver Interface ID |
 :----------- |:------------------- |
+| 7.1.0.265  | d9857bc9bddb5c6abdeb3f22d69b21d1 |
 | 7.0.0.176  | 6ac17472788a64c61013f3d7ed9ae4c9 |
 | 201811     | 357bb6508f1e324ea32da88f948efafa |
 | 201811-u1  | 2d850c0cd0616655dc3e31c7937acaf7 |

@@ -5,6 +5,7 @@
 require 'getoptlong'
 
 ONLOAD_VERSIONS = {
+    '7.1.0.265'   => { :version => '7.1.0.265',   :md5sum => '4db72fe198ec88d71fb1d39ef60c5ba7', :driverid => 'd9857bc9bddb5c6abdeb3f22d69b21d1', :package_url => "https://support.solarflare.com/index.php/component/cognidox/?task=download&file=SF-122921-DH-2.xml&subdoc=SF-109585-LS&subissue=33&o=1&format=raw" },
     '7.0.0.176'   => { :version => '7.0.0.176',   :md5sum => '851ccf4fc76c96bcbeb01e1c57b20cce', :driverid => '6ac17472788a64c61013f3d7ed9ae4c9', :package_url => "https://support.solarflare.com/index.php/component/cognidox/?task=download&file=SF-122921-DH-1.xml&subdoc=SF-109585-LS&subissue=32&o=1&format=raw" },
     '201811-u1'   => { :version => '201811-u1',   :md5sum => '357e64862aa4145e49d218fd04e63407', :driverid => '2d850c0cd0616655dc3e31c7937acaf7' },
     '201811'      => { :version => '201811',      :md5sum => 'fde70da355e11c8b4114b54114a35de1', :driverid => '357bb6508f1e324ea32da88f948efafa' },
