@@ -12,6 +12,6 @@ FLAVOR="${1:-bionic}"
 
 
 for VERSION in $(./build_onload_image.rb --versions); do
-    time ./build_onload_image.rb -x -v $DOCKER_FWD -f $FLAVOR -b $VERSION -a ootestbuild:
-    time ./build_onload_image.rb -x -v $DOCKER_FWD -f $FLAVOR -b $VERSION -a ootestbuild: --zf
+    time ./build_onload_image.rb -x -v $DOCKER_FWD -f $FLAVOR -o $VERSION -a ootestbuild:
+    time ./build_onload_image.rb -x -v $DOCKER_FWD -f $FLAVOR -o $VERSION -a ootestbuild: --zf
 done

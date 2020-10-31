@@ -1,5 +1,12 @@
 # docker-onload CHANGELOG
 
+## 2020-10-31 (tagged 7.1.0.265)
+
+ * Add `centos8` flavor
+ * Rename `centos` to `centos7`
+ * Update to Solarflare download URLs
+ * Fix broken args in `build_all_images.sh`
+
 ## 2020-05-06 (tagged 7.1.0.265)
 
  * Update to Onload 7.1.0.265

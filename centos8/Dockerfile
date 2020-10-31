@@ -1,6 +1,6 @@
-# Dockerfile - CentOS 7
+# Dockerfile - CentOS 8
 #
-# Installs Solarflare's OpenOnload into CentOS 7.
+# Installs Solarflare's OpenOnload into CentOS 8.
 #
 # OpenOnload web page:
 #    https://www.openonload.org/
@@ -16,12 +16,12 @@
 #
 
 ARG ONLOAD_CENTOS_BASE="centos"
-ARG ONLOAD_CENTOS_TAG="7"
+ARG ONLOAD_CENTOS_TAG="8"
 
 FROM ${ONLOAD_CENTOS_BASE}:${ONLOAD_CENTOS_TAG}
 
 ARG ONLOAD_CENTOS_BASE="centos"
-ARG ONLOAD_CENTOS_TAG="7"
+ARG ONLOAD_CENTOS_TAG="8"
 
 # Onload version and its md5sum
 ARG ONLOAD_VERSION="7.1.0.265"
@@ -30,7 +30,7 @@ ARG ONLOAD_MD5SUM="4db72fe198ec88d71fb1d39ef60c5ba7"
 # Onload package URL and legacy URL
 # If ONLOAD_PACKAGE_URL is set, it will download and unzip the tarball from the newer packaging,
 # otherwise it will download the tarball from ONLOAD_LEGACY_URL as before.
-ARG ONLOAD_PACKAGE_URL="https://support.solarflare.com/index.php/component/cognidox/?task=download&file=SF-122921-DH-2.xml&subdoc=SF-109585-LS&subissue=33&o=1&format=raw"
+ARG ONLOAD_PACKAGE_URL="https://support.solarflare.com/wp/onload?sd=SF-109585-LS-33&pe=SF-122921-DH-2"
 ARG ONLOAD_LEGACY_URL="https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz"
 
 # When ONLOAD_WITHZF is non-empty, the build includes Solarflare's TCPDirect library.
@@ -61,8 +61,9 @@ ARG ONLOAD_USERSPACE_ID
 # 3) Extract, build, and install onload
 # 4) Cleanup
 
-RUN \
-    yum install -y \
+RUN yum install -y 'dnf-command(config-manager)' \
+    && yum config-manager --set-enabled PowerTools \
+    && yum install -y \
         autoconf \
         automake \
         bash \
@@ -81,15 +82,17 @@ RUN \
         libtool \
         make \
         module-init-tools \
-        python-devel \
+        python3-devel \
         sed \
         tar \
         unzip \
         valgrind-devel \
-        which \
-    && cd /tmp \
+        which
+
+RUN cd /tmp \
     && if [ -n "${ONLOAD_PACKAGE_URL}" ] ; then \
           curl -fSL "${ONLOAD_PACKAGE_URL}" -o /tmp/onload-${ONLOAD_VERSION}-package.zip \
+          && ls -l /tmp \
           && unzip /tmp/onload-${ONLOAD_VERSION}-package.zip \
           && echo "${ONLOAD_MD5SUM} onload-${ONLOAD_VERSION}.tgz" | md5sum --check \
           && tar -zxf onload-${ONLOAD_VERSION}.tgz ; \

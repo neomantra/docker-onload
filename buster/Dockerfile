@@ -30,7 +30,7 @@ ARG ONLOAD_MD5SUM="4db72fe198ec88d71fb1d39ef60c5ba7"
 # Onload package URL and legacy URL
 # If ONLOAD_PACKAGE_URL is set, it will download and unzip the tarball from the newer packaging,
 # otherwise it will download the tarball from ONLOAD_LEGACY_URL as before.
-ARG ONLOAD_PACKAGE_URL="https://support.solarflare.com/index.php/component/cognidox/?task=download&file=SF-122921-DH-2.xml&subdoc=SF-109585-LS&subissue=33&o=1&format=raw"
+ARG ONLOAD_PACKAGE_URL="https://support.solarflare.com/wp/onload?sd=SF-109585-LS-33&pe=SF-122921-DH-2"
 ARG ONLOAD_LEGACY_URL="https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz"
 
 # When ONLOAD_WITHZF is non-empty, the build includes Solarflare's TCPDirect library.

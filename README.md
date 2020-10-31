@@ -12,7 +12,8 @@ See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/m
 
 These unversioned tags currently map to `7.1.0.265`:
 
-- [`centos-nozf` (*centos/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos/Dockerfile)
+- [`centos7-nozf` (*centos7/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos7/Dockerfile)
+- [`centos8-nozf` (*centos8/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos8/Dockerfile)
 - [`precise-nozf` (*precise/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile)
 - [`stretch-nozf` (*stretch/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/stretch/Dockerfile)
 - [`trusty-nozf` (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile)
@@ -23,7 +24,8 @@ These unversioned tags currently map to `7.1.0.265`:
 
 The following versioned tags are available:
 
-- `7.1.0.265-centos-nozf`
+- `7.1.0.265-centos7-nozf`
+- `7.1.0.265-centos8-nozf`
 - `7.1.0.265-precise-nozf`
 - `7.1.0.265-trusty-nozf`
 - `7.1.0.265-stretch-nozf`
@@ -215,7 +217,8 @@ There are also `build_all_flavors.sh` and `build_all_images.sh`.
 
 Dockerfiles are provided for the following base systems, selecting the Dockerfile path with `-f`:
 
- * [CentOS 7](https://github.com/neomantra/docker-onload/centos/Dockerfile) (`centos/Dockerfile`)
+ * [CentOS 7](https://github.com/neomantra/docker-onload/centos7/Dockerfile) (`centos7/Dockerfile`)
+ * [CentOS 8](https://github.com/neomantra/docker-onload/centos8/Dockerfile) (`centos8/Dockerfile`)
  * [Debian Stretch](https://github.com/neomantra/docker-onload/stretch/Dockerfile) (`stretch/Dockerfile`)
  * [Ubuntu Precise](https://github.com/neomantra/docker-onload/precise/Dockerfile) (`precise/Dockerfile`)
  * [Ubuntu Trusty](https://github.com/neomantra/docker-onload/trusty/Dockerfile) (`trusty/Dockerfile`)
@@ -244,7 +247,7 @@ The Dockerfile downloads specific versions from [openonload.org](https://openonl
 |ONLOAD_DISABLE_SYSCALL_HOOK | |Set to non-empty to disables hooking the syscall function from libc. |
 |ONLOAD_USERSPACE_ID | |Set to non-empty to specify the userspace build md5sum ID. |
 
-`ONLOAD_PACKAGE_URL` defaults to https://support.solarflare.com/index.php/component/cognidox/?task=download&file=SF-122921-DH-2.xml&subdoc=SF-109585-LS&subissue=33&o=1&format=raw
+`ONLOAD_PACKAGE_URL` defaults to https://support.solarflare.com/wp/onload?sd=SF-109585-LS-33&pe=SF-122921-DH-2
 
 `ONLOAD_LEGACY_URL` defaults to https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz.   If you want to build from a legacy (non-packaged) URL, you must also set `ONLOAD_PACKAGE_URL` to `''` (empty string).
 

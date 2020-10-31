@@ -28,38 +28,72 @@ services:
 jobs:
   include:
 
-    - stage: build docker image for flavor centos (nozf)
+    - stage: build docker image for flavor centos7 (nozf)
       script:
       - echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin
-      - docker build -t onload:centos -f centos/Dockerfile .
+      - docker build -t onload:centos7 -f centos7/Dockerfile .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
-          docker tag onload:centos $DOCKER_ORG/onload:centos &&
-          docker push $DOCKER_ORG/onload:centos &&
-          docker tag onload:centos $DOCKER_ORG/onload:centos-nozf &&
-          docker push $DOCKER_ORG/onload:centos-nozf ;
+          docker tag onload:centos7 $DOCKER_ORG/onload:centos7 &&
+          docker push $DOCKER_ORG/onload:centos7 &&
+          docker tag onload:centos7 $DOCKER_ORG/onload:centos7-nozf &&
+          docker push $DOCKER_ORG/onload:centos7-nozf ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
           echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
-          docker tag onload:centos $DOCKER_ORG/onload:$TRAVIS_TAG-centos &&
-          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-centos &&
-          docker tag onload:centos $DOCKER_ORG/onload:$TRAVIS_TAG-centos-nozf &&
-          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-centos-nozf ;
+          docker tag onload:centos7 $DOCKER_ORG/onload:$TRAVIS_TAG-centos7 &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-centos7 &&
+          docker tag onload:centos7 $DOCKER_ORG/onload:$TRAVIS_TAG-centos7-nozf &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-centos7-nozf ;
         fi
 
-    - stage: build docker image for flavor centos (zf)
+    - stage: build docker image for flavor centos7 (zf)
       script:
       - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
-      - docker build -t onloadzf:centos -f centos/Dockerfile --build-arg ONLOAD_WITHZF=1 .
+      - docker build -t onloadzf:centos7 -f centos7/Dockerfile --build-arg ONLOAD_WITHZF=1 .
       - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
           echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
-          docker tag onloadzf:centos $DOCKER_ORG/onloadzf:centos &&
-          docker push $DOCKER_ORG/onloadzf:centos ;
+          docker tag onloadzf:centos7 $DOCKER_ORG/onloadzf:centos7 &&
+          docker push $DOCKER_ORG/onloadzf:centos7 ;
         fi
       - if [[ "$TRAVIS_TAG" ]] ; then
           echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
-          docker tag onloadzf:centos $DOCKER_ORG/onloadzf:$TRAVIS_TAG-centos &&
-          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-centos ;
+          docker tag onloadzf:centos7 $DOCKER_ORG/onloadzf:$TRAVIS_TAG-centos7 &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-centos7 ;
+        fi
+
+    - stage: build docker image for flavor centos8 (nozf)
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin
+      - docker build -t onload:centos8 -f centos8/Dockerfile .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
+          docker tag onload:centos8 $DOCKER_ORG/onload:centos8 &&
+          docker push $DOCKER_ORG/onload:centos8 &&
+          docker tag onload:centos8 $DOCKER_ORG/onload:centos8-nozf &&
+          docker push $DOCKER_ORG/onload:centos8-nozf ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
+          docker tag onload:centos8 $DOCKER_ORG/onload:$TRAVIS_TAG-centos8 &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-centos8 &&
+          docker tag onload:centos8 $DOCKER_ORG/onload:$TRAVIS_TAG-centos8-nozf &&
+          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-centos8-nozf ;
+        fi
+
+    - stage: build docker image for flavor centos8 (zf)
+      script:
+      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
+      - docker build -t onloadzf:centos8 -f centos8/Dockerfile --build-arg ONLOAD_WITHZF=1 .
+      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
+          docker tag onloadzf:centos8 $DOCKER_ORG/onloadzf:centos8 &&
+          docker push $DOCKER_ORG/onloadzf:centos8 ;
+        fi
+      - if [[ "$TRAVIS_TAG" ]] ; then
+          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
+          docker tag onloadzf:centos8 $DOCKER_ORG/onloadzf:$TRAVIS_TAG-centos8 &&
+          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-centos8 ;
         fi
 
     - stage: build docker image for flavor stretch (nozf)

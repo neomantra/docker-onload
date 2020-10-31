@@ -1,6 +1,6 @@
-# Dockerfile - Ubuntu Bionic Beaver
+# Dockerfile - CentOS 7
 #
-# Installs Solarflare's OpenOnload into Ubuntu Bionic.
+# Installs Solarflare's OpenOnload into CentOS 7.
 #
 # OpenOnload web page:
 #    https://www.openonload.org/
@@ -10,18 +10,18 @@
 #   docker run --net=host --device=/dev/onload --device=/dev/onload_epoll --device=/dev/onload_cplane -it ONLOAD_ENABLED_IMAGE_ID [COMMAND] [ARG...]
 #
 # NOTE: The host's OpenOnload version must be the same as the container's.
-#
+# 
 # Copyright (c) 2020 Neomantra BV
 # Released under the MIT License, see LICENSE.txt
 #
 
-ARG ONLOAD_DEBIAN_BASE="ubuntu"
-ARG ONLOAD_DEBIAN_TAG="bionic"
+ARG ONLOAD_CENTOS_BASE="centos"
+ARG ONLOAD_CENTOS_TAG="7"
 
-FROM ${ONLOAD_DEBIAN_BASE}:${ONLOAD_DEBIAN_TAG}
+FROM ${ONLOAD_CENTOS_BASE}:${ONLOAD_CENTOS_TAG}
 
-ARG ONLOAD_DEBIAN_BASE="ubuntu"
-ARG ONLOAD_DEBIAN_TAG="bionic"
+ARG ONLOAD_CENTOS_BASE="centos"
+ARG ONLOAD_CENTOS_TAG="7"
 
 # Onload version and its md5sum
 ARG ONLOAD_VERSION="7.1.0.265"
@@ -62,30 +62,31 @@ ARG ONLOAD_USERSPACE_ID
 # 4) Cleanup
 
 RUN \
-    DEBIAN_FRONTEND=noninteractive apt-get update -y \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    yum install -y \
         autoconf \
         automake \
-        ca-certificates \
-        coreutils \
-        curl \
-        ethtool \
+        bash \
+        binutils \
+        file \
+        gawk \
         gcc \
-        gcc-multilib \
-        kmod \
-        libc6-dev-i386 \
-        libpcap0.8-dev \
-        libtool-bin \
+        gettext \
+        glibc-common \
+        glibc-devel.i686 \
+        glibc-devel.x86_64 \
+        kernel-devel \
+        libgcc.i686 \
+        libgcc.x86_64 \
+        libpcap-devel \
+        libtool \
         make \
-        net-tools \
-        patch \
-        perl \
-        python-dev \
+        module-init-tools \
+        python-devel \
         sed \
         tar \
         unzip \
-        valgrind \
-        wget \
+        valgrind-devel \
+        which \
     && cd /tmp \
     && if [ -n "${ONLOAD_PACKAGE_URL}" ] ; then \
           curl -fSL "${ONLOAD_PACKAGE_URL}" -o /tmp/onload-${ONLOAD_VERSION}-package.zip \
@@ -115,17 +116,14 @@ RUN \
     && if [ -z ${ONLOAD_WITHZF} ] ; then \
         rm -rf /usr/include/zf /usr/bin/zf_stackdump /usr/bin/zf_debug /usr/lib/x86_64-linux-gnu/zf /usr/lib/x86_64-linux-gnu/libonload_zf* ; \
     fi \
-    && DEBIAN_FRONTEND=noninteractive apt-get remove -y --purge \
-        curl \
-        patch \
-    && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y
+    && yum clean all
 
-# TODO: which apt packages can we remove?
+# TODO: which yum packages can we remove
 
 # Labels for introspection
 LABEL maintainer="Evan Wies <evan@neomantra.net>"
-LABEL ONLOAD_DEBIAN_BASE="${ONLOAD_DEBIAN_BASE}"
-LABEL ONLOAD_DEBIAN_TAG="${ONLOAD_DEBIAN_TAG}"
+LABEL ONLOAD_CENTOS_BASE="${ONLOAD_CENTOS_BASE}"
+LABEL ONLOAD_CENTOS_TAG="${ONLOAD_CENTOS_TAG}"
 LABEL ONLOAD_PACKAGE_URL="${ONLOAD_PACKAGE_URL}"
 LABEL ONLOAD_LEGACY_URL="${ONLOAD_LEGACY_URL}"
 LABEL ONLOAD_VERSION="${ONLOAD_VERSION}"
