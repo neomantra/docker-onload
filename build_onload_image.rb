@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # Build helper for OpenOnload Docker images
-# Copyright (c) 2020 Neomantra BV.
+# Copyright (c) 2015-2021 Neomantra BV.
 
 require 'getoptlong'
 
@@ -27,14 +27,15 @@ IMAGE_FLAVORS = {
     'buster'   => { :flavor => 'buster' },
     'centos7'  => { :flavor => 'centos7' },
     'centos8'  => { :flavor => 'centos8' },
-    'cosmic'   => { :flavor => 'cosmic' },
-    'disco'    => { :flavor => 'disco' },
     'focal'    => { :flavor => 'focal' },
-    'precise'  => { :flavor => 'precise' },
     'stretch'  => { :flavor => 'stretch' },
     'trusty'   => { :flavor => 'trusty' },
     'xenial'   => { :flavor => 'xenial' }
 }
+# Archived Image Flavors
+#   'cosmic'   => { :flavor => 'cosmic' },
+#   'disco'    => { :flavor => 'disco' },
+#   'precise'  => { :flavor => 'precise' },
 
 ###############################################################################
 

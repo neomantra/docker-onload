@@ -1,5 +1,9 @@
 # docker-onload CHANGELOG
 
+## 2021-05-09 (to be tagged 7.1.1.75)
+
+ * Archive `precise` flavor
+
 ## 2020-10-31 (tagged 7.1.0.265)
 
  * Add `centos8` flavor

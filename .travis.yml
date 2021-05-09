@@ -164,40 +164,6 @@ jobs:
           docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-buster ;
         fi
 
-    - stage: build docker image for flavor precise (nozf)
-      script:
-      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
-      - docker build -t onload:precise -f precise/Dockerfile .
-      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
-          docker tag onload:precise $DOCKER_ORG/onload:precise &&
-          docker push $DOCKER_ORG/onload:precise &&
-          docker tag onload:precise $DOCKER_ORG/onload:precise-nozf &&
-          docker push $DOCKER_ORG/onload:precise-nozf ;
-        fi
-      - if [[ "$TRAVIS_TAG" ]] ; then
-          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
-          docker tag onload:precise $DOCKER_ORG/onload:$TRAVIS_TAG-precise &&
-          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-precise &&
-          docker tag onload:precise $DOCKER_ORG/onload:$TRAVIS_TAG-precise-nozf &&
-          docker push $DOCKER_ORG/onload:$TRAVIS_TAG-precise-nozf ;
-        fi
-
-    - stage: build docker image for flavor precise (zf)
-      script:
-      - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin
-      - docker build -t onloadzf:precise  -f precise/Dockerfile --build-arg ONLOAD_WITHZF=1 .
-      - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
-          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
-          docker tag onloadzf:precise $DOCKER_ORG/onloadzf:precise &&
-          docker push $DOCKER_ORG/onloadzf:precise ;
-        fi
-      - if [[ "$TRAVIS_TAG" ]] ; then
-          echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin &&
-          docker tag onloadzf:precise $DOCKER_ORG/onloadzf:$TRAVIS_TAG-precise &&
-          docker push $DOCKER_ORG/onloadzf:$TRAVIS_TAG-precise ;
-        fi
-
     - stage: build docker image for flavor trusty (nozf)
       script:
       - echo "$DOCKER_PASSWORD" docker login -u="$DOCKER_USERNAME" --password-stdin

@@ -220,12 +220,9 @@ Dockerfiles are provided for the following base systems, selecting the Dockerfil
  * [CentOS 7](https://github.com/neomantra/docker-onload/centos7/Dockerfile) (`centos7/Dockerfile`)
  * [CentOS 8](https://github.com/neomantra/docker-onload/centos8/Dockerfile) (`centos8/Dockerfile`)
  * [Debian Stretch](https://github.com/neomantra/docker-onload/stretch/Dockerfile) (`stretch/Dockerfile`)
- * [Ubuntu Precise](https://github.com/neomantra/docker-onload/precise/Dockerfile) (`precise/Dockerfile`)
  * [Ubuntu Trusty](https://github.com/neomantra/docker-onload/trusty/Dockerfile) (`trusty/Dockerfile`)
  * [Ubuntu Xenial](https://github.com/neomantra/docker-onload/xenial/Dockerfile) (`xenial/Dockerfile`)
  * [Ubuntu Bionic](https://github.com/neomantra/docker-onload/bionic/Dockerfile) (`bionic/Dockerfile`)
- * [Ubuntu Cosmic](https://github.com/neomantra/docker-onload/cosmic/Dockerfile) (`cosmic/Dockerfile`)
- * [Ubuntu Disco](https://github.com/neomantra/docker-onload/disco/Dockerfile) (`disco/Dockerfile`)
 
 Each system folder has a `Dockerfile`.
  
