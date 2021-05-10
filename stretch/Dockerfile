@@ -71,9 +71,7 @@ RUN \
         curl \
         ethtool \
         gcc \
-        gcc-multilib \
         kmod \
-        libc6-dev-i386 \
         libpcap0.8-dev \
         libtool-bin \
         make \
@@ -107,7 +105,7 @@ RUN \
         && sed -i "s/\$\$md5/${ONLOAD_USERSPACE_ID}/" src/lib/transport/ip/mmake.mk ; \
     fi \
     && cd scripts \
-    && ./onload_build --user \
+    && ./onload_build --user64 \
     && ./onload_install --userfiles --nobuild \
     && cd /tmp \
     && rm -rf onload-${ONLOAD_VERSION}* \
@@ -117,8 +115,6 @@ RUN \
     && DEBIAN_FRONTEND=noninteractive apt-get remove -y --purge \
         curl \
     && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y
-
-# TODO: which apt packages can we remove?
 
 # Labels for introspection
 LABEL maintainer="Evan Wies <evan@neomantra.net>"

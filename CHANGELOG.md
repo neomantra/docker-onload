@@ -3,6 +3,7 @@
 ## 2021-05-09 (to be tagged 7.1.1.75)
 
  * Update to Onload 7.1.1.75
+ * Only build 64-bit userspace components (no 32-bit applications)
  * Archive `precise` flavor
 
 ## 2020-10-31 (tagged 7.1.0.265)

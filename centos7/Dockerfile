@@ -72,10 +72,8 @@ RUN \
         gcc \
         gettext \
         glibc-common \
-        glibc-devel.i686 \
         glibc-devel.x86_64 \
         kernel-devel \
-        libgcc.i686 \
         libgcc.x86_64 \
         libpcap-devel \
         libtool \
@@ -109,7 +107,7 @@ RUN \
         && sed -i "s/\$\$md5/${ONLOAD_USERSPACE_ID}/" src/lib/transport/ip/mmake.mk ; \
     fi \
     && cd scripts \
-    && ./onload_build --user \
+    && ./onload_build --user64 \
     && ./onload_install --userfiles --nobuild \
     && cd /tmp \
     && rm -rf onload-${ONLOAD_VERSION}* \
@@ -118,7 +116,6 @@ RUN \
     fi \
     && yum clean all
 
-# TODO: which yum packages can we remove
 
 # Labels for introspection
 LABEL maintainer="Evan Wies <evan@neomantra.net>"
