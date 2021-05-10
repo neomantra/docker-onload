@@ -11,7 +11,7 @@
 #
 # NOTE: The host's OpenOnload version must be the same as the container's.
 # 
-# Copyright (c) 2020 Neomantra BV
+# Copyright (c) 2015-2021 Neomantra BV
 # Released under the MIT License, see LICENSE.txt
 #
 
@@ -24,13 +24,13 @@ ARG ONLOAD_DEBIAN_BASE="ubuntu"
 ARG ONLOAD_DEBIAN_TAG="xenial"
 
 # Onload version and its md5sum
-ARG ONLOAD_VERSION="7.1.0.265"
-ARG ONLOAD_MD5SUM="4db72fe198ec88d71fb1d39ef60c5ba7"
+ARG ONLOAD_VERSION="7.1.1.75"
+ARG ONLOAD_MD5SUM="39b2d8d40982f6f3afd3cdb084969e90"
 
 # Onload package URL and legacy URL
 # If ONLOAD_PACKAGE_URL is set, it will download and unzip the tarball from the newer packaging,
 # otherwise it will download the tarball from ONLOAD_LEGACY_URL as before.
-ARG ONLOAD_PACKAGE_URL="https://support.solarflare.com/wp/onload?sd=SF-109585-LS-33&pe=SF-122921-DH-2"
+ARG ONLOAD_PACKAGE_URL="https://support-nic.xilinx.com/wp/onload?sd=SF-109585-LS-35&pe=SF-122921-DH-4"
 ARG ONLOAD_LEGACY_URL="https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz"
 
 # When ONLOAD_WITHZF is non-empty, the build includes Solarflare's TCPDirect library.

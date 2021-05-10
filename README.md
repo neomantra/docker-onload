@@ -6,23 +6,36 @@
 
 See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/master/CHANGELOG.md).
 
+The `onload` image is built with `ONLOAD_WITHZF` set, thus without support for [TCPDirect](#tcpdirect) (aka ZF).  This is due to licensing restrictions.
+
 ----
 
 ## Supported Docker Hub tags for image `neomantra/onload` and respective `Dockerfile` links
 
-These unversioned tags currently map to `7.1.0.265`:
+These unversioned image tags currently map to `7.1.1.75`:
 
-- [`centos7-nozf` (*centos7/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos7/Dockerfile)
-- [`centos8-nozf` (*centos8/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos8/Dockerfile)
-- [`precise-nozf` (*precise/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/precise/Dockerfile)
-- [`stretch-nozf` (*stretch/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/stretch/Dockerfile)
-- [`trusty-nozf` (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile)
-- [`xenial-nozf` (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
-- [`bionic-nozf` (*bionic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bionic/Dockerfile)
-- [`focal-nozf` (*focal/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/focal/Dockerfile)
-- [`buster-nozf` (*buster/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/buster/Dockerfile)
+- [`centos7` (*centos7/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos7/Dockerfile)
+- [`centos8` (*centos8/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos8/Dockerfile)
+- [`stretch` (*stretch/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/stretch/Dockerfile)
+- [`buster` (*buster/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/buster/Dockerfile)
+- [`trusty` (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile)
+- [`xenial` (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
+- [`bionic` (*bionic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bionic/Dockerfile)
+- [`focal` (*focal/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/focal/Dockerfile)
 
 The following versioned tags are available:
+
+- `7.1.1.75-centos7-nozf`
+- `7.1.1.75-centos8-nozf`
+- `7.1.1.75-stretch-nozf`
+- `7.1.1.75-buster-nozf`
+- `7.1.1.75-trusty-nozf`
+- `7.1.1.75-xenial-nozf`
+- `7.1.1.75-bionic-nozf`
+- `7.1.1.75-focal-nozf`
+
+<details>
+  <summary>Older Tags</summary>
 
 - `7.1.0.265-centos7-nozf`
 - `7.1.0.265-centos8-nozf`
@@ -114,7 +127,8 @@ The following versioned tags are available:
 - `201509-u1-trusty`
 - `201509-u1-xenial`
 
-**NOTE** Since version 201606-u1, Docker Hub hosts images tagged as a `-nozf` variant.  These are built from [Dockerfile](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile) without `ONLOAD_WITHZF` set, thus without support for [TCPDirect](#tcpdirect) (aka ZF).
+</details>
+<br>
 
 ----
 
@@ -159,7 +173,8 @@ To run TCPDirect applications in a container, an addition device must be exporte
 `--device=/dev/sfc_char`
 
 TCPDirect is under a different license than OpenOnload; its binaries may not be distributed.
-Thus, we have introduced a `-nozf` variant for images hosted on [Docker Hub](https://hub.docker.com/r/neomantra/onload/).
+Thus, the `onload` public image on [Docker Hub](https://hub.docker.com/r/neomantra/onload/) does not have TCPDirect
+support.
 
 You are free to build and deploy TCPDirect-enabled images yourself with the regular Dockerfiles.
 To do so, set the build argument `ONLOAD_WITHZF` to a non-empty string (the Dockerfile checks `[ -z ${ONLOAD_WITHZF} ]`).
@@ -208,7 +223,7 @@ build_onload_image.rb [options]
 Example usage:
 
 ```
-./build_onload_image.rb -o 7.1.0.265 --arg foo -f buster --zf -x
+./build_onload_image.rb -o 7.1.1.75 --arg foo -f buster --zf -x
 ```
 
 There are also `build_all_flavors.sh` and `build_all_images.sh`.
@@ -220,9 +235,11 @@ Dockerfiles are provided for the following base systems, selecting the Dockerfil
  * [CentOS 7](https://github.com/neomantra/docker-onload/centos7/Dockerfile) (`centos7/Dockerfile`)
  * [CentOS 8](https://github.com/neomantra/docker-onload/centos8/Dockerfile) (`centos8/Dockerfile`)
  * [Debian Stretch](https://github.com/neomantra/docker-onload/stretch/Dockerfile) (`stretch/Dockerfile`)
+ * [Debian Buster](https://github.com/neomantra/docker-onload/buster/Dockerfile) (`buster/Dockerfile`)
  * [Ubuntu Trusty](https://github.com/neomantra/docker-onload/trusty/Dockerfile) (`trusty/Dockerfile`)
  * [Ubuntu Xenial](https://github.com/neomantra/docker-onload/xenial/Dockerfile) (`xenial/Dockerfile`)
  * [Ubuntu Bionic](https://github.com/neomantra/docker-onload/bionic/Dockerfile) (`bionic/Dockerfile`)
+  * [Ubuntu Focal](https://github.com/neomantra/docker-onload/focal/Dockerfile) (`focal/Dockerfile`)
 
 Each system folder has a `Dockerfile`.
  
@@ -236,24 +253,25 @@ The Dockerfile downloads specific versions from [openonload.org](https://openonl
 
 | Key  | Default | Description |
 :----- | :-----: |:----------- |
-|ONLOAD_VERSION | "7.1.0.265" |The version of OpenOnload to download. |
-|ONLOAD_MD5SUM | "4db72fe198ec88d71fb1d39ef60c5ba7" |The MD5 checksum of the download. |
+|ONLOAD_VERSION | "7.1.1.75" |The version of OpenOnload to download. |
+|ONLOAD_MD5SUM | "39b2d8d40982f6f3afd3cdb084969e90" |The MD5 checksum of the download. |
 |ONLOAD_PACKAGE_URL | (see below) | If set, it will download and unzip the tarball from the newer packaging. |
 |ONLOAD_LEGACY_URL | (see below) | Download the OpenOnload tarball from this URL, `ONLOAD_PACKAGE_URL` has priority. |
 |ONLOAD_WITHZF | |Set to non-empty to include TCPDirect. |
 |ONLOAD_DISABLE_SYSCALL_HOOK | |Set to non-empty to disables hooking the syscall function from libc. |
 |ONLOAD_USERSPACE_ID | |Set to non-empty to specify the userspace build md5sum ID. |
 
-`ONLOAD_PACKAGE_URL` defaults to https://support.solarflare.com/wp/onload?sd=SF-109585-LS-33&pe=SF-122921-DH-2
+`ONLOAD_PACKAGE_URL` defaults to https://support-nic.xilinx.com/wp/onload?sd=SF-109585-LS-35&pe=SF-122921-DH-4
 
 `ONLOAD_LEGACY_URL` defaults to https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz.   If you want to build from a legacy (non-packaged) URL, you must also set `ONLOAD_PACKAGE_URL` to `''` (empty string).
 
 If you change the `ONLOAD_VERSION`, you must also change `ONLOAD_MD5SUM` to match. Note that Docker is only supported by OpenOnload since version 201502.
 
-If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID of the driver.  It can be found in the build tree at `./build/gnu/lib/transport/ip/uk_intf_ver.h`. The following are driver interface IDs we have recorded:
+If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID of the driver.  It can be found in the build tree at `./build/gnu_x86_64/lib/transport/ip/uk_intf_ver.h`. The following are driver interface IDs we have recorded:
 
 | OpenOnload Version | Driver Interface ID |
 :----------- |:------------------- |
+| 7.1.1.75   | 65869c81c4a7f92b75316cf88446a9f1 |
 | 7.1.0.265  | d9857bc9bddb5c6abdeb3f22d69b21d1 |
 | 7.0.0.176  | 6ac17472788a64c61013f3d7ed9ae4c9 |
 | 201811     | 357bb6508f1e324ea32da88f948efafa |
@@ -261,6 +279,6 @@ If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID 
 
 ## License
 
-Copyright (c) 2015-2020 Neomantra BV
+Copyright (c) 2015-2021 Neomantra BV
 
 Released under the MIT License, see LICENSE.txt

@@ -2,6 +2,7 @@
 
 ## 2021-05-09 (to be tagged 7.1.1.75)
 
+ * Update to Onload 7.1.1.75
  * Archive `precise` flavor
 
 ## 2020-10-31 (tagged 7.1.0.265)
