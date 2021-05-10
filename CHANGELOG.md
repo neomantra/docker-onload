@@ -1,11 +1,13 @@
 # docker-onload CHANGELOG
 
-## 2021-05-09 (to be tagged 7.1.1.75)
+## 2021-05-09 (tagged 7.1.1.75)
 
  * Update to Onload 7.1.1.75
  * Only build 64-bit userspace components (no 32-bit applications)
  * `focal` flavor builds with GCC 10
  * Archive `precise` flavor
+ * Travis build with `docker_build_and_push_flavor.sh`
+ * Move to travis-ci.com
 
 ## 2020-10-31 (tagged 7.1.0.265)
 
