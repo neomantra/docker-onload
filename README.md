@@ -25,14 +25,14 @@ These unversioned image tags currently map to `7.1.1.75`:
 
 The following versioned tags are available:
 
-- `7.1.1.75-centos7-nozf`
-- `7.1.1.75-centos8-nozf`
-- `7.1.1.75-stretch-nozf`
-- `7.1.1.75-buster-nozf`
-- `7.1.1.75-trusty-nozf`
-- `7.1.1.75-xenial-nozf`
-- `7.1.1.75-bionic-nozf`
-- `7.1.1.75-focal-nozf`
+- `7.1.1.75-centos7`
+- `7.1.1.75-centos8`
+- `7.1.1.75-stretch`
+- `7.1.1.75-buster`
+- `7.1.1.75-trusty`
+- `7.1.1.75-xenial`
+- `7.1.1.75-bionic`
+- `7.1.1.75-focal`
 
 <details>
   <summary>Older Tags</summary>
