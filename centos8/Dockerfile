@@ -23,6 +23,9 @@ FROM ${ONLOAD_CENTOS_BASE}:${ONLOAD_CENTOS_TAG}
 ARG ONLOAD_CENTOS_BASE="centos"
 ARG ONLOAD_CENTOS_TAG="8"
 
+# The PowerTools repo changed names from PowerTools to powertools in Centos 8.3
+ARG ONLOAD_CENTOS_POWERTOOLS="powertools"
+
 # Onload version and its md5sum
 ARG ONLOAD_VERSION="7.1.1.75"
 ARG ONLOAD_MD5SUM="39b2d8d40982f6f3afd3cdb084969e90"
@@ -62,7 +65,7 @@ ARG ONLOAD_USERSPACE_ID
 # 4) Cleanup
 
 RUN yum install -y 'dnf-command(config-manager)' \
-    && yum config-manager --set-enabled PowerTools \
+    && yum config-manager --set-enabled "${ONLOAD_CENTOS_POWERTOOLS}" \
     && yum install -y \
         autoconf \
         automake \
@@ -123,6 +126,7 @@ RUN yum install -y 'dnf-command(config-manager)' \
 LABEL maintainer="Evan Wies <evan@neomantra.net>"
 LABEL ONLOAD_CENTOS_BASE="${ONLOAD_CENTOS_BASE}"
 LABEL ONLOAD_CENTOS_TAG="${ONLOAD_CENTOS_TAG}"
+LABEL ONLOAD_CENTOS_POWERTOOLS="${ONLOAD_CENTOS_POWERTOOLS}"
 LABEL ONLOAD_PACKAGE_URL="${ONLOAD_PACKAGE_URL}"
 LABEL ONLOAD_LEGACY_URL="${ONLOAD_LEGACY_URL}"
 LABEL ONLOAD_VERSION="${ONLOAD_VERSION}"
