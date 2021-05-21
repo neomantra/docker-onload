@@ -1,5 +1,10 @@
 # docker-onload CHANGELOG
 
+## 2021-05-21 (untagged)
+
+ * Add `bullseye` flavor which can be built from Git.
+   There is no automated build for it.
+
 ## 2021-05-09 (tagged 7.1.1.75)
 
  * Update to Onload 7.1.1.75

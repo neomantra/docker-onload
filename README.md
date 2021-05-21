@@ -255,6 +255,8 @@ The Dockerfile downloads specific versions from [openonload.org](https://openonl
 :----- | :-----: |:----------- |
 |ONLOAD_VERSION | "7.1.1.75" |The version of OpenOnload to download. |
 |ONLOAD_MD5SUM | "39b2d8d40982f6f3afd3cdb084969e90" |The MD5 checksum of the download. |
+|ONLOAD_GIT_REF | "" | If set, build from this Git Reference (currently `bullseye` only). |
+|ONLOAD_GIT_URL | https://github.com/Xilinx-CNS/onload.git | If building from git, which the URL of the repo to clone from |
 |ONLOAD_PACKAGE_URL | (see below) | If set, it will download and unzip the tarball from the newer packaging. |
 |ONLOAD_LEGACY_URL | (see below) | Download the OpenOnload tarball from this URL, `ONLOAD_PACKAGE_URL` has priority. |
 |ONLOAD_WITHZF | |Set to non-empty to include TCPDirect. |
@@ -276,6 +278,14 @@ If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID 
 | 7.0.0.176  | 6ac17472788a64c61013f3d7ed9ae4c9 |
 | 201811     | 357bb6508f1e324ea32da88f948efafa |
 | 201811-u1  | 2d850c0cd0616655dc3e31c7937acaf7 |
+
+## Building from Onload Git repo
+
+An initial `bullseye` Dockerfile is available for building from [upstream GitHub](https://github.com/Xilinx-CNS/onload.git), rather than pre-packaged releases:
+
+```
+docker build --build-arg ONLOAD_GIT_REF=master -f bullseye/Dockerfile .
+```
 
 ## License
 
