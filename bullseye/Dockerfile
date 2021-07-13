@@ -24,8 +24,8 @@ ARG ONLOAD_DEBIAN_BASE="debian"
 ARG ONLOAD_DEBIAN_TAG="bullseye-slim"
 
 # Onload version and its md5sum
-ARG ONLOAD_VERSION="7.1.1.75"
-ARG ONLOAD_MD5SUM="39b2d8d40982f6f3afd3cdb084969e90"
+ARG ONLOAD_VERSION="7.1.2.141"
+ARG ONLOAD_MD5SUM="bfda4a68267e2aa3d5bed02af229b4fc"
 
 # To build from an Onload git repository, set ONLOAD_GIT_REF.
 # Be sure to set the appropriate ONLOAD_VERSION and ONLOAD_USERSPACE_ID for your system.
@@ -35,7 +35,7 @@ ARG ONLOAD_GIT_URL="https://github.com/Xilinx-CNS/onload.git"
 # Onload package URL and legacy URL
 # If ONLOAD_PACKAGE_URL is set, it will download and unzip the tarball from the newer packaging,
 # otherwise it will download the tarball from ONLOAD_LEGACY_URL as before.
-ARG ONLOAD_PACKAGE_URL="https://support-nic.xilinx.com/wp/onload?sd=SF-109585-LS-35&pe=SF-122921-DH-4"
+ARG ONLOAD_PACKAGE_URL="https://support-nic.xilinx.com/wp/onload?sd=SF-109585-LS-36&pe=SF-122921-DH-5"
 ARG ONLOAD_LEGACY_URL="https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz"
 
 # When ONLOAD_WITHZF is non-empty, the build includes Solarflare's TCPDirect library.

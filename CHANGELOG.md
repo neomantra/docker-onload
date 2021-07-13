@@ -1,5 +1,10 @@
 # docker-onload CHANGELOG
 
+## 2021-07-12 (tagged 7.1.2.141)
+
+ * Update to Onload 7.1.2.141
+ * Add `bullseye` image to automated build as it can now be built from release.
+
 ## 2021-05-21 (untagged)
 
  * Add `bullseye` flavor which can be built from Git.
