@@ -23,7 +23,7 @@ $ONLOAD_VERSIONS = {
     '201606'      => { :version => '201606',      :md5sum => 'a94dc9b45bda85096814d85e366afdea' },
     '201509-u1'   => { :version => '201509-u1',   :md5sum => '01192799b6e932a043fdf27f5c28e6be' }
 }
-$ONLOAD_VERSIONS['latest'] = $ONLOAD_VERSIONS['7.1.0.265'].dup
+$ONLOAD_VERSIONS['latest'] = $ONLOAD_VERSIONS['7.1.2.141'].dup
 
 $IMAGE_FLAVORS = {
     'bionic'   => { :flavor => 'bionic' },
