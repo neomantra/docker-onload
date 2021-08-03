@@ -1,0 +1,119 @@
+# docker-onload GitLab CI/CD
+# Copyright (c) 2020 Neomantra BV
+
+image: docker:latest
+
+stages:
+  - setup
+  - triggers
+  - build
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+before_script:
+  - apk add --update ruby
+
+
+###############################################################################################
+# Images
+###############################################################################################
+
+master-build-setup:
+  stage: setup
+  only:
+    - master
+  script:
+    - ./gen_gitlab_yml.rb --template --zf -o $ONLOAD_VERSION -p "$CI_REGISTRY_IMAGE:" > onload-gitlab-ci.yml
+  artifacts:
+    paths:
+      - onload-gitlab-ci.yml
+  variables:
+    ONLOAD_VERSION: latest
+
+master-build-triggers:
+  stage: triggers
+  only:
+    - master
+  trigger:
+    strategy: depend
+    include:
+      - artifact: onload-gitlab-ci.yml
+        job: master-build-setup
+
+
+tag-build-setup:
+  stage: setup
+  only:
+    - tags
+  script:
+    - ./gen_gitlab_yml.rb --template --zf -o $ONLOAD_VERSION -p "$CI_REGISTRY_IMAGE:" > onload-gitlab-ci.yml
+  artifacts:
+    paths:
+      - onload-gitlab-ci.yml
+  variables:
+    ONLOAD_VERSION: $CI_COMMIT_TAG
+
+tag-build-triggers:
+  stage: triggers
+  only:
+    - tags
+  trigger:
+    strategy: depend
+    include:
+      - artifact: onload-gitlab-ci.yml
+        job: tag-build-setup
+
+
+branch-build-setup:
+  stage: setup
+  only:
+    - branches
+  script:
+    - ./gen_gitlab_yml.rb --template --zf -o $ONLOAD_VERSION -p "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME-" > onload-gitlab-ci.yml
+  artifacts:
+    paths:
+      - onload-gitlab-ci.yml
+  variables:
+    ONLOAD_VERSION: latest
+
+branch-build-triggers:
+  stage: triggers
+  only:
+    - branches
+  trigger:
+    strategy: depend
+    include:
+      - artifact: onload-gitlab-ci.yml
+        job: branch-build-setup
+
+
+build-all-setup:
+  stage: setup
+  rules:
+    - if: '$BUILD == "ALL"'
+      when: manual
+  environment:
+    name: production
+  script:
+    - |
+      ./gen_gitlab_yml.rb --template > onload-gitlab-ci.yml
+      for OOVERSION in $(./build_onload_image.rb --versions) ; do
+        ./gen_gitlab_yml.rb --zf -o $OOVERSION -p "$CI_REGISTRY_IMAGE:" >> onload-gitlab-ci.yml
+      done
+  artifacts:
+    paths:
+      - onload-gitlab-ci.yml
+
+build-all-triggers:
+  stage: triggers
+  rules:
+    - if: '$BUILD == "ALL"'
+      when: manual
+  trigger:
+    strategy: depend
+    include:
+      - artifact: onload-gitlab-ci.yml
+        job: build-all-setup

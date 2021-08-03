@@ -204,11 +204,17 @@ The Ruby script `build_onload_image.rb` helps generate command lines for buildin
 $ ./build_onload_image.rb --help
 build_onload_image.rb [options]
 
+ACTIONS
     --versions                show list of onload version name (use with -v to show all fields)
     --flavors                 show list of image flavors
+    --gettag     <prefix>     show the autotag name of --autotag <prefix>
 
-    --onload   -o  <version>  show docker build for OpenOnload <version>
-    --flavor   -f  <flavor>   add <flavor> to build
+    --build                   show docker build command
+    --execute                 execute docker build command
+
+OPTIONS
+    --flavor   -f  <flavor>   specify build <flavor> (required for --build or --execute)
+    --onload   -o  <version>  specify onload <version> to build (default is 'latest')
 
     --url      -u <url>       Override URL for "packaged" versions.
 
@@ -217,7 +223,7 @@ build_onload_image.rb [options]
                               <prefix> is optional, but note without a <prefix> with colon,
                               the autotag will be a name not an image-name:tag
 
-    --zf                      build with TCPDirect (zf)
+    --zf          <truthy>    build with TCPDirect (zf)  (or not, if optional <truthy> is '0' or 'false')
 
     --arg          <arg>      pass '--build-arg <arg>' to "docker build"
 
@@ -226,6 +232,8 @@ build_onload_image.rb [options]
 
     --execute  -x             also execute the build line
 
+    --push     -p             push the built image
+
     --verbose  -v             verbose output
     --help     -h             show this help
 ```
@@ -233,7 +241,7 @@ build_onload_image.rb [options]
 Example usage:
 
 ```
-./build_onload_image.rb -o 7.1.1.75 --arg foo -f buster --zf -x
+./build_onload_image.rb -o 7.1.1.75 --arg foo -f buster --zf --execute
 ```
 
 There are also `build_all_flavors.sh` and `build_all_images.sh`.

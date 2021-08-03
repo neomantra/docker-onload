@@ -1,0 +1,8 @@
+# .dockerignore
+# Copyright (c) 2021 Neomantra BV
+
+.travis.yml
+
+.gitlab-ci.yml
+onload-gitlab-ci.yml
+flavors-to-build.txt

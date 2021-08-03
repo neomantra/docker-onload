@@ -4,7 +4,7 @@
 
 require 'getoptlong'
 
-ONLOAD_VERSIONS = {
+$ONLOAD_VERSIONS = {
     '7.1.2.141'   => { :version => '7.1.2.141',   :md5sum => 'bfda4a68267e2aa3d5bed02af229b4fc', :driverid => '1d52732765feca797791b9668b14fb4e', :package_url => "https://support-nic.xilinx.com/wp/onload?sd=SF-109585-LS-36&pe=SF-122921-DH-5" },
     '7.1.1.75'    => { :version => '7.1.1.75',    :md5sum => '39b2d8d40982f6f3afd3cdb084969e90', :driverid => '65869c81c4a7f92b75316cf88446a9f1', :package_url => "https://support-nic.xilinx.com/wp/onload?sd=SF-109585-LS-35&pe=SF-122921-DH-4" },
     '7.1.0.265'   => { :version => '7.1.0.265',   :md5sum => '4db72fe198ec88d71fb1d39ef60c5ba7', :driverid => 'd9857bc9bddb5c6abdeb3f22d69b21d1', :package_url => "https://support.solarflare.com/wp/onload?sd=SF-109585-LS-33&pe=SF-122921-DH-2" },
@@ -23,8 +23,9 @@ ONLOAD_VERSIONS = {
     '201606'      => { :version => '201606',      :md5sum => 'a94dc9b45bda85096814d85e366afdea' },
     '201509-u1'   => { :version => '201509-u1',   :md5sum => '01192799b6e932a043fdf27f5c28e6be' }
 }
+$ONLOAD_VERSIONS['latest'] = $ONLOAD_VERSIONS['7.1.0.265'].dup
 
-IMAGE_FLAVORS = {
+$IMAGE_FLAVORS = {
     'bionic'   => { :flavor => 'bionic' },
     'bullseye' => { :flavor => 'bullseye' },
     'buster'   => { :flavor => 'buster' },
@@ -45,20 +46,26 @@ IMAGE_FLAVORS = {
 USAGE_STR = <<END_OF_USAGE
 build_onload_image.rb [options]
 
+ACTIONS
     --versions                show list of onload version name (use with -v to show all fields)
     --flavors                 show list of image flavors
+    --gettag      <prefix>    show the autotag name of --autotag <prefix>
 
-    --onload   -o  <version>  show docker build for OpenOnload <version>
-    --flavor   -f  <flavor>   add <flavor> to build
+    --build                   show docker build command
+    --execute                 execute docker build command
 
-    --url      -u <url>       Override URL for "packaged" versions.
+OPTIONS
+    --flavor   -f  <flavor>   specify build <flavor> (required for --build or --execute)
+    --onload   -o  <version>  specify onload <version> to build (default is 'latest')
 
-    --tag      -t <tag>       tag image as <tag>
-    --autotag  -a <prefix>    tag image as <prefix><version>-<flavor>[-nozf]. 
-                              <prefix> is optional, but note without a <prefix> with colon,
-                              the autotag will be a name not an image-name:tag
+    --url      -u  <url>      Override URL for "packaged" versions.
 
-    --zf                      build with TCPDirect (zf)
+    --tag      -t  <tag>      tag image as <tag>
+    --autotag  -a  <prefix>   tag image as <prefix><version>-<flavor>[-nozf]. 
+                                 <prefix> is optional, but note without a <prefix> with colon,
+                                 the autotag will be a name not an image-name:tag
+
+    --zf           <truthy>   build with TCPDirect (zf)  (or not, if optional <truthy> is '0' or 'false')
 
     --arg          <arg>      pass '--build-arg <arg>' to "docker build"
 
@@ -77,7 +84,7 @@ $opts = {
     :action    => nil,
     :execute   => false,
     :push      => false,
-    :version   => nil,
+    :ooversion => 'latest',
     :flavor    => nil,
     :tag       => nil,
     :autotag   => nil,
@@ -92,13 +99,15 @@ begin
     GetoptLong.new(
         [ '--versions',       GetoptLong::NO_ARGUMENT ],
         [ '--flavors',        GetoptLong::NO_ARGUMENT ],
+        [ '--gettag',         GetoptLong::OPTIONAL_ARGUMENT ],
+        [ '--build',          GetoptLong::NO_ARGUMENT ],
         [ '--onload',   '-o', GetoptLong::REQUIRED_ARGUMENT ],
         [ '--flavor',   '-f', GetoptLong::REQUIRED_ARGUMENT ],
         [ '--url',      '-u', GetoptLong::REQUIRED_ARGUMENT ],
         [ '--tag',      '-t', GetoptLong::REQUIRED_ARGUMENT ],
         [ '--autotag',  '-a', GetoptLong::OPTIONAL_ARGUMENT ],
         [ '--arg',            GetoptLong::REQUIRED_ARGUMENT ],
-        [ '--zf',             GetoptLong::NO_ARGUMENT ],
+        [ '--zf',             GetoptLong::OPTIONAL_ARGUMENT ],
         [ '--quiet',    '-q', GetoptLong::NO_ARGUMENT ],
         [ '--no-cache',       GetoptLong::NO_ARGUMENT ],
         [ '--execute',  '-x', GetoptLong::NO_ARGUMENT ],
@@ -111,19 +120,22 @@ begin
             $opts[:action] = :versions    
         when '--flavors'
             $opts[:action] = :flavors    
+        when '--gettag'
+            $opts[:action] = :gettag
+            $opts[:autotag] = arg || '' if $opts[:autotag].nil?
+        when '--build'
+            $opts[:action] = :build
         when '--onload'
-            if ! $opts[:version].nil? then
-                STDERR << "ERROR: --build can only be specified once\n"
+            if $opts[:ooversion] != 'latest' then
+                STDERR << "ERROR: --onload can only be specified once\n"
                 exit(-1)
             end
-            $opts[:action] = :build
-            $opts[:version] = arg
+            $opts[:ooversion] = arg
         when '--flavor'
             if ! $opts[:flavor].nil? then
                 STDERR << "ERROR: --flavor can only be specified once\n"
                 exit(-1)
             end
-            $opts[:action] = :build
             $opts[:flavor] = arg
         when '--url'
             $opts[:url] = arg
@@ -135,11 +147,13 @@ begin
             $opts[:buildargs] << arg
         when '--zf'
             $opts[:zf] = true
+            $opts[:zf] = false if arg == '0' || arg.downcase == 'false'
         when '--quiet'
             $opts[:quiet] = true
         when '--no-cache'
             $opts[:cache] = false
         when '--execute'
+            $opts[:action] = :build
             $opts[:execute] = true
         when '--push'
             $opts[:push] = true
@@ -156,14 +170,69 @@ end
 
 ###############################################################################
 
+def get_version()
+    version = $opts[:ooversion]
+    if version.nil? then
+        STDERR << "ERROR: a valid version must be specified with --build (-b).  List with --versions\n"
+        exit(-1)
+    end
+    if ! $ONLOAD_VERSIONS.has_key? version then
+        STDERR << "ERROR: unknown onload version '#{version}'.  List with --versions\n"
+        exit(-1)
+    end
+    return version
+end
+
+
+def get_flavor()
+    flavor = $opts[:flavor]
+    if flavor.nil? then
+        STDERR << "ERROR: a valid flavor must be specified with --flavor (-f).   List with --flavors.\n"
+        exit(-1)
+    end
+    if ! $IMAGE_FLAVORS.has_key? flavor then
+        STDERR << "ERROR: unknown flavor '#{flavor}'.  List with --flavors.\n"
+        exit(-1)
+    end
+    return flavor
+end
+
+
+def get_tag()
+    # check tag arguments
+    if ! $opts[:tag].nil? && ! $opts[:autotag].nil? then
+        STDERR << "ERROR: cannot specify both --tag and --autotag (or --gettag with argument)\n"
+        exit(-1)
+    end
+
+    if ! $opts[:tag].nil? then
+        return $opts[:tag]
+    end
+
+    version = get_version()
+    flavor = get_flavor()
+    tag = $opts[:tag]
+    if $opts[:autotag] then
+        tag = "#{$opts[:autotag]}#{version}-#{flavor}#{$opts[:zf] ? "" : "-nozf"}"
+    end
+    return tag
+end
+
+
+
+###############################################################################
+
+
 case $opts[:action]
 when :versions
     if $opts[:verbose] == 0 then
-        ONLOAD_VERSIONS.each do |k, v|
+        $ONLOAD_VERSIONS.each do |k, v|
+            next if k == 'latest'
             STDOUT << sprintf("%s\n", v[:version])
         end
     else
-        ONLOAD_VERSIONS.each do |k, v|
+        $ONLOAD_VERSIONS.each do |k, v|
+            next if k == 'latest'
             STDOUT << sprintf("%-16s %s %s %s\n",
                 v[:version], v[:md5sum],
                 v[:driverid] || "",
@@ -171,38 +240,17 @@ when :versions
         end
     end
 when :flavors
-    IMAGE_FLAVORS.each do |k, v|
+    $IMAGE_FLAVORS.each do |k, v|
         STDOUT << sprintf("%s\n", v[:flavor])
     end
+when :gettag
+    if $opts[:tag].nil? && $opts[:autotag].nil? then
+        STDERR << "ERROR: must specify either --tag and --autotag (or --gettag with argument)\n"
+        exit(-1)
+    end
+    STDOUT << get_tag() << "\n"
 when :build
-    V = $opts[:version]
-    if V.nil? then
-        STDERR << "ERROR: a valid version must be specified with --build (-b).  List with --versions\n"
-        exit(-1)
-    end
-    if ! ONLOAD_VERSIONS.has_key? V then
-        STDERR << "ERROR: unknown onload version '#{V}'.  List with --versions\n"
-        exit(-1)
-    end
-
-    F = $opts[:flavor]
-    if F.nil? then
-        STDERR << "ERROR: a valid flavor must be specified with --flavor (-f).   List with --flavors.\n"
-        exit(-1)
-    end
-    if ! IMAGE_FLAVORS.has_key? F then
-        STDERR << "ERROR: unknown flavor '#{F}'.  List with --flavors.\n"
-        exit(-1)
-    end
-
-    if ! $opts[:tag].nil? && ! $opts[:autotag].nil? then
-        STDERR << "ERROR: cannot specify both --tag and --autotag\n"
-        exit(-1)
-    end
-    tag = $opts[:tag]
-    if $opts[:autotag] then
-        tag = "#{$opts[:autotag]}#{V}-#{F}#{$opts[:zf] ? "" : "-nozf"}"
-    end
+    tag = get_tag()
 
     if $opts[:push] && !$opts[:execute] then
         STDERR << "--push requires --execute\n"
@@ -213,9 +261,10 @@ when :build
         exit(-1)
     end
 
-    VDATA = ONLOAD_VERSIONS[V]
-    cmd = "docker build --build-arg ONLOAD_VERSION=#{VDATA[:version]} --build-arg ONLOAD_MD5SUM=#{VDATA[:md5sum]} "
-    package_url = $opts[:url] || VDATA[:package_url]
+    version = get_version()
+    vdata = $ONLOAD_VERSIONS[version]
+    cmd = "docker build --build-arg ONLOAD_VERSION=#{vdata[:version]} --build-arg ONLOAD_MD5SUM=#{vdata[:md5sum]} "
+    package_url = $opts[:url] || vdata[:package_url]
     if ! package_url.nil? then
         cmd += " --build-arg ONLOAD_PACKAGE_URL='#{package_url}' "
     else
@@ -230,7 +279,8 @@ when :build
     cmd += "--no-cache " if ! $opts[:cache]
     cmd += "-t #{tag} " if ! tag.nil?
 
-    cmd += "-f #{F}/Dockerfile ."
+    flavor = get_flavor()
+    cmd += "-f #{flavor}/Dockerfile ."
 
     STDOUT << cmd << "\n"
     if $opts[:execute] then
