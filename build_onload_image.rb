@@ -5,6 +5,7 @@
 require 'getoptlong'
 
 $ONLOAD_VERSIONS = {
+    '7.1.3.202'   => { :version => '7.1.3.202',   :md5sum => '6153f93f03c65b4d091e9247c195b58c', :driverid => '1d52732765feca797791b9668b14fb4e', :package_url => "https://support-nic.xilinx.com/wp/onload?sd=SF-109585-LS-37&pe=SF-122921-DH-6" },
     '7.1.2.141'   => { :version => '7.1.2.141',   :md5sum => 'bfda4a68267e2aa3d5bed02af229b4fc', :driverid => '1d52732765feca797791b9668b14fb4e', :package_url => "https://support-nic.xilinx.com/wp/onload?sd=SF-109585-LS-36&pe=SF-122921-DH-5" },
     '7.1.1.75'    => { :version => '7.1.1.75',    :md5sum => '39b2d8d40982f6f3afd3cdb084969e90', :driverid => '65869c81c4a7f92b75316cf88446a9f1', :package_url => "https://support-nic.xilinx.com/wp/onload?sd=SF-109585-LS-35&pe=SF-122921-DH-4" },
     '7.1.0.265'   => { :version => '7.1.0.265',   :md5sum => '4db72fe198ec88d71fb1d39ef60c5ba7', :driverid => 'd9857bc9bddb5c6abdeb3f22d69b21d1', :package_url => "https://support.solarflare.com/wp/onload?sd=SF-109585-LS-33&pe=SF-122921-DH-2" },
@@ -23,7 +24,7 @@ $ONLOAD_VERSIONS = {
     '201606'      => { :version => '201606',      :md5sum => 'a94dc9b45bda85096814d85e366afdea' },
     '201509-u1'   => { :version => '201509-u1',   :md5sum => '01192799b6e932a043fdf27f5c28e6be' }
 }
-$ONLOAD_VERSIONS['latest'] = $ONLOAD_VERSIONS['7.1.2.141'].dup
+$ONLOAD_VERSIONS['latest'] = $ONLOAD_VERSIONS['7.1.3.202'].dup
 
 $IMAGE_FLAVORS = {
     'bionic'   => { :flavor => 'bionic' },

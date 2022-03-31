@@ -12,7 +12,7 @@ The `onload` image is built with `ONLOAD_WITHZF` set, thus without support for [
 
 ## Supported Docker Hub tags for image `neomantra/onload` and respective `Dockerfile` links
 
-These unversioned image tags currently map to **7.1.2.141**:
+These unversioned image tags currently map to **7.1.3.202**:
 
 - [`centos7` (*centos7/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos7/Dockerfile)
 - [`centos8` (*centos8/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos8/Dockerfile)
@@ -24,6 +24,16 @@ These unversioned image tags currently map to **7.1.2.141**:
 - [`focal` (*focal/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/focal/Dockerfile)
 
 The following versioned tags are available:
+- For **7.1.3.202**
+  - `7.1.3.202-bionic`
+  - `7.1.3.202-bullseye`
+  - `7.1.3.202-buster`
+  - `7.1.3.202-centos7`
+  - `7.1.3.202-centos8`
+  - `7.1.3.202-focal`
+  - `7.1.3.202-stretch`
+  - `7.1.3.202-trusty`
+  - `7.1.3.202-xenial`
 - For **7.1.2.141**
   - `7.1.2.141-bionic`
   - `7.1.2.141-bullseye`
@@ -34,15 +44,6 @@ The following versioned tags are available:
   - `7.1.2.141-stretch`
   - `7.1.2.141-trusty`
   - `7.1.2.141-xenial`
-- For **7.1.1.75**
-  - `7.1.1.75-bionic`
-  - `7.1.1.75-buster`
-  - `7.1.1.75-centos7`
-  - `7.1.1.75-centos8`
-  - `7.1.1.75-focal`
-  - `7.1.1.75-stretch`
-  - `7.1.1.75-trusty`
-  - `7.1.1.75-xenial`
 
 <details>
   <summary>Older Tags</summary>
@@ -271,8 +272,8 @@ The Dockerfile downloads specific versions from [openonload.org](https://openonl
 
 | Key  | Default | Description |
 :----- | :-----: |:----------- |
-|ONLOAD_VERSION | "7.1.2.141" |The version of OpenOnload to download. |
-|ONLOAD_MD5SUM | "bfda4a68267e2aa3d5bed02af229b4fc" |The MD5 checksum of the download. |
+|ONLOAD_VERSION | "7.1.3.202" |The version of OpenOnload to download. |
+|ONLOAD_MD5SUM | "6153f93f03c65b4d091e9247c195b58c" |The MD5 checksum of the download. |
 |ONLOAD_GIT_REF | "" | If set, build from this Git Reference (currently `bullseye` only). |
 |ONLOAD_GIT_URL | https://github.com/Xilinx-CNS/onload.git | If building from git, which the URL of the repo to clone from |
 |ONLOAD_PACKAGE_URL | (see below) | If set, it will download and unzip the tarball from the newer packaging. |
@@ -281,7 +282,7 @@ The Dockerfile downloads specific versions from [openonload.org](https://openonl
 |ONLOAD_DISABLE_SYSCALL_HOOK | |Set to non-empty to disables hooking the syscall function from libc. |
 |ONLOAD_USERSPACE_ID | |Set to non-empty to specify the userspace build md5sum ID. |
 
-`ONLOAD_PACKAGE_URL` defaults to https://support-nic.xilinx.com/wp/onload?sd=SF-109585-LS-36&pe=SF-122921-DH-5
+`ONLOAD_PACKAGE_URL` defaults to https://support-nic.xilinx.com/wp/onload?sd=SF-109585-LS-37&pe=SF-122921-DH-6
 
 `ONLOAD_LEGACY_URL` defaults to https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz.   If you want to build from a legacy (non-packaged) URL, you must also set `ONLOAD_PACKAGE_URL` to `''` (empty string).
 
@@ -291,6 +292,7 @@ If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID 
 
 | OpenOnload Version | Driver Interface ID |
 :----------- |:------------------- |
+| 7.1.3.202  | 278944a898989bf53d1f06e1e3397749 |
 | 7.1.2.141  | 1d52732765feca797791b9668b14fb4e |
 | 7.1.1.75   | 65869c81c4a7f92b75316cf88446a9f1 |
 | 7.1.0.265  | d9857bc9bddb5c6abdeb3f22d69b21d1 |

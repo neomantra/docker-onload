@@ -1,5 +1,9 @@
 # docker-onload CHANGELOG
 
+## 2022-03-30 (tagged 7.1.3.202)
+
+  * Update to Onload 7.1.3.202 (#8)
+
 ## 2021-07-12 (tagged 7.1.2.141)
 
  * Update to Onload 7.1.2.141
