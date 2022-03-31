@@ -3,6 +3,7 @@
 ## 2022-03-30 (tagged 7.1.3.202)
 
   * Update to Onload 7.1.3.202 (#8)
+  * `centos8` image (from EOL Centos 8) now uses yum repo http://vault.centos.org
 
 ## 2021-07-12 (tagged 7.1.2.141)
 

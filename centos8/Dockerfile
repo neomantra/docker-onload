@@ -64,7 +64,9 @@ ARG ONLOAD_USERSPACE_ID
 # 3) Extract, build, and install onload
 # 4) Cleanup
 
-RUN yum install -y 'dnf-command(config-manager)' \
+RUN    find /etc/yum.repos.d -name 'CentOS-Linux-*' -exec sed -i 's/mirrorlist/#mirrorlist/g' {} \; \
+    && find /etc/yum.repos.d -name 'CentOS-Linux-*' -exec sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' {} \; \
+    && yum install -y 'dnf-command(config-manager)' \
     && yum config-manager --set-enabled "${ONLOAD_CENTOS_POWERTOOLS}" \
     && yum install -y \
         autoconf \
