@@ -33,7 +33,7 @@ ARG ONLOAD_MD5SUM="6153f93f03c65b4d091e9247c195b58c"
 # Onload package URL and legacy URL
 # If ONLOAD_PACKAGE_URL is set, it will download and unzip the tarball from the newer packaging,
 # otherwise it will download the tarball from ONLOAD_LEGACY_URL as before.
-ARG ONLOAD_PACKAGE_URL="https://support-nic.xilinx.com/wp/onload?sd=SF-109585-LS-37&pe=SF-122921-DH-6"
+ARG ONLOAD_PACKAGE_URL="https://www.xilinx.com/content/dam/xilinx/publications/solarflare/onload/openonload/7-1-3-202/SF-109585-LS-37-OpenOnload-release-package.zip"
 ARG ONLOAD_LEGACY_URL="https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz"
 
 # When ONLOAD_WITHZF is non-empty, the build includes Solarflare's TCPDirect library.
