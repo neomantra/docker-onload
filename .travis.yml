@@ -19,7 +19,7 @@
 #
 
 os: linux
-dist: bionic
+dist: focal
 language: ruby
 
 sudo: required
