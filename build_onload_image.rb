@@ -33,6 +33,7 @@ $IMAGE_FLAVORS = {
     'centos7'  => { :flavor => 'centos7' },
     'centos8'  => { :flavor => 'centos8' },
     'focal'    => { :flavor => 'focal' },
+    'jammy'    => { :flavor => 'jammy' },
     'stretch'  => { :flavor => 'stretch' },
     'trusty'   => { :flavor => 'trusty' },
     'xenial'   => { :flavor => 'xenial' }
