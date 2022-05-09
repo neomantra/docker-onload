@@ -2,7 +2,7 @@
 
 [![Travis Status](https://travis-ci.com/neomantra/docker-onload.svg?branch=master)](https://travis-ci.com/neomantra/docker-onload)  [![](https://images.microbadger.com/badges/image/neomantra/onload.svg)](https://microbadger.com/#/images/neomantra/onload "microbadger.com")
 
-`docker-onload` provides a Dockerfile which installs Solarflare's [OpenOnload](https://www.openonload.org/ "OpenOnload") into various OS flavors. Find it on the Docker Hub: https://hub.docker.com/r/neomantra/onload/
+`docker-onload` provides a Dockerfile which installs Solarflare's [OpenOnload](https://github.com/Xilinx-CNS/onload) into various OS flavors. Find it on the Docker Hub: https://hub.docker.com/r/neomantra/onload/
 
 See changes in the [CHANGELOG](https://github.com/neomantra/docker-onload/blob/master/CHANGELOG.md).
 
@@ -22,6 +22,7 @@ These unversioned image tags currently map to **7.1.3.202**:
 - [`xenial` (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
 - [`bionic` (*bionic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bionic/Dockerfile)
 - [`focal` (*focal/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/focal/Dockerfile)
+- [`jammy` (*jammy/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/jammy/Dockerfile)
 
 The following versioned tags are available:
 - For **7.1.3.202**
@@ -31,6 +32,7 @@ The following versioned tags are available:
   - `7.1.3.202-centos7`
   - `7.1.3.202-centos8`
   - `7.1.3.202-focal`
+  - `7.1.3.202-jammy`
   - `7.1.3.202-stretch`
   - `7.1.3.202-trusty`
   - `7.1.3.202-xenial`
@@ -41,6 +43,7 @@ The following versioned tags are available:
   - `7.1.2.141-centos7`
   - `7.1.2.141-centos8`
   - `7.1.2.141-focal`
+  - `7.1.2.141-jammy`
   - `7.1.2.141-stretch`
   - `7.1.2.141-trusty`
   - `7.1.2.141-xenial`
@@ -258,7 +261,8 @@ Dockerfiles are provided for the following base systems, selecting the Dockerfil
  * [Ubuntu Trusty](https://github.com/neomantra/docker-onload/trusty/Dockerfile) (`trusty/Dockerfile`)
  * [Ubuntu Xenial](https://github.com/neomantra/docker-onload/xenial/Dockerfile) (`xenial/Dockerfile`)
  * [Ubuntu Bionic](https://github.com/neomantra/docker-onload/bionic/Dockerfile) (`bionic/Dockerfile`)
-  * [Ubuntu Focal](https://github.com/neomantra/docker-onload/focal/Dockerfile) (`focal/Dockerfile`)
+ * [Ubuntu Focal](https://github.com/neomantra/docker-onload/focal/Dockerfile) (`focal/Dockerfile`)
+ * [Ubuntu Jammy](https://github.com/neomantra/docker-onload/jammy/Dockerfile) (`jammy/Dockerfile`)
 
 Each system folder has a `Dockerfile`.
  
@@ -310,6 +314,6 @@ docker build --build-arg ONLOAD_GIT_REF=master -f bullseye/Dockerfile .
 
 ## License
 
-Copyright (c) 2015-2021 Neomantra BV
+Copyright (c) 2015-2022 Neomantra BV
 
 Released under the MIT License, see LICENSE.txt

@@ -1,10 +1,11 @@
 # docker-onload CHANGELOG
 
-## 2022-05-08 
+## 2022-05-08 (tagged 7.1.3.202) 
 
   * Migrate to latest downloads at Xilinx Support
+  * Add Ubuntu `jammy` flavor
 
-## 2022-03-30 (tagged 7.1.3.202)
+## 2022-03-30
 
   * Update to Onload 7.1.3.202 (#8)
   * `centos8` image (from EOL Centos 8) now uses yum repo http://vault.centos.org

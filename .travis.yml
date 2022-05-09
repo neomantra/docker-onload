@@ -98,3 +98,11 @@ jobs:
     - stage: build docker image for flavor focal (onloadzf)
       script:
       - IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh focal focal/Dockerfile --build-arg ONLOAD_WITHZF=1
+
+    - stage: build docker image for flavor jammy (onload)
+      script:
+      - ./docker_build_and_push_flavor.sh jammy jammy/Dockerfile
+
+    - stage: build docker image for flavor jammy (onloadzf)
+      script:
+      - IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh jammy jammy/Dockerfile --build-arg ONLOAD_WITHZF=1
