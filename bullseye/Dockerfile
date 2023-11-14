@@ -75,6 +75,7 @@ RUN \
         coreutils \
         curl \
         ethtool \
+        g++ \
         gcc \
         git \
         kmod \

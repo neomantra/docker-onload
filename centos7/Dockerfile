@@ -70,10 +70,12 @@ RUN \
         file \
         gawk \
         gcc \
+        gcc-c++ \
         gettext \
         glibc-common \
         glibc-devel.x86_64 \
         kernel-devel \
+        libcap-devel \
         libgcc.x86_64 \
         libpcap-devel \
         libtool \

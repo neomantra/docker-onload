@@ -70,8 +70,10 @@ RUN \
         coreutils \
         curl \
         ethtool \
+        g++ \
         gcc \
         kmod \
+        libcap-dev \
         libpcap0.8-dev \
         libtool-bin \
         make \

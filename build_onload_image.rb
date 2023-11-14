@@ -53,14 +53,14 @@ $IMAGE_FLAVORS = {
     'centos8'  => { :flavor => 'centos8' },
     'focal'    => { :flavor => 'focal' },
     'jammy'    => { :flavor => 'jammy' },
-    'trusty'   => { :flavor => 'trusty' },
-    'xenial'   => { :flavor => 'xenial' }
 }
 # Archived Image Flavors
 #   'cosmic'   => { :flavor => 'cosmic' },
 #   'disco'    => { :flavor => 'disco' },
 #   'precise'  => { :flavor => 'precise' },
 #   'stretch'  => { :flavor => 'stretch' },
+#   'trusty'   => { :flavor => 'trusty' },
+#   'xenial'   => { :flavor => 'xenial' }
 
 ###############################################################################
 

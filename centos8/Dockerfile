@@ -76,10 +76,12 @@ RUN    find /etc/yum.repos.d -name 'CentOS-Linux-*' -exec sed -i 's/mirrorlist/#
         file \
         gawk \
         gcc \
+        gcc-c++ \
         gettext \
         glibc-common \
         glibc-devel.x86_64 \
         kernel-devel \
+        libcap-devel \
         libgcc.x86_64 \
         libpcap-devel \
         libtool \

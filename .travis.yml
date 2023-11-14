@@ -35,6 +35,14 @@ before_script:
 
 jobs:
   include:
+    - stage: build docker image for flavor centos7 (onload)
+      script:
+      - ./docker_build_and_push_flavor.sh centos7 centos7/Dockerfile
+
+    - stage: build docker image for flavor centos7 (onloadzf)
+      script:
+      - IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh centos7 centos7/Dockerfile --build-arg ONLOAD_WITHZF=1
+
     - stage: build docker image for flavor centos8 (onload)
       script:
       - ./docker_build_and_push_flavor.sh centos8 centos8/Dockerfile
@@ -51,6 +59,13 @@ jobs:
       script:
       - IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh buster buster/Dockerfile --build-arg ONLOAD_WITHZF=1
 
+   - stage: build docker image for flavor bookworm (onload)
+      script:
+      - ./docker_build_and_push_flavor.sh bookworm bookworm/Dockerfile
+
+    - stage: build docker image for flavor bookworm (onloadzf)
+      script:
+      - IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh bookworm bookworm/Dockerfile --build-arg ONLOAD_WITHZF=1
 
     - stage: build docker image for flavor bionic (onload)
       script:

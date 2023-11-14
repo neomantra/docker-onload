@@ -1,6 +1,6 @@
-# Dockerfile - Debian Buster
+# Dockerfile - Debian Bookworm
 #
-# Installs Solarflare's OpenOnload into Debian Buster (`buster-slim`).
+# Installs Solarflare's OpenOnload into Debian Bookworm (`bookworm-slim`).
 #
 # OpenOnload web page:
 #    https://www.openonload.org/
@@ -9,23 +9,28 @@
 #
 #   docker run --net=host --device=/dev/onload --device=/dev/onload_epoll --device=/dev/onload_cplane -it ONLOAD_ENABLED_IMAGE_ID [COMMAND] [ARG...]
 #
-# NOTE: The host's OpenOnload version must be the same as the container's.
+# NOTE: The host's OpenOnload version (ONLOAD_USERSPACE_ID) must be the same as the container's.
 #
-# Copyright (c) 2015-2021 Neomantra BV
+# Copyright (c) 2015-2023 Neomantra BV
 # Released under the MIT License, see LICENSE.txt
 #
 
 ARG ONLOAD_DEBIAN_BASE="debian"
-ARG ONLOAD_DEBIAN_TAG="buster-slim"
+ARG ONLOAD_DEBIAN_TAG="bookworm-slim"
 
 FROM ${ONLOAD_DEBIAN_BASE}:${ONLOAD_DEBIAN_TAG}
 
 ARG ONLOAD_DEBIAN_BASE="debian"
-ARG ONLOAD_DEBIAN_TAG="buster-slim"
+ARG ONLOAD_DEBIAN_TAG="bookworm-slim"
 
 # Onload version and its md5sum
 ARG ONLOAD_VERSION="7.1.3.202"
 ARG ONLOAD_MD5SUM="6153f93f03c65b4d091e9247c195b58c"
+
+# To build from an Onload git repository, set ONLOAD_GIT_REF.
+# Be sure to set the appropriate ONLOAD_VERSION and ONLOAD_USERSPACE_ID for your system.
+ARG ONLOAD_GIT_REF=""
+ARG ONLOAD_GIT_URL="https://github.com/Xilinx-CNS/onload.git"
 
 # Onload package URL and legacy URL
 # If ONLOAD_PACKAGE_URL is set, it will download and unzip the tarball from the newer packaging,
@@ -72,6 +77,7 @@ RUN \
         ethtool \
         g++ \
         gcc \
+        git \
         kmod \
         libcap-dev \
         libpcap0.8-dev \
@@ -79,14 +85,21 @@ RUN \
         make \
         net-tools \
         perl \
-        python-dev \
+        python-dev-is-python3 \
         sed \
         tar \
         unzip \
         valgrind \
         wget \
     && cd /tmp \
-    && if [ -n "${ONLOAD_PACKAGE_URL}" ] ; then \
+    && if [ -n "${ONLOAD_GIT_REF}" ] ; then \
+          git clone "${ONLOAD_GIT_URL}" "onload-${ONLOAD_VERSION}" \
+          && cd "onload-${ONLOAD_VERSION}" \
+          && git reset --hard "${ONLOAD_GIT_REF}" \
+          && scripts/onload_mkdist \
+          && tar xzf "onload-$(git log -1 --format="%H").tgz" \
+          && cd "onload-$(git log -1 --format="%H")" ; \
+    elif [ -n "${ONLOAD_PACKAGE_URL}" ] ; then \
           curl -fSL "${ONLOAD_PACKAGE_URL}" -o /tmp/onload-${ONLOAD_VERSION}-package.zip \
           && unzip /tmp/onload-${ONLOAD_VERSION}-package.zip \
           && echo "${ONLOAD_MD5SUM} onload-${ONLOAD_VERSION}.tgz" | md5sum --check \
@@ -121,10 +134,12 @@ RUN \
 LABEL maintainer="Evan Wies <evan@neomantra.net>"
 LABEL ONLOAD_DEBIAN_BASE="${ONLOAD_DEBIAN_BASE}"
 LABEL ONLOAD_DEBIAN_TAG="${ONLOAD_DEBIAN_TAG}"
-LABEL ONLOAD_PACKAGE_URL="${ONLOAD_PACKAGE_URL}"
-LABEL ONLOAD_LEGACY_URL="${ONLOAD_LEGACY_URL}"
 LABEL ONLOAD_VERSION="${ONLOAD_VERSION}"
 LABEL ONLOAD_MD5SUM="${ONLOAD_MD5SUM}"
+LABEL ONLOAD_GIT_REF="${ONLOAD_GIT_REF}"
+LABEL ONLOAD_GIT_URL="${ONLOAD_GIT_URL}"
+LABEL ONLOAD_PACKAGE_URL="${ONLOAD_PACKAGE_URL}"
+LABEL ONLOAD_LEGACY_URL="${ONLOAD_LEGACY_URL}"
 LABEL ONLOAD_WITHZF="${ONLOAD_WITHZF}"
 LABEL ONLOAD_DISABLE_SYSCALL_HOOK="${ONLOAD_DISABLE_SYSCALL_HOOK}"
 LABEL ONLOAD_USERSPACE_ID="${ONLOAD_USERSPACE_ID}"
