@@ -46,13 +46,13 @@ $ONLOAD_VERSIONS['latest'] = $ONLOAD_VERSIONS['7.1.3.202'].dup
 
 $IMAGE_FLAVORS = {
     'bionic'   => { :flavor => 'bionic' },
+    'bookworm' => { :flavor => 'bookworm' },
     'bullseye' => { :flavor => 'bullseye' },
     'buster'   => { :flavor => 'buster' },
     'centos7'  => { :flavor => 'centos7' },
     'centos8'  => { :flavor => 'centos8' },
     'focal'    => { :flavor => 'focal' },
     'jammy'    => { :flavor => 'jammy' },
-    'stretch'  => { :flavor => 'stretch' },
     'trusty'   => { :flavor => 'trusty' },
     'xenial'   => { :flavor => 'xenial' }
 }
@@ -60,6 +60,7 @@ $IMAGE_FLAVORS = {
 #   'cosmic'   => { :flavor => 'cosmic' },
 #   'disco'    => { :flavor => 'disco' },
 #   'precise'  => { :flavor => 'precise' },
+#   'stretch'  => { :flavor => 'stretch' },
 
 ###############################################################################
 
