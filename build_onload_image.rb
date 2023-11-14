@@ -5,6 +5,24 @@
 require 'getoptlong'
 
 $ONLOAD_VERSIONS = {
+    '8.1.1.17' => {
+        :version => '8.1.1.17',
+        :zf_version => '8.1.1.23',
+        :driverid => '1d52732765feca797791b9668b14fb4e',
+        :package_url => 'https://www.xilinx.com/content/dam/xilinx/publications/solarflare/onload/openonload/8-1-1-17/SF-109585-LS-42-OpenOnload-Release-Package.zip',
+        :md5sum => 'd3845b7c35798787de551e09e4272785', 
+        :zf_package_url => 'https://www.xilinx.com/content/dam/xilinx/publications/solarflare/onload/tcpdirect/8-1-1-23/XN-201046-LS-5-TCPDirect-Release-Package.zip',
+        :zf_md5sum => 'f966ad385cec3d632d3a6b9bb1ce64d9'
+    },
+   '8.1.0.15' => {
+        :version => '8.1.0.15',
+        :zf_version => '8.1.0.19',
+        :driverid => '1d52732765feca797791b9668b14fb4e',
+        :package_url => 'https://www.xilinx.com/content/dam/xilinx/publications/solarflare/onload/openonload/8_1_0_15/SF-109585-LS-41-OpenOnload-Release-Package.zip',
+        :md5sum => 'a016c90b5a1bc98ed4fef8d9e6407839', 
+        :zf_package_url => 'https://www.xilinx.com/content/dam/xilinx/publications/solarflare/onload/tcpdirect/8_1_0_19/XN-201046-LS-4-TCPDirect-Release-Package.zip',
+        :zf_md5sum => 'e36bc271f3c4fe25a8bb8498e9799206'
+    },
     '7.1.3.202'   => { :version => '7.1.3.202',   :md5sum => '6153f93f03c65b4d091e9247c195b58c', :driverid => '1d52732765feca797791b9668b14fb4e', :package_url => 'https://www.xilinx.com/content/dam/xilinx/publications/solarflare/onload/openonload/7-1-3-202/SF-109585-LS-37-OpenOnload-release-package.zip' },
     '7.1.2.141'   => { :version => '7.1.2.141',   :md5sum => 'bfda4a68267e2aa3d5bed02af229b4fc', :driverid => '1d52732765feca797791b9668b14fb4e', :package_url => 'https://www.xilinx.com/content/dam/xilinx/publications/solarflare/onload/openonload/7-1-2-141/SF-109585-LS-36_OpenOnload_Release_Package.zip' },
     '7.1.1.75'    => { :version => '7.1.1.75',    :md5sum => '39b2d8d40982f6f3afd3cdb084969e90', :driverid => '65869c81c4a7f92b75316cf88446a9f1', :package_url => 'https://www.xilinx.com/content/dam/xilinx/publications/solarflare/onload/openonload/7-1-1-75/SF-109585-LS-35_OpenOnload_Release_Package.zip' },
@@ -92,6 +110,7 @@ $opts = {
     :autotag   => nil,
     :buildargs => [],
     :zf        => false,
+    :dockerfwd => [],
     :quiet     => false,
     :cache     => true,
     :verbose   => 0
@@ -109,6 +128,7 @@ begin
         [ '--tag',      '-t', GetoptLong::REQUIRED_ARGUMENT ],
         [ '--autotag',  '-a', GetoptLong::OPTIONAL_ARGUMENT ],
         [ '--arg',            GetoptLong::REQUIRED_ARGUMENT ],
+        [ '--fwd',            GetoptLong::REQUIRED_ARGUMENT ],
         [ '--zf',             GetoptLong::OPTIONAL_ARGUMENT ],
         [ '--quiet',    '-q', GetoptLong::NO_ARGUMENT ],
         [ '--no-cache',       GetoptLong::NO_ARGUMENT ],
@@ -147,6 +167,8 @@ begin
             $opts[:autotag] = arg
         when '--arg'
             $opts[:buildargs] << arg
+        when '--fwd'
+            $opts[:dockerfwd] << arg
         when '--zf'
             $opts[:zf] = true
             $opts[:zf] = false if arg == '0' || arg.downcase == 'false'
@@ -274,7 +296,12 @@ when :build
         cmd += " --build-arg ONLOAD_PACKAGE_URL='' "
     end
 
-    cmd += "--build-arg ONLOAD_WITHZF=1 " if $opts[:zf]
+    if $opts[:zf] then
+        cmd += "--build-arg ONLOAD_WITHZF=1 "
+        cmd += "--build-arg ONLOADZF_VERSION='#{vdata[:zf_version]}' " if vdata[:zf_version]
+        cmd += "--build-arg ONLOADZF_PACKAGE_URL='#{vdata[:zf_package_url]}' " if vdata[:zf_package_url]
+        cmd += "--build-arg ONLOADZF_MD5SUM='#{vdata[:zf_md5sum]}' " if vdata[:zf_md5sum]
+    end
     $opts[:buildargs].each { |arg| cmd += "--build-arg #{arg} " }
 
     cmd += "-q " if $opts[:quiet]
@@ -282,7 +309,11 @@ when :build
     cmd += "-t #{tag} " if ! tag.nil?
 
     flavor = get_flavor()
-    cmd += "-f #{flavor}/Dockerfile ."
+    cmd += "-f #{flavor}/Dockerfile "
+
+    $opts[:dockerfwd].each { |fwd| cmd += " #{fwd} " }
+
+    cmd += " ."
 
     STDOUT << cmd << "\n"
     if $opts[:execute] then

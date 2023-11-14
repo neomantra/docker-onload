@@ -37,6 +37,11 @@ ARG ONLOAD_LEGACY_URL="https://www.openonload.org/download/openonload-${ONLOAD_V
 # Default is to exclude it.
 ARG ONLOAD_WITHZF
 
+# ZFDirect installation arguments
+ARG ONLOADZF_VERSION
+ARG ONLOADZF_PACKAGE_URL
+ARG ONLOADZF_MD5SUM
+
 # When ONLOAD_DISABLE_SYSCALL_HOOK is non-empty, then the build disables hooking the syscall function from libc.
 # Default is empty, enabling the OpenOnload's default hooking the syscall function.
 #
@@ -73,9 +78,10 @@ RUN \
         g++ \
         gcc \
         kmod \
-        linux-libc-dev \
+        libcap-dev \
         libpcap0.8-dev \
         libtool-bin \
+        linux-libc-dev \
         make \
         net-tools \
         patch \
@@ -115,8 +121,19 @@ RUN \
     && rm -rf onload-${ONLOAD_VERSION}* \
     && if [ -z ${ONLOAD_WITHZF} ] ; then \
         rm -rf /usr/include/zf /usr/bin/zf_stackdump /usr/bin/zf_debug /usr/lib/x86_64-linux-gnu/zf /usr/lib/x86_64-linux-gnu/libonload_zf* ; \
+    else \
+        if [ -n "${ONLOADZF_PACKAGE_URL}" ] ; then \
+          curl -fSL "${ONLOADZF_PACKAGE_URL}" -o /tmp/tcpdirect-${ONLOADZF_VERSION}-package.zip \
+          && unzip /tmp/tcpdirect-${ONLOADZF_VERSION}-package.zip \
+          && echo "${ONLOADZF_MD5SUM} tcpdirect-${ONLOADZF_VERSION}.tgz" | md5sum --check \
+          && tar -zxf tcpdirect-${ONLOADZF_VERSION}.tgz \
+          && cd tcpdirect-${ONLOADZF_VERSION} \
+          && ./scripts/zf_install \
+          && cd /tmp \
+          && rm -rf tcpdirect-${ONLOADZF_VERSION}* ; \
+        fi \
     fi \
-    && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y
+    && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y 
 
 
 # Labels for introspection
@@ -128,5 +145,8 @@ LABEL ONLOAD_LEGACY_URL="${ONLOAD_LEGACY_URL}"
 LABEL ONLOAD_VERSION="${ONLOAD_VERSION}"
 LABEL ONLOAD_MD5SUM="${ONLOAD_MD5SUM}"
 LABEL ONLOAD_WITHZF="${ONLOAD_WITHZF}"
+LABEL ONLOADZF_VERSION="${ONLOADZF_VERSION}"
+LABEL ONLOADZF_PACKAGE_URL="${ONLOADZF_PACKAGE_URL}"
+LABEL ONLOADZF_MD5SUM="${ONLOADZF_MD5SUM}"
 LABEL ONLOAD_DISABLE_SYSCALL_HOOK="${ONLOAD_DISABLE_SYSCALL_HOOK}"
 LABEL ONLOAD_USERSPACE_ID="${ONLOAD_USERSPACE_ID}"
