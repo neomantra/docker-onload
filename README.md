@@ -25,6 +25,9 @@ These unversioned image tags currently map to **7.1.3.202**:
 - [`jammy` (*jammy/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/jammy/Dockerfile)
 
 The following versioned tags are available:
+- **8.1.2.26**
+- **8.1.1.17**
+- **8.1.0.15**
 - For **7.1.3.202**
   - `7.1.3.202-bionic`
   - `7.1.3.202-bullseye`
@@ -296,6 +299,7 @@ If you patch OpenOnload, you must specify `ONLOAD_USERSPACE_ID` to match the ID 
 
 | OpenOnload Version | Driver Interface ID |
 :----------- |:------------------- |
+| 8.1.2.26   | 55285faa7791a719ba067d52108964c4 |
 | 7.1.3.202  | 278944a898989bf53d1f06e1e3397749 |
 | 7.1.2.141  | 1d52732765feca797791b9668b14fb4e |
 | 7.1.1.75   | 65869c81c4a7f92b75316cf88446a9f1 |
@@ -314,6 +318,6 @@ docker build --build-arg ONLOAD_GIT_REF=master -f bullseye/Dockerfile .
 
 ## License
 
-Copyright (c) 2015-2022 Neomantra BV
+Copyright (c) 2015-2024 Neomantra BV
 
 Released under the MIT License, see LICENSE.txt

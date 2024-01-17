@@ -5,6 +5,15 @@
 require 'getoptlong'
 
 $ONLOAD_VERSIONS = {
+    '8.1.2.26' => {
+        :version => '8.1.2.26',
+        :zf_version => '8.1.2.38',
+        :driverid => '55285faa7791a719ba067d52108964c4',
+        :package_url => 'https://www.xilinx.com/content/dam/xilinx/publications/solarflare/onload/openonload/8_1_2_26/SF-109585-LS-43-OpenOnload-Package.zip',
+        :md5sum => 'b758408d51aec33f36e698009173eb13', 
+        :zf_package_url => 'https://www.xilinx.com/content/dam/xilinx/publications/solarflare/onload/tcpdirect/8_1_2_38/XN-201046-LS-6-TCPDirect-Release-Package.zip',
+        :zf_md5sum => '2d50b5da3d3cbb49384eb95d8765d1a2'
+    },
     '8.1.1.17' => {
         :version => '8.1.1.17',
         :zf_version => '8.1.1.23',

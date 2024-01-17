@@ -1,5 +1,17 @@
 # docker-onload CHANGELOG
 
+## 2024-01-17 (tagged 8.1.2.26)
+
+ * Update to Onload 8.1.2.26
+
+## 2023-11-14 (tagged 8.1.1.17)
+
+ * Update to Onload 8.1.1.17
+
+## 2023-11-14 (tagged 8.1.0.15) 
+
+ * Update to Onload 8.1.0.15
+
 ## 2022-05-08 (tagged 7.1.3.202) 
 
   * Migrate to latest downloads at Xilinx Support

@@ -8,7 +8,7 @@
 
 #DOCKER_FWD="--no-cache -q "
 
-VERSION="${1:-7.1.3.202}"
+VERSION="${1:-8.1.2.26}"
 
 for FLAVOR in $(./build_onload_image.rb --flavors); do
     time ./build_onload_image.rb -x -v $DOCKER_FWD -f $FLAVOR -o $VERSION -a ootestbuild:
