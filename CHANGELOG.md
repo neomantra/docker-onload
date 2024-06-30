@@ -1,5 +1,9 @@
 # docker-onload CHANGELOG
 
+## 2024-06-29 (tagged 8.1.3.40)
+
+ * Update to Onload 8.1.3.40
+
 ## 2024-01-17 (tagged 8.1.2.26)
 
  * Update to Onload 8.1.2.26

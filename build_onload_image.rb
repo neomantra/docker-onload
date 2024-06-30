@@ -5,6 +5,15 @@
 require 'getoptlong'
 
 $ONLOAD_VERSIONS = {
+    '8.1.3.40' => {
+        :version => '8.1.3.40',
+        :zf_version => '8.1.3.8',
+        :driverid => 'c71e5318f0cc60edbe8fb390bb778a5d',
+        :package_url => 'https://www.xilinx.com/content/dam/xilinx/publications/solarflare/onload/openonload/8-1-3-40/SF-109585-LS-44-OpenOnload-Release-Package.zip',
+        :md5sum => '2cf23e45999e4c411c32ea13e91bcc49', 
+        :zf_package_url => 'https://www.xilinx.com/content/dam/xilinx/publications/solarflare/onload/tcpdirect/8-1-3-8/XN-201046-LS-7-TCPDirect-Release-Package.zip',
+        :zf_md5sum => '48a42da3468244d0bf65a97ebbea05cd'
+    },
     '8.1.2.26' => {
         :version => '8.1.2.26',
         :zf_version => '8.1.2.38',
@@ -62,7 +71,7 @@ $IMAGE_FLAVORS = {
     'centos8'  => { :flavor => 'centos8' },
     'focal'    => { :flavor => 'focal' },
     'jammy'    => { :flavor => 'jammy' },
-}
+    
 # Archived Image Flavors
 #   'cosmic'   => { :flavor => 'cosmic' },
 #   'disco'    => { :flavor => 'disco' },
