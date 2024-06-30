@@ -3,7 +3,7 @@ name: Publish Docker image
 on:
   push:
     branches:
-      - "main"
+      - "master"
 
 env:
   DOCKER_ORG: ${{ secrets.DOCKER_ORG }}
