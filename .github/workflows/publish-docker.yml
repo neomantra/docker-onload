@@ -1,0 +1,82 @@
+name: Publish Docker image
+
+on:
+  push:
+    branches:
+      - "main"
+
+env:
+  DOCKER_ORG: ${{ secrets.DOCKER_ORG }}
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+
+jobs:
+  build-cento8:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      - name: Build docker image for flavor centos8 (onload)
+        run: ./docker_build_and_push_flavor.sh centos8 centos8/Dockerfile
+      - name: Build docker image for flavor centos8 (onloadzf)
+        run: IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh centos8 centos8/Dockerfile --build-arg ONLOAD_WITHZF=1
+  
+  build-buster:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check out the repo
+          uses: actions/checkout@v4
+        - name: Build docker image for flavor buster (onload)
+          run: ./docker_build_and_push_flavor.sh buster buster/Dockerfile  
+        - name: Build docker image for flavor buster (onloadzf)
+          run: IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh buster buster/Dockerfile --build-arg ONLOAD_WITHZF=1
+  
+  build-bookworm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      - name: Build docker image for flavor bookworm (onload)
+        run: ./docker_build_and_push_flavor.sh bookworm bookworm/Dockerfile
+      - name: Build docker image for flavor bookworm (onloadzf)
+        run: IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh bookworm bookworm/Dockerfile --build-arg ONLOAD_WITHZF=1
+
+  build-bionic:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check out the repo
+          uses: actions/checkout@v4
+        - name: Build docker image for flavor bionic (onload)
+          run: ./docker_build_and_push_flavor.sh bionic bionic/Dockerfile
+        - name: Build docker image for flavor bionic (onloadzf)
+          run: IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh bionic bionic/Dockerfile --build-arg ONLOAD_WITHZF=1
+
+  build-focal:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      - name: Build docker image for flavor focal (onload)
+        run: ./docker_build_and_push_flavor.sh focal focal/Dockerfile
+      - name: Build docker image for flavor focal (onloadzf)
+        run: IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh focal focal/Dockerfile --build-arg ONLOAD_WITHZF=1
+
+  build-jammy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      - name: Build docker image for flavor jammy (onload)
+        run: ./docker_build_and_push_flavor.sh jammy jammy/Dockerfile
+      - name: Build docker image for flavor jammy (onloadzf)
+        run: IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh jammy jammy/Dockerfile --build-arg ONLOAD_WITHZF=1
+
+  build-noble:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      - name: Build docker image for flavor noble (onload)
+        run: ./docker_build_and_push_flavor.sh noble noble/Dockerfile
+      - name: Build docker image for flavor noble (onloadzf)
+        run: IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh noble noble/Dockerfile --build-arg ONLOAD_WITHZF=1
