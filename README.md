@@ -23,6 +23,7 @@ These unversioned image tags currently map to **7.1.3.202**:
 - [`bionic` (*bionic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bionic/Dockerfile)
 - [`focal` (*focal/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/focal/Dockerfile)
 - [`jammy` (*jammy/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/jammy/Dockerfile)
+- [`noble` (*noble/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/noble/Dockerfile)
 
 The following versioned tags are available:
 - **8.1.3.40**

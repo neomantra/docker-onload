@@ -8,7 +8,7 @@
 
 #DOCKER_FWD="--no-cache -q "
 
-FLAVOR="${1:-bionic}"
+FLAVOR="${1:-noble}"
 
 
 for VERSION in $(./build_onload_image.rb --versions); do
