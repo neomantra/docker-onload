@@ -5,6 +5,7 @@
  * Update to Onload 8.1.3.40
  * Add Ubuntu `noble` flavor
  * Images are now built with [GitHub Actions](https://github.com/neomantra/docker-onload/actions)
+ * `bullseye` flavor is now built by Github Actions
 
 ## 2024-01-17 (tagged 8.1.2.26)
 
