@@ -2,8 +2,6 @@ name: Publish Docker image
 
 on:
   push:
-    branches:
-      - "master"
 
 env:
   DOCKER_ORG: ${{ secrets.DOCKER_ORG }}
@@ -16,6 +14,11 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
       - name: Build docker image for flavor centos8 (onload)
         run: ./docker_build_and_push_flavor.sh centos8 centos8/Dockerfile
       - name: Build docker image for flavor centos8 (onloadzf)
@@ -26,6 +29,11 @@ jobs:
       steps:
         - name: Check out the repo
           uses: actions/checkout@v4
+        - name: Login to Docker Hub
+          uses: docker/login-action@v3
+          with:
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_TOKEN }}
         - name: Build docker image for flavor buster (onload)
           run: ./docker_build_and_push_flavor.sh buster buster/Dockerfile  
         - name: Build docker image for flavor buster (onloadzf)
@@ -36,6 +44,11 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
       - name: Build docker image for flavor bookworm (onload)
         run: ./docker_build_and_push_flavor.sh bookworm bookworm/Dockerfile
       - name: Build docker image for flavor bookworm (onloadzf)
@@ -46,6 +59,11 @@ jobs:
       steps:
         - name: Check out the repo
           uses: actions/checkout@v4
+        - name: Login to Docker Hub
+          uses: docker/login-action@v3
+          with:
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_TOKEN }}
         - name: Build docker image for flavor bionic (onload)
           run: ./docker_build_and_push_flavor.sh bionic bionic/Dockerfile
         - name: Build docker image for flavor bionic (onloadzf)
@@ -56,6 +74,11 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
       - name: Build docker image for flavor focal (onload)
         run: ./docker_build_and_push_flavor.sh focal focal/Dockerfile
       - name: Build docker image for flavor focal (onloadzf)
@@ -66,6 +89,11 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
       - name: Build docker image for flavor jammy (onload)
         run: ./docker_build_and_push_flavor.sh jammy jammy/Dockerfile
       - name: Build docker image for flavor jammy (onloadzf)
@@ -76,6 +104,11 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
       - name: Build docker image for flavor noble (onload)
         run: ./docker_build_and_push_flavor.sh noble noble/Dockerfile
       - name: Build docker image for flavor noble (onloadzf)

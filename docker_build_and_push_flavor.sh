@@ -5,15 +5,12 @@
 #
 # Environment Variables
 #  DOCKER_ORG
-#  DOCKER_PASSFILE
+#  DOCKER_USERNAME
+#  DOCKER_TOKEN
 #  IMAGE_NAME
-#  TRAVIS_BRANCH
-#  TRAVIS_TAG
+#  GITHUB_REF_NAME
+#  GITHUB_REF_TYPE
 #
-
-# Docker password is read from DOCKER_PASSFILE
-# We do his because this script uses -x for build transparency
-# and we don't want to leak passwords
 
 set -e
 
@@ -42,14 +39,14 @@ docker_login_from_file
 
 docker build -t $IMAGE_NAME:$FLAVOR -f $DOCKERFILE_PATH $DOCKER_BUILD_PARAMS .
 
-if [[ "$TRAVIS_BRANCH" == "master" ]] ; then
+if [[ "$GITHUB_REF_NAME" == "master" ]] ; then
     docker_login_from_file &&
     docker tag $IMAGE_NAME:$FLAVOR $DOCKER_ORG/$IMAGE_NAME:$FLAVOR &&
     docker push $DOCKER_ORG/$IMAGE_NAME:$FLAVOR ;
 fi
 
-if [[ "$TRAVIS_TAG" ]] ; then
+if [[ "$GITHUB_REF_TYPE" == "tag" ]] ; then
     docker_login_from_file &&
-    docker tag $IMAGE_NAME:$FLAVOR $DOCKER_ORG/$IMAGE_NAME:$TRAVIS_TAG-$FLAVOR &&
-    docker push $DOCKER_ORG/$IMAGE_NAME:$TRAVIS_TAG-$FLAVOR ;
+    docker tag $IMAGE_NAME:$FLAVOR $DOCKER_ORG/$IMAGE_NAME:$GITHUB_REF_NAME-$FLAVOR &&
+    docker push $DOCKER_ORG/$IMAGE_NAME:$GITHUB_REF_NAME-$FLAVOR ;
 fi
