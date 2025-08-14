@@ -14,13 +14,11 @@ The `onload` image is built with `ONLOAD_WITHZF` set, thus without support for [
 
 These unversioned image tags currently map to **7.1.3.202**:
 
+- [`bionic` (*bionic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bionic/Dockerfile)
+- [`bookworm` (*bookworm/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bookworm/Dockerfile)
+- [`bullseye` (*bullseye/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bullseye/Dockerfile)
 - [`centos7` (*centos7/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos7/Dockerfile)
 - [`centos8` (*centos8/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/centos8/Dockerfile)
-- [`stretch` (*stretch/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/stretch/Dockerfile)
-- [`buster` (*buster/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/buster/Dockerfile)
-- [`trusty` (*trusty/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/trusty/Dockerfile)
-- [`xenial` (*xenial/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/xenial/Dockerfile)
-- [`bionic` (*bionic/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/bionic/Dockerfile)
 - [`focal` (*focal/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/focal/Dockerfile)
 - [`jammy` (*jammy/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/jammy/Dockerfile)
 - [`noble` (*noble/Dockerfile*)](https://github.com/neomantra/docker-onload/blob/master/noble/Dockerfile)

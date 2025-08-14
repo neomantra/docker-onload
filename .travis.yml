@@ -51,15 +51,7 @@ jobs:
       script:
       - IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh centos8 centos8/Dockerfile --build-arg ONLOAD_WITHZF=1
 
-    - stage: build docker image for flavor buster (onload)
-      script:
-      - ./docker_build_and_push_flavor.sh buster buster/Dockerfile
-
-    - stage: build docker image for flavor buster (onloadzf)
-      script:
-      - IMAGE_NAME="onloadzf" ./docker_build_and_push_flavor.sh buster buster/Dockerfile --build-arg ONLOAD_WITHZF=1
-
-   - stage: build docker image for flavor bookworm (onload)
+    - stage: build docker image for flavor bookworm (onload)
       script:
       - ./docker_build_and_push_flavor.sh bookworm bookworm/Dockerfile
 

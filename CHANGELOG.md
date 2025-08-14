@@ -1,5 +1,10 @@
 # docker-onload CHANGELOG
 
+## 2024-08-14
+
+  * Add ONLOAD_USER_AGENT for Onload downloads (#9)
+  * `buster` is archived as LTS is over.  Thank you for your service little pup.
+
 ## 2024-06-29 (tagged 8.1.3.40)
 
  * Update to Onload 8.1.3.40
