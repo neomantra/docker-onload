@@ -287,6 +287,7 @@ The Dockerfile downloads specific versions from [openonload.org](https://openonl
 |ONLOAD_GIT_URL | https://github.com/Xilinx-CNS/onload.git | If building from git, which the URL of the repo to clone from |
 |ONLOAD_PACKAGE_URL | (see below) | If set, it will download and unzip the tarball from the newer packaging. |
 |ONLOAD_LEGACY_URL | (see below) | Download the OpenOnload tarball from this URL, `ONLOAD_PACKAGE_URL` has priority. |
+|ONLOAD_USER_AGENT | "docker-onload" | User Agent for downloading artifacts |
 |ONLOAD_WITHZF | |Set to non-empty to include TCPDirect. |
 |ONLOAD_DISABLE_SYSCALL_HOOK | |Set to non-empty to disables hooking the syscall function from libc. |
 |ONLOAD_USERSPACE_ID | |Set to non-empty to specify the userspace build md5sum ID. |

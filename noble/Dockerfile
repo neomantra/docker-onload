@@ -33,6 +33,9 @@ ARG ONLOAD_MD5SUM="2cf23e45999e4c411c32ea13e91bcc49"
 ARG ONLOAD_PACKAGE_URL="https://www.xilinx.com/content/dam/xilinx/publications/solarflare/onload/openonload/8-1-3-40/SF-109585-LS-44-OpenOnload-Release-Package.zip"
 ARG ONLOAD_LEGACY_URL="https://www.openonload.org/download/openonload-${ONLOAD_VERSION}.tgz"
 
+# Onload User Agent -- Required to download from AMD
+ARG ONLOAD_USER_AGENT="docker-onload"
+
 # When ONLOAD_WITHZF is non-empty, the build includes Solarflare's TCPDirect library.
 # Default is to exclude it.
 ARG ONLOAD_WITHZF
@@ -95,8 +98,7 @@ RUN \
         wget \
     && cd /tmp \
     && if [ -n "${ONLOAD_PACKAGE_URL}" ] ; then \
-          curl -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
-          -fSL "${ONLOAD_PACKAGE_URL}" -o /tmp/onload-${ONLOAD_VERSION}-package.zip \
+          curl -fSL "${ONLOAD_PACKAGE_URL}" -o /tmp/onload-${ONLOAD_VERSION}-package.zip -H "User-Agent: ${ONLOAD_USER_AGENT}" \
           && unzip /tmp/onload-${ONLOAD_VERSION}-package.zip \
           && echo "${ONLOAD_MD5SUM} onload-${ONLOAD_VERSION}.tgz" | md5sum --check \
           && tar -zxf onload-${ONLOAD_VERSION}.tgz ; \
