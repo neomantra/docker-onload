@@ -101,7 +101,8 @@ RUN \
     && update-alternatives --set c++ /usr/bin/g++ \
     && cd /tmp \
     && if [ -n "${ONLOAD_PACKAGE_URL}" ] ; then \
-          curl -fSL "${ONLOAD_PACKAGE_URL}" -o /tmp/onload-${ONLOAD_VERSION}-package.zip \
+          curl -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+          -fSL "${ONLOAD_PACKAGE_URL}" -o /tmp/onload-${ONLOAD_VERSION}-package.zip \
           && unzip /tmp/onload-${ONLOAD_VERSION}-package.zip \
           && echo "${ONLOAD_MD5SUM} onload-${ONLOAD_VERSION}.tgz" | md5sum --check \
           && tar -zxf onload-${ONLOAD_VERSION}.tgz ; \
@@ -110,7 +111,7 @@ RUN \
           && echo "${ONLOAD_MD5SUM} onload-${ONLOAD_VERSION}.tgz" | md5sum --check \
           && tar -zxf onload-${ONLOAD_VERSION}.tgz \
           && mv openonload-${ONLOAD_VERSION} onload-${ONLOAD_VERSION}; \
-    fi 
+    fi
 
 RUN  cd /tmp/onload-${ONLOAD_VERSION} \
     && if [ -n "${ONLOAD_DISABLE_SYSCALL_HOOK}" ] ; then \

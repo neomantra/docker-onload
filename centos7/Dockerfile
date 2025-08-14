@@ -10,7 +10,7 @@
 #   docker run --net=host --device=/dev/onload --device=/dev/onload_epoll --device=/dev/onload_cplane -it ONLOAD_ENABLED_IMAGE_ID [COMMAND] [ARG...]
 #
 # NOTE: The host's OpenOnload version must be the same as the container's.
-# 
+#
 # Copyright (c) 2015-2021 Neomantra BV
 # Released under the MIT License, see LICENSE.txt
 #
@@ -89,7 +89,8 @@ RUN \
         which \
     && cd /tmp \
     && if [ -n "${ONLOAD_PACKAGE_URL}" ] ; then \
-          curl -fSL "${ONLOAD_PACKAGE_URL}" -o /tmp/onload-${ONLOAD_VERSION}-package.zip \
+          curl -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+          -fSL "${ONLOAD_PACKAGE_URL}" -o /tmp/onload-${ONLOAD_VERSION}-package.zip \
           && unzip /tmp/onload-${ONLOAD_VERSION}-package.zip \
           && echo "${ONLOAD_MD5SUM} onload-${ONLOAD_VERSION}.tgz" | md5sum --check \
           && tar -zxf onload-${ONLOAD_VERSION}.tgz ; \
