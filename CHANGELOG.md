@@ -1,6 +1,6 @@
 # docker-onload CHANGELOG
 
-## 2024-08-14
+## 2025-08-14
 
   * Add ONLOAD_USER_AGENT for Onload downloads (#9)
   * `buster` is archived as LTS is over.  Thank you for your service little pup.
@@ -20,11 +20,11 @@
 
  * Update to Onload 8.1.1.17
 
-## 2023-11-14 (tagged 8.1.0.15) 
+## 2023-11-14 (tagged 8.1.0.15)
 
  * Update to Onload 8.1.0.15
 
-## 2022-05-08 (tagged 7.1.3.202) 
+## 2022-05-08 (tagged 7.1.3.202)
 
   * Migrate to latest downloads at Xilinx Support
   * Add Ubuntu `jammy` flavor

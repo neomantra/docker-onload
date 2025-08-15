@@ -104,7 +104,6 @@ RUN \
           && cd "onload-$(git log -1 --format="%H")" ; \
     elif [ -n "${ONLOAD_PACKAGE_URL}" ] ; then \
           curl -fSL "${ONLOAD_PACKAGE_URL}" -o /tmp/onload-${ONLOAD_VERSION}-package.zip -H "User-Agent: ${ONLOAD_USER_AGENT}" \
-          -fSL "${ONLOAD_PACKAGE_URL}" -o /tmp/onload-${ONLOAD_VERSION}-package.zip \
           && unzip /tmp/onload-${ONLOAD_VERSION}-package.zip \
           && echo "${ONLOAD_MD5SUM} onload-${ONLOAD_VERSION}.tgz" | md5sum --check \
           && tar -zxf onload-${ONLOAD_VERSION}.tgz ; \
