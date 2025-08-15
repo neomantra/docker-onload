@@ -126,7 +126,7 @@ RUN \
         rm -rf /usr/include/zf /usr/bin/zf_stackdump /usr/bin/zf_debug /usr/lib/x86_64-linux-gnu/zf /usr/lib/x86_64-linux-gnu/libonload_zf* ; \
     else \
         if [ -n "${ONLOADZF_PACKAGE_URL}" ] ; then \
-          curl -fSL "${ONLOADZF_PACKAGE_URL}" -o /tmp/tcpdirect-${ONLOADZF_VERSION}-package.zip \
+          curl -fSL "${ONLOADZF_PACKAGE_URL}" -o /tmp/tcpdirect-${ONLOADZF_VERSION}-package.zip -H "User-Agent: ${ONLOAD_USER_AGENT}" \
           && unzip /tmp/tcpdirect-${ONLOADZF_VERSION}-package.zip \
           && echo "${ONLOADZF_MD5SUM} tcpdirect-${ONLOADZF_VERSION}.tgz" | md5sum --check \
           && tar -zxf tcpdirect-${ONLOADZF_VERSION}.tgz \
